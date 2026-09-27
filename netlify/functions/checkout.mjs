@@ -113,10 +113,13 @@ export default async (req) => {
     order_1: clip(summary, 500), order_2: clip(summary.slice(500), 500), order_3: clip(summary.slice(1000), 500),
   };
 
+  // Embedded = Stripe's payment form shown inside our own page (customer stays on northgatehvac.com).
+  const embedded = body?.embedded === true;
   const params = {
     mode: "payment",
-    success_url: `${origin}/?paid={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${origin}/?checkout=cancelled`,
+    ...(embedded
+      ? { ui_mode: "embedded", return_url: `${origin}/?paid={CHECKOUT_SESSION_ID}` }
+      : { success_url: `${origin}/?paid={CHECKOUT_SESSION_ID}`, cancel_url: `${origin}/?checkout=cancelled` }),
     line_items,
     billing_address_collection: "required",
     phone_number_collection: { enabled: true },
@@ -158,5 +161,5 @@ export default async (req) => {
       });
     } catch (e) { console.error("order record failed", e.message); }
   }
-  return json(200, { url: session.url });
+  return json(200, embedded ? { clientSecret: session.client_secret } : { url: session.url });
 };

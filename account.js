@@ -254,9 +254,11 @@
       try {
         const headers = { "Content-Type": "application/json" };
         if (session?.access_token) headers.Authorization = `Bearer ${session.access_token}`;
+        const stripe = await getStripe();
         const r = await fetch("/.netlify/functions/checkout", { method: "POST", headers,
-          body: JSON.stringify({ items, delivery: d, customer: NG.customerInfo(), repCode: window.NGRep.code(), lang: document.documentElement.lang }) });
+          body: JSON.stringify({ items, delivery: d, customer: NG.customerInfo(), repCode: window.NGRep.code(), lang: document.documentElement.lang, embedded: !!stripe }) });
         const out = await r.json().catch(() => ({}));
+        if (r.ok && out.clientSecret && stripe) { btn.removeAttribute("aria-busy"); return openPayment(stripe, out.clientSecret); }
         if (r.ok && out.url) { location.href = out.url; return; }
         if (r.status === 404 || r.status === 405 || r.status === 501 || out.error === "not_configured")
           return fail("Online payment isn't switched on yet. Please send your order by text or email below and we'll invoice you.");
@@ -265,6 +267,61 @@
         fail("Couldn't reach the payment page. Check your connection, or text/email your order.");
       }
     };
+  }
+
+  // ---------------------------------------------------------- Payment form on our own page (Stripe embedded Checkout)
+  let stripeP = null, payForm = null;
+  function getStripe() {
+    if (!STRIPE_PK) return Promise.resolve(null);
+    stripeP = stripeP || loadScript("https://js.stripe.com/v3/").then(() => window.Stripe(STRIPE_PK)).catch(() => { stripeP = null; return null; });
+    return stripeP;
+  }
+  function payModal() {
+    let bg = $("#payBg");
+    if (bg) return bg;
+    const css = document.createElement("style");
+    css.textContent = `
+      #payBg { position: fixed; inset: 0; z-index: 90; background: rgba(12,34,64,.55); display: none; overflow-y: auto; padding: 24px 12px; }
+      #payBg.open { display: block; }
+      #payBg .pay-box { max-width: 1000px; margin: 0 auto; background: #fff; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden; }
+      #payBg .pay-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 18px; border-bottom: 1px solid #e3e7ee; }
+      #payBg .pay-head img { height: 38px; display: block; }
+      #payBg .pay-head span { font-size: 13.5px; color: #4a5566; display: flex; align-items: center; gap: 6px; }
+      #payBg .pay-x { border: 0; background: #f1f4f8; width: 36px; height: 36px; border-radius: 50%; font-size: 22px; line-height: 1; cursor: pointer; color: #1d2530; }
+      #payBg .pay-x:hover { background: #e3e8ef; }
+      #payForm { min-height: 420px; padding: 8px 0; }
+      body.pay-open { overflow: hidden; }
+      @media (max-width: 560px) { #payBg { padding: 0; } #payBg .pay-box { border-radius: 0; min-height: 100%; } #payBg .pay-head span b { display: none; } }`;
+    document.head.appendChild(css);
+    bg = document.createElement("div");
+    bg.id = "payBg";
+    bg.innerHTML = `<div class="pay-box" role="dialog" aria-modal="true" aria-label="Secure payment">
+      <div class="pay-head"><img src="img/brand/northgate-logo-900.png" alt="Northgate">
+        <span>🔒 <b>Secure payment</b></span>
+        <button class="pay-x" type="button" aria-label="Close">×</button></div>
+      <div id="payForm"></div></div>`;
+    document.body.appendChild(bg);
+    bg.querySelector(".pay-x").onclick = closePayment;
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && bg.classList.contains("open")) closePayment(); });
+    return bg;
+  }
+  async function openPayment(stripe, clientSecret) {
+    const bg = payModal();
+    closePayment();
+    document.querySelectorAll(".drawer.open, .drawer-bg.open, #drawerBg.open").forEach(el => el.classList.remove("open"));
+    bg.classList.add("open"); document.body.classList.add("pay-open");
+    try {
+      payForm = await stripe.initEmbeddedCheckout({ fetchClientSecret: async () => clientSecret });
+      payForm.mount("#payForm");
+    } catch (e) {
+      $("#payForm").innerHTML = `<p style="padding:30px;text-align:center">Couldn't load the payment form. Please try again, or text/email your order.</p>`;
+    }
+  }
+  function closePayment() {
+    if (payForm) { try { payForm.destroy(); } catch (e) {} payForm = null; }
+    const bg = $("#payBg");
+    if (bg) { bg.classList.remove("open"); $("#payForm").innerHTML = ""; }
+    document.body.classList.remove("pay-open");
   }
 
   // Back from Stripe: ?paid=cs_... (success) or ?checkout=cancelled
@@ -289,7 +346,7 @@
   // ---------------------------------------------------------- Monthly payments message (Stripe's official Affirm/Klarna element)
   async function setupMonthlyMessaging() {
     let stripe = null, el = null;
-    try { await loadScript("https://js.stripe.com/v3/"); stripe = window.Stripe(STRIPE_PK); } catch { return; }
+    stripe = await getStripe(); if (!stripe) return;
     const elements = stripe.elements();
     document.addEventListener("ng:price", e => {
       const amount = Math.round((e.detail.amount || 0) * 100);
