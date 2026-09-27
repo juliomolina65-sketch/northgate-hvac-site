@@ -92,7 +92,9 @@ export default async (req) => {
   const origin = req.headers.get("origin") || process.env.URL || "http://localhost:8888";
   const line_items = order.lines.map(l => ({
     quantity: l.qty,
-    price_data: { currency: "usd", unit_amount: l.unit, product_data: { name: clip(l.name, 250), description: clip(`${l.models}${order.pickup ? " · local pickup price" : l.near ? " · near-DFW delivery price" : " · free shipping"}`, 500) } },
+    price_data: { currency: "usd", unit_amount: l.unit, product_data: { name: clip(l.name, 250),
+      ...(l.u.image && /^https:\/\//.test(origin) ? { images: [new URL(l.u.image, origin + "/").href] } : {}),
+      description: clip(`${l.models ? "Models: " + l.models : ""}${order.pickup ? " · local pickup price" : l.near ? " · near-DFW delivery price" : " · free shipping"}`, 500) } },
   }));
   if (order.liftgate) line_items.push({ quantity: 1, price_data: { currency: "usd", unit_amount: Math.round(order.liftgatePrice * 100), product_data: { name: "Liftgate delivery" } } });
 
