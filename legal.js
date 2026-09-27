@@ -8,7 +8,7 @@
     const v = S[el.dataset.ship];
     el.textContent = typeof v === "number" && el.dataset.money !== undefined ? money(v) : v ?? "";
   });
-  const links = { tel: "tel:" + (B.sms || ""), sms: "sms:" + (B.sms || ""), mailto: "mailto:" + (B.email || "") };
+  const links = { tel: "tel:" + (B.sms || ""), tel2: "tel:" + (B.tel2 || ""), sms: "sms:" + (B.sms || ""), mailto: "mailto:" + (B.email || "") };
   document.querySelectorAll("[data-href]").forEach(el => { el.href = links[el.dataset.href]; });
   const mail = document.getElementById("mailLine");
   if (mail) mail.hidden = !B.mailingAddress;
