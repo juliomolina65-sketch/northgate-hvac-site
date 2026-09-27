@@ -1388,3 +1388,15 @@ const FINAL_PRICES = {
   .forEach(u => { if (FINAL_PRICES[u.id] != null) u.price = FINAL_PRICES[u.id]; });
 
 window.INVENTORY = [...ELECTRIC, ...TRANE_ELECTRIC, ...GAS, ...TRANE_GAS, ...GOODMAN_GAS, ...HEAT_PUMPS, ...GOODMAN, ...GOODMAN_HEAT_PUMPS, ...PART_ITEMS, ...COMMERCIAL];
+
+// TEMPORARY $1 PAYMENT TEST (Sept 27, 2026): only visible at northgatehvac.com/?testitem=1 (the checkout server
+// always knows it). No freight, pickup or near-DFW discounts. Remove after the live payment test.
+const PAYMENT_TEST_ITEM = {
+  id: "ng-payment-test", brand: "Northgate", name: "$1 Payment Test (not for sale)", type: "Heat Kit",
+  tons: null, refrigerant: null, price: 1, unit: "each", inStock: null, pickupDiscount: 0,
+  image: "img/brand/northgate-mark-512.png", badge: "TEST",
+  components: [{ role: "Test", model: "PAYMENT-TEST", image: "img/brand/northgate-mark-512.png",
+    name: "Live payment test. Refund after purchase.", highlights: ["Checks payment, thank-you message and order webhook"], specs: { Purpose: "Payment test" } }],
+  chips: ["Test only"], keySpecsExtra: [["Purpose", "Payment test"]],
+};
+if (typeof location === "undefined" || /[?&]testitem=1\b/.test(location.search)) window.INVENTORY.unshift(PAYMENT_TEST_ITEM);
