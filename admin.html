@@ -245,19 +245,31 @@
   }
 
   // ---------------- Orders paid online
+  // Default view hides checkouts that were opened but never paid ("pending" / "abandoned").
+  let showAllOrders = false;
   async function loadOrders() {
     const { data, error } = await sb.from("orders").select("*").order("created_at", { ascending: false }).limit(200);
     if (error) { $("#orders").innerHTML = `<div class="msg err">${esc(error.message)}</div>`; return; }
     const statuses = ["pending", "processing", "paid", "shipped", "picked_up", "failed", "abandoned"];
-    $("#orders").innerHTML = `<div class="card"><table><thead><tr><th>Date</th><th>Customer</th><th>Items</th><th>Delivery</th><th>Total</th><th>Rep</th><th>Status</th></tr></thead><tbody>` +
-      (data.length ? data.map(o => `<tr data-order="${o.id}"><td>${new Date(o.created_at).toLocaleString()}</td>
-        <td>${esc(o.customer_name || "")}<br><span class="muted">${esc(o.customer_email || "")}<br>${esc(o.customer_phone || "")}${o.meta?.company ? "<br>" + esc(o.meta.company) : ""}${o.meta?.contractor ? "<br>Contractor: " + esc(o.meta.contractor) : ""}</span></td>
+    const unpaid = o => o.status === "pending" || o.status === "abandoned";
+    const rows = showAllOrders ? data : data.filter(o => !unpaid(o));
+    const hidden = data.length - rows.length;
+    // Name / phone / email from the order form (meta.customer = "Name · phone · email") until Stripe confirms payment.
+    const who = o => { const [n, p, e] = String(o.meta?.customer || "").split(" · "); return { name: o.customer_name || n || "", email: o.customer_email || e || "", phone: o.customer_phone || p || "" }; };
+    const addr = o => o.shipping_address ? [o.shipping_address.line1, o.shipping_address.line2, o.shipping_address.city, o.shipping_address.state, o.shipping_address.postal_code].filter(Boolean).join(", ") : (o.meta?.address || "");
+    $("#orders").innerHTML = `<div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+        <span class="muted">${rows.length} order${rows.length === 1 ? "" : "s"}${hidden ? ` · ${hidden} unpaid checkout${hidden === 1 ? "" : "s"} hidden` : ""}</span>
+        <label class="muted" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="showAllOrders" ${showAllOrders ? "checked" : ""}> Show unpaid / abandoned checkouts</label></div>
+      <div class="card"><table><thead><tr><th>Date</th><th>Customer</th><th>Items</th><th>Delivery</th><th>Total</th><th>Rep</th><th>Status</th></tr></thead><tbody>` +
+      (rows.length ? rows.map(o => { const c = who(o); return `<tr data-order="${o.id}"><td>${new Date(o.created_at).toLocaleString()}</td>
+        <td>${esc(c.name)}<br><span class="muted">${esc(c.email)}<br>${esc(c.phone)}${o.meta?.company ? "<br>" + esc(o.meta.company) : ""}${o.meta?.contractor ? "<br>Contractor: " + esc(o.meta.contractor) : ""}</span></td>
         <td>${(o.items || []).map(i => `${i.qty}× ${esc(i.name)}<br><span class="muted">${esc(i.models)}</span>`).join("<br>")}</td>
-        <td>${esc(o.delivery || "")}${o.meta?.liftgate === "yes" ? "<br>+ liftgate" : ""}${o.meta?.commercial_unloading && o.meta.commercial_unloading !== "n/a" ? "<br><b>Unloading:</b> " + esc(o.meta.commercial_unloading) : ""}${o.shipping_address ? `<br><span class="muted">${esc([o.shipping_address.line1, o.shipping_address.city, o.shipping_address.state, o.shipping_address.postal_code].filter(Boolean).join(", "))}</span>` : ""}</td>
+        <td>${esc(o.delivery || "")}${o.meta?.liftgate === "yes" ? "<br>+ liftgate" : ""}${o.meta?.commercial_unloading && o.meta.commercial_unloading !== "n/a" ? "<br><b>Unloading:</b> " + esc(o.meta.commercial_unloading) : ""}${addr(o) ? `<br><span class="muted">${esc(addr(o))}</span>` : ""}</td>
         <td><b>${money((o.total_cents || 0) / 100)}</b><br><span class="muted">${esc(o.payment_method || "")}</span></td>
         <td>${esc(o.rep_code || "house")}</td>
-        <td><select data-status>${statuses.map(s => `<option ${s === o.status ? "selected" : ""}>${s}</option>`).join("")}</select></td></tr>`).join("")
-      : `<tr><td colspan="7" class="muted">No online orders yet.</td></tr>`) + `</tbody></table></div>`;
+        <td><select data-status>${statuses.map(s => `<option ${s === o.status ? "selected" : ""}>${s}</option>`).join("")}</select></td></tr>`; }).join("")
+      : `<tr><td colspan="7" class="muted">No paid orders yet.</td></tr>`) + `</tbody></table></div>`;
+    $("#showAllOrders").onchange = e => { showAllOrders = e.target.checked; loadOrders(); };
   }
   $("#orders").addEventListener("change", async e => {
     const sel = e.target.closest("[data-status]"); if (!sel) return;
