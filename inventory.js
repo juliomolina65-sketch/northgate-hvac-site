@@ -509,9 +509,10 @@ const ELECTRIC = [
   electricBundle(5,   4100, ["GA5SAN56000W", "FJ5ANXD60L00"], HEAT_15_STANDARD, { seer2: 16.0 }),
 ];
 
-// Gas systems cost the electric system of the same tonnage + GAS_PREMIUM.
+// Gas systems cost the electric system of the same tonnage + GAS_PREMIUM (or a per-tonnage override).
 const GAS_PREMIUM = 140;
-const gasPrice = tons => ELECTRIC.find(u => u.tons === tons).price + GAS_PREMIUM;
+const GAS_PREMIUM_BY_TONS = { 3: 50 };
+const gasPrice = tons => ELECTRIC.find(u => u.tons === tons).price + (GAS_PREMIUM_BY_TONS[tons] ?? GAS_PREMIUM);
 const GAS = [
   //         tons  price          [condenser, coil]                furnace: [standard, upgrade +$350]
   gasBundle(1.5, gasPrice(1.5), ["GA5SAN51800W", "CVAVA2414XMA"], ["58SC0B045M14--12", "58SC0B070M17--12"]),   // uses the 2-ton coil
