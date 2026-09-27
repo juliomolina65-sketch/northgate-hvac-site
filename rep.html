@@ -175,7 +175,7 @@
         </div>
         <div style="display:flex;gap:10px;align-items:center"><button class="btn-cta" data-save>Save</button><span data-msg class="muted">A discount comes out of the margin, so it lowers your earnings too.</span></div>
       </div>`;
-    }).join("") : `<div class="card"><b>No customers yet.</b><p class="muted">Send your sign-up link to contractors, technicians and local customers. Anyone who creates an account through it shows up here.</p></div>`;
+    }).join("") : `<div class="card"><b>No customers yet.</b><p class="muted">Send your sign-up link to HVAC contractors and businesses. Anyone who creates an account through it shows up here.</p></div>`;
   }
   $("#customers").addEventListener("click", async e => {
     const btn = e.target.closest("[data-save]"); if (!btn) return;

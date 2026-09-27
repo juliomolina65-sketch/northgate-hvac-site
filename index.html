@@ -476,18 +476,6 @@
   /* ---------- Order bar + checkout ---------- */
   .order-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: #fff; border-top: 1px solid var(--line); box-shadow: 0 -6px 20px rgba(20,35,60,.08); transform: translateY(110%); transition: transform .25s ease; }
   .order-bar.show { transform: none; }
-  .promo { position: fixed; right: 18px; bottom: 18px; z-index: 40; width: 340px; max-width: calc(100vw - 32px); background: #fff; border: 1px solid var(--line); border-top: 4px solid #f2b33d; border-radius: 8px; box-shadow: 0 14px 40px rgba(10,25,50,.22); padding: 16px 16px 14px; transform: translateY(20px); opacity: 0; transition: transform .3s ease, opacity .3s ease; }
-  .promo.in { transform: none; opacity: 1; }
-  .order-bar.show ~ .promo, body.has-order .promo { bottom: 84px; }
-  .promo-tag { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; color: #7a5200; background: #fff3d6; border: 1px solid #f2d18a; border-radius: 999px; padding: 2px 8px; }
-  .promo b { display: block; font-size: 17px; color: var(--brand); margin: 8px 24px 4px 0; line-height: 1.3; }
-  .promo p { margin: 0 0 12px; font-size: 14px; color: var(--text-2); }
-  .promo p strong { color: var(--ok); }
-  .promo-btns { display: flex; gap: 8px; }
-  .promo-btns .btn { flex: 1; justify-content: center; padding: 9px 10px; }
-  .promo-x { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; border: 0; background: none; font-size: 20px; line-height: 1; color: var(--muted); cursor: pointer; border-radius: 50%; }
-  .promo-x:hover { background: #f1f5fa; color: var(--text); }
-  @media (max-width: 520px) { .promo { right: 16px; left: 16px; width: auto; } }
   .order-bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 10px; padding-bottom: 10px; }
   .order-bar b { font-size: 20px; }
   .order-bar small { display: block; color: var(--muted); font-size: 12.5px; }
@@ -612,6 +600,7 @@
       <a href="#shipping">Shipping &amp; Pickup</a>
       <a href="#faq">FAQ</a>
       <a href="#contact">Contact</a>
+      <a href="#" data-contractor>Contractors: trade accounts</a>
       <a data-href="tel"><span data-biz="phone"></span></a>
     </div>
   </div>
@@ -691,14 +680,14 @@
           <div class="brands-line"><span class="bb bb-carrier lg">Carrier</span><span class="bb bb-trane lg">Trane</span><span class="bb bb-goodman lg">Goodman</span></div>
           <div class="ctas">
             <button class="btn btn-cta" type="button" data-cat="electric">Shop systems</button>
-            <button class="btn btn-line" type="button" data-contractor>Get contractor pricing</button>
+            <button class="btn btn-line" type="button" data-offer="pickup"><span>Save $<span data-ship="pickupDiscount"></span> with DFW pickup</span></button>
           </div>
         </div>
         <div class="brand-cards" id="brandCards"></div>
       </div>
       <div class="offers">
         <button class="offer" type="button" data-offer="pickup"><span class="amt">$<span data-ship="pickupDiscount"></span></span><span><b>Off every system with DFW pickup</b><small>Order online, pick up in <span data-biz="pickupArea"></span>, pay cash if you like.</small></span></button>
-        <button class="offer" type="button" data-contractor><span class="amt">PRO</span><span><b>Contractor accounts</b><small>Contractors get lower account pricing. No license needed. Apply in 2 minutes.</small></span></button>
+        <button class="offer" type="button" data-go="faq"><span class="amt">$/mo</span><span><b>Monthly payments</b><small>Pay over time with Affirm or Klarna at checkout, subject to approval.</small></span></button>
         <button class="offer" type="button" data-wholesale><span class="amt">5+</span><span><b>Wholesale &amp; volume pricing</b><small>Buying 5+ systems or using your own freight? Get a quote.</small></span></button>
       </div>
     </section>
@@ -722,12 +711,12 @@
         <div>
           <h2>Built for HVAC contractors</h2>
           <p>Order online or by text, pick up in DFW or get it shipped free, and talk to a real person who knows the equipment.</p>
-          <button class="btn btn-navy" type="button" data-contractor>Apply for contractor pricing</button>
+          <button class="btn btn-navy" type="button" data-contractor>Open a trade account</button>
         </div>
         <div class="tools">
           <button class="tool" type="button" data-go="shipping"><svg><use href="#i-truck"/></svg><span>Free nationwide shipping</span></button>
           <button class="tool" type="button" data-go="shipping"><svg><use href="#i-tag"/></svg><span>$650 off DFW pickup</span></button>
-          <button class="tool" type="button" data-contractor><svg><use href="#i-shield"/></svg><span>Contractor pricing</span></button>
+          <button class="tool" type="button" data-contractor><svg><use href="#i-shield"/></svg><span>Trade accounts</span></button>
           <button class="tool" type="button" data-wholesale><svg><use href="#i-box"/></svg><span>Wholesale 5+ systems</span></button>
           <button class="tool" type="button" data-go="shipping"><svg><use href="#i-clock"/></svg><span>Ships in 3–5 days</span></button>
           <button class="tool" type="button" data-cat="all"><svg><use href="#i-list"/></svg><span>Full spec sheets</span></button>
@@ -810,7 +799,8 @@
       <section class="panel faq" id="faq">
         <h2>Frequently Asked Questions</h2>
         <p class="lead">Still have a question? Call or text us.</p>
-        <details><summary>What is a contractor account?</summary><p>HVAC contractors, installers and businesses can apply for an account with pricing below what's listed on the site. No license required. Apply online, we call you, and your account is set up with your salesperson. <a href="#" data-contractor>Apply for contractor pricing</a>.</p></details>
+        <details><summary>Do you have trade accounts?</summary><p>Yes, for HVAC contractors and businesses. No license required. Apply online, we'll call you, and your account is set up with your salesperson. <a href="#" data-contractor>Open a trade account</a>.</p></details>
+        <details><summary>I'm near DFW. Can I get a quote?</summary><p>Yes. Delivery within about 2 hours of DFW already comes off automatically at checkout, and picking up saves even more. For a quote on several units or a specific job, <a data-href="sms">text us</a> or <a data-href="tel">call us</a>.</p></details>
         <details><summary>Do you offer wholesale or volume pricing?</summary><p>Yes. If you're buying several systems at a time, ordering regularly, or want to send your own freight carrier to pick up in <span data-biz="pickupArea"></span>, we'll quote you wholesale pricing well below the prices listed here. <a href="#" data-wholesale>Request wholesale pricing</a>.</p></details>
         <details><summary>Who can buy?</summary><p>Anyone can buy: contractors, businesses and homeowners. A contractor license isn't required. If you have one, you can add it to your order.</p></details>
         <details><summary>Is the equipment new?</summary><p data-biz="warrantyNote"></p></details>
@@ -899,21 +889,17 @@
   <div class="modal ws-modal" role="dialog" aria-modal="true" aria-labelledby="caTitle">
     <button class="x" id="closeCa" aria-label="Close" style="background:rgba(255,255,255,.15);color:#fff">×</button>
     <div class="ws-head">
-      <span class="pill">NORTHGATE ACCOUNT</span>
-      <h2 id="caTitle">Get contractor pricing</h2>
-      <p>HVAC contractors and businesses get account pricing below what's listed on the site. No license required. Apply below, we'll call you and set up your account.</p>
+      <span class="pill">TRADE ACCOUNT</span>
+      <h2 id="caTitle">Open a trade account</h2>
+      <p>For HVAC contractors and businesses. No license required. Apply below and we'll call you to set up your account.</p>
       <ul class="ws-perks">
-        <li>Lower prices on every system and part</li>
+        <li>Account pricing on every system and part</li>
         <li>Priority on stock and orders held for your jobs</li>
         <li>A direct line to your salesperson: quotes by text, same day</li>
       </ul>
     </div>
     <form class="ws-body" id="caForm">
       <div class="ca-ref" id="caRef" hidden></div>
-      <div class="ca-type" id="caTypeRow">
-        <label><input type="radio" name="caType" value="Contractor / business" checked><span><b>Contractor or business</b><small>Account pricing on every system and part</small></span></label>
-        <label><input type="radio" name="caType" value="Local customer (within 2 hours of DFW)"><span><b>Local customer</b><small>Within 2 hours of DFW? Apply for local customer pricing</small></span></label>
-      </div>
       <div class="ws-row">
         <label>Your name<input id="caName" autocomplete="name" required></label>
         <label>Company<input id="caCompany" autocomplete="organization"></label>
@@ -924,7 +910,7 @@
       </div>
       <div class="ws-row">
         <label>Your role
-          <select id="caRole"><option>Contractor / company owner</option><option>HVAC technician</option><option>Installer</option><option>Salesperson</option><option>Property manager / business</option><option>Homeowner</option></select>
+          <select id="caRole"><option>Contractor / company owner</option><option>HVAC technician</option><option>Installer</option><option>Salesperson</option><option>Property manager / business</option></select>
         </label>
         <label>City<input id="caCity" autocomplete="address-level2" placeholder="e.g. Waco"></label>
       </div>
@@ -952,7 +938,8 @@
         <a class="btn btn-cta" id="caSms">Text my application</a>
         <a class="btn btn-line" id="caEmailBtn">Email my application</a>
       </div>
-      <p class="fine">We'll contact you to activate your account. Approved contractors will sign in here to see their pricing.</p>
+      <p class="fine">We'll contact you to activate your account. Approved accounts sign in here to see their pricing.</p>
+      <p class="fine">Homeowner? You don't need an account; just order online. Near DFW and want a quote? <a data-href="sms">Text us</a> or <a data-href="tel">call us</a>.</p>
     </form>
   </div>
 </div>
@@ -1001,16 +988,6 @@
   </div>
 </div>
 
-<aside class="promo" id="promo" role="dialog" aria-labelledby="promoTitle" hidden>
-  <button class="promo-x" type="button" id="promoClose" aria-label="Close">×</button>
-  <span class="promo-tag">CONTRACTORS &amp; BULK BUYERS</span>
-  <b id="promoTitle">HVAC contractor or buying in bulk?</b>
-  <p>Get your own <strong>contractor pricing</strong>, lower than our listed prices on every system and part. Apply in 2 minutes or contact us for a quote.</p>
-  <div class="promo-btns">
-    <button class="btn btn-cta" type="button" data-contractor data-promo-go>Apply now</button>
-    <button class="btn btn-line" type="button" data-wholesale data-promo-go>Contact us</button>
-  </div>
-</aside>
 
 <div class="order-bar" id="orderBar">
   <div class="wrap">
@@ -1774,7 +1751,7 @@
   function caText() {
     const v = id => $("#" + id).value.trim();
     return [
-      `Hi, I'd like an account: ${$('input[name="caType"]:checked').value}.`,
+      `Hi, I'd like a trade account.`,
       `Role: ${v("caRole")}`,
       (v("caCity") || v("caSt")) && `Location: ${[v("caCity"), v("caSt").toUpperCase()].filter(Boolean).join(", ")}`,
       v("caAreas") && `Areas served: ${v("caAreas")}`,
@@ -1789,18 +1766,18 @@
     ].filter(Boolean).join("\n");
   }
   function caZipNote() {
-    const zip = $("#caZip").value.trim(), local = $('input[name="caType"]:checked').value.startsWith("Local");
+    const zip = $("#caZip").value.trim();
     const el = $("#caZipNote");
     if (!/^\d{5}$/.test(zip)) { el.textContent = ""; el.className = "ca-zip-note"; return; }
     const near = Pricing.nearDfw(zip, S);
-    el.className = "ca-zip-note " + (near ? "ok" : local ? "far" : "");
-    el.textContent = near ? "✓ Within our local area (about 2 hours of DFW)" : local ? "Outside our local area, but apply as a contractor or text us" : "";
+    el.className = "ca-zip-note " + (near ? "ok" : "");
+    el.textContent = near ? "✓ Within our local area (about 2 hours of DFW)" : "";
   }
   function updateCa() {
     caZipNote();
     const body = encodeURIComponent(caText());
     $("#caSms").href = `sms:${B.sms}?&body=${body}`;
-    $("#caEmailBtn").href = `mailto:${B.email}?subject=${encodeURIComponent("Contractor account application")}&body=${body}`;
+    $("#caEmailBtn").href = `mailto:${B.email}?subject=${encodeURIComponent("Trade account application")}&body=${body}`;
   }
   function openCa() { closeSpecs(); closeDrawer(); closeWs(); updateCa(); $("#caBg").classList.add("open"); }
   function closeCa() { $("#caBg").classList.remove("open"); }
@@ -1831,26 +1808,6 @@
 
   setCat("home"); updateOrder();
 
-  // ---------- Bulk / contractor pricing pop-up: once, a few seconds in; closed = stays closed.
-  (function promo() {
-    const box = $("#promo");
-    const KEY = "promoClosed";
-    let closed = false;
-    try { closed = localStorage.getItem(KEY) === "1"; } catch (e) {}
-    if (closed) return;
-    const busy = () => $$(".modal-bg.open, .drawer.open, .notice-bg").length > 0 || !!$("#acctBanner:not([hidden])");
-    const close = () => { box.classList.remove("in"); setTimeout(() => { box.hidden = true; }, 300); try { localStorage.setItem(KEY, "1"); } catch (e) {} };
-    const show = () => {
-      if (busy()) return setTimeout(show, 4000);          // wait until no product page / order / form is open
-      box.hidden = false; requestAnimationFrame(() => box.classList.add("in"));
-    };
-    setTimeout(show, 8000);
-    $("#promoClose").onclick = close;
-    box.addEventListener("click", e => { if (e.target.closest("[data-promo-go]")) close(); });
-    // Sit above the order bar when it's showing.
-    new MutationObserver(() => document.body.classList.toggle("has-order", $("#orderBar").classList.contains("show")))
-      .observe($("#orderBar"), { attributes: true, attributeFilter: ["class"] });
-  })();
 
   // ---------- Buyer details: required before any order (warranty registration + delivery)
   function buyerInfo() {

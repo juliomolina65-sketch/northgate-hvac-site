@@ -124,7 +124,7 @@
         <button class="btn btn-cta" type="button" id="siGo" style="width:100%;justify-content:center;margin-top:6px">Sign in</button>
         <button class="btn btn-line" type="button" id="siReset" style="width:100%;justify-content:center;margin-top:8px">Forgot password? Email me a link</button>
         <div id="siMsg"></div>
-        <p class="fine" style="text-align:center;margin-top:10px">Don't have an account? <button type="button" class="linkish" data-ca-tab="apply">Create one</button>. Contractors, technicians and local customers get account pricing.</p>
+        <p class="fine" style="text-align:center;margin-top:10px">Don't have an account? <button type="button" class="linkish" data-ca-tab="apply">Create one</button>. Trade accounts are for HVAC contractors and businesses.</p>
       </div>
       <div class="ws-body" id="caAccount" hidden></div>`);
 
@@ -170,7 +170,7 @@
     ["#siEmail", "#siPass", "#siGo", "#siReset"].forEach(sel => $(sel).disabled = !SB_ON);
     const signin = !acct && caTab === "signin";
     $$("#caBg .ws-head p, #caBg .ws-head ul").forEach(el => el.hidden = signin);   // keep the login screen short
-    $("#caTitle").textContent = acct ? "Your account" : signin ? "Account login" : "Get contractor pricing";
+    $("#caTitle").textContent = acct ? "Your account" : signin ? "Account login" : "Open a trade account";
     if (acct) renderAccountPanel(NG);
   }
   const msg = (el, text, ok) => { $(el).innerHTML = text ? `<div class="ca-msg ${ok ? "ok" : "err"}">${esc(text)}</div>` : ""; };
@@ -183,13 +183,13 @@
       email: v("caEmail"), password: $("#caPass").value,
       options: { emailRedirectTo: location.origin + location.pathname,
         data: { name: v("caName"), company: v("caCompany"), phone: v("caPhone"), license: v("caLicense"), license_state: v("caState"), volume: v("caVolume"), work: v("caWork"),
-          account_type: document.querySelector('input[name="caType"]:checked').value, zip: v("caZip"),
+          account_type: "Contractor / business", zip: v("caZip"),
           role: v("caRole"), city: v("caCity"), state: v("caSt").toUpperCase(), service_areas: v("caAreas"), rep_code: window.NGRep.code() } },
     });
     $("#caCreate").removeAttribute("aria-busy");
     if (error) return msg("#caApplyMsg", error.message);
-    if (!data.session) return msg("#caApplyMsg", "Almost done: check your email and click the confirmation link, then sign in here. We'll review your license and approve your account.", true);
-    msg("#caApplyMsg", "Account created. We'll verify your license and approve it, usually within one business day.", true);
+    if (!data.session) return msg("#caApplyMsg", "Almost done: check your email and click the confirmation link, then sign in here. We'll review your application and call you.", true);
+    msg("#caApplyMsg", "Account created. We'll review it and call you, usually within one business day.", true);
   }
 
   async function signIn() {

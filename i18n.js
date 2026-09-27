@@ -59,6 +59,29 @@
     "Order online, pick up in": "Pida en línea, recoja en",
     ", pay cash if you like.": ", pague en efectivo si prefiere.",
     "PRO": "PRO",
+    "Contractors: trade accounts": "Contratistas: cuentas comerciales",
+    "Open a trade account": "Abrir una cuenta comercial",
+    "Trade accounts": "Cuentas comerciales",
+    "TRADE ACCOUNT": "CUENTA COMERCIAL",
+    "Monthly payments": "Pagos mensuales",
+    "Pay over time with Affirm or Klarna at checkout, subject to approval.": "Pague a plazos con Affirm o Klarna al pagar, sujeto a aprobación.",
+    "Save $": "Ahorre $", " with DFW pickup": " al recoger en DFW",
+    "Account pricing on every system and part": "Precios de cuenta en cada sistema y pieza",
+    "For HVAC contractors and businesses. No license required. Apply below and we'll call you to set up your account.":
+      "Para contratistas y negocios de HVAC. No se requiere licencia. Solicítela abajo y le llamaremos para abrir su cuenta.",
+    "We'll contact you to activate your account. Approved accounts sign in here to see their pricing.":
+      "Le contactaremos para activar su cuenta. Las cuentas aprobadas inician sesión aquí para ver sus precios.",
+    "Homeowner? You don't need an account; just order online. Near DFW and want a quote? ":
+      "¿Dueño de casa? No necesita cuenta; pida en línea. ¿Cerca de DFW y quiere una cotización? ",
+    "Text us": "Envíenos un mensaje", " or ": " o ", "call us": "llámenos",
+    "Do you have trade accounts?": "¿Tienen cuentas comerciales?",
+    "Yes, for HVAC contractors and businesses. No license required. Apply online, we'll call you, and your account is set up with your salesperson. ":
+      "Sí, para contratistas y negocios de HVAC. No se requiere licencia. Solicítela en línea, le llamaremos y su cuenta queda con su vendedor. ",
+    "I'm near DFW. Can I get a quote?": "Estoy cerca de DFW. ¿Me pueden cotizar?",
+    "Yes. Delivery within about 2 hours of DFW already comes off automatically at checkout, and picking up saves even more. For a quote on several units or a specific job, ":
+      "Sí. La entrega a unas 2 horas de DFW ya se descuenta automáticamente al pagar, y recoger ahorra aún más. Para cotizar varias unidades o un trabajo específico, ",
+    "text us": "envíenos un mensaje",
+    ". Trade accounts are for HVAC contractors and businesses.": ". Las cuentas comerciales son para contratistas y negocios de HVAC.",
     "Contractor accounts": "Cuentas para contratistas",
     "Contractors get lower account pricing. No license needed. Apply in 2 minutes.": "Los contratistas obtienen precios más bajos. No se necesita licencia. Solicítelo en 2 minutos.",
     "Wholesale & volume pricing": "Precios de mayoreo y volumen",
