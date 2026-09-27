@@ -668,6 +668,8 @@
     [/^(\d+) commercial rooftop units$/, "$1 unidades comerciales de techo"],
     [/^(\d+) units · ([\d.]+) to ([\d.]+) ton$/, "$1 unidades · $2 a $3 toneladas"],
     [/^(\d+) systems · ([\d.]+) to ([\d.]+) ton$/, "$1 sistemas · $2 a $3 toneladas"],
+    [/^Show (\d+) more$/, "Ver $1 más"],
+    [/^Showing (\d+) of (\d+)$/, "Mostrando $1 de $2"],
     [/^Shop (\w+) →$/, "Ver $1 →"],
     [/^from (\$[\d,]+)$/, "desde $1"],
     [/^([\d.]+) Ton$/, "$1 toneladas"],
