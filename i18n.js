@@ -505,6 +505,8 @@
       "Se envían en 3 a 5 días hábiles en camión de carga hasta su banqueta. Pagos mensuales disponibles con Klarna.",
     "Shop home systems →": "Ver sistemas residenciales →", "Save with DFW pickup": "Ahorre recogiendo en DFW",
     "systems to choose from": "sistemas para elegir",
+    "Electric AC systems": "Sistemas de A/C eléctricos", "Gas furnace systems": "Sistemas con horno de gas",
+    "Heat pump systems": "Sistemas de bomba de calor", "Condensers & parts": "Condensadoras y piezas",
     "Brands we carry": "Marcas que vendemos",
     "Terms of Sale": "Términos de venta", "Privacy Policy": "Política de privacidad", "Terms": "Términos", "Privacy": "Privacidad",
     "By placing an order you agree to our": "Al hacer un pedido acepta nuestros", "and": "y",
