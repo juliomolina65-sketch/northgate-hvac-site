@@ -9,5 +9,5 @@
 window.NORTHGATE_CONFIG = {
   SUPABASE_URL: "",               // Supabase > Project Settings > API > Project URL
   SUPABASE_ANON_KEY: "",          // Supabase > Project Settings > API > anon / publishable key
-  STRIPE_PUBLISHABLE_KEY: "",     // Stripe > Developers > API keys > Publishable key (pk_live_… or pk_test_…)
+  STRIPE_PUBLISHABLE_KEY: "pk_live_51QNJsaH9I0r7YLxVtNOJRWW4RnSflq3KzM38s64PyXw86Y5VYAXb9v178ADtFuKit9G3EZ5pSYaUtEnIuTz1nGuQ00JTBcX3k4", // Stripe > Developers > API keys > Publishable key (pk_live_… or pk_test_…)
 };
