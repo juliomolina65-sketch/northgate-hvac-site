@@ -1,0 +1,58 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+  # The checkout prices orders with the same files the website uses.
+  included_files = ["inventory.js", "commercial-data.js", "pricing.js"]
+
+# Don't publish the working files.
+[[redirects]]
+  from = "/commercial/*"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/supabase/*"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/netlify/*"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/img/src/*"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/SETUP.md"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/serve.py"
+  to = "/"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/.env.example"
+  to = "/"
+  status = 404
+  force = true
+
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

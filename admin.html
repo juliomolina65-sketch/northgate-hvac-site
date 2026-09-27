@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Northgate Admin</title>
+<link rel="icon" type="image/png" href="img/brand/favicon-64.png">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --brand: #13335e; --line: #d8dce2; --muted: #6b7482; --text: #1d2530; --ok: #1f7a35; --warn: #7a5a00; --warn-bg: #fff6dc; --link: #1767b3; --cta: #2b8a3e; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.45 Roboto, system-ui, sans-serif; color: var(--text); background: #f3f5f8; }
+  header { background: var(--brand); color: #fff; padding: 14px clamp(16px, 3vw, 40px); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  header b { font-size: 18px; } header a, header button { color: #fff; }
+  main { padding: 18px clamp(16px, 3vw, 40px) 60px; max-width: 1500px; margin: 0 auto; }
+  [hidden] { display: none !important; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 16px; margin-bottom: 14px; }
+  h2 { color: var(--brand); font-size: 20px; margin: 18px 0 10px; }
+  button, .btn { font: inherit; border-radius: 4px; border: 1px solid var(--line); background: #fff; padding: 7px 12px; cursor: pointer; }
+  .btn-cta { background: var(--cta); border-color: var(--cta); color: #fff; font-weight: 500; }
+  .btn-link { border: 0; background: none; color: var(--link); padding: 0; }
+  input, select, textarea { font: inherit; border: 1px solid var(--line); border-radius: 4px; padding: 7px 9px; width: 100%; }
+  label { display: block; font-size: 13px; color: var(--muted); }
+  label > input, label > select { color: var(--text); margin-top: 3px; }
+  .tabs { display: flex; gap: 6px; margin: 4px 0 14px; } .tabs button[aria-pressed="true"] { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin: 10px 0; }
+  .pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: .04em; }
+  .pending { background: var(--warn-bg); color: var(--warn); } .approved { background: #e7f4ea; color: var(--ok); } .rejected { background: #f7e3e3; color: #9b2c2c; }
+  .paid { background: #e7f4ea; color: var(--ok); } .processing { background: #e8f0fb; color: var(--link); } .failed, .abandoned { background: #eef0f3; color: var(--muted); }
+  .muted { color: var(--muted); font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; } th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .msg { padding: 8px 10px; border-radius: 4px; margin: 8px 0; } .msg.ok { background: #e7f4ea; color: var(--ok); } .msg.err { background: var(--warn-bg); color: var(--warn); }
+  .overrides td input { width: 110px; }
+  .login { max-width: 380px; margin: 60px auto; }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  code { font-size: 12.5px; background: #f1f5fa; padding: 1px 4px; border-radius: 3px; }
+  .demo-note { background: var(--warn-bg); color: var(--warn); border: 1px solid #efdc9f; border-radius: 6px; padding: 12px 14px; margin-bottom: 14px; }
+</style>
+</head>
+<body>
+<header><b style="display:flex;align-items:center;gap:10px"><img src="img/brand/northgate-mark-512.png" alt="" style="height:34px;background:#fff;border-radius:4px;padding:2px">Northgate Admin</b><span><a href="./">← Back to site</a> &nbsp; <button class="btn-link" id="out" hidden>Sign out</button></span></header>
+<main>
+  <div id="notConfigured" class="demo-note" hidden><b>Demo preview: sample data.</b> This is how your admin page works. Changes here aren't saved.
+    To use it for real, connect your database (SETUP.md, step 2: Supabase). Then real contractor applications and paid orders show up here.</div>
+
+  <div id="login" class="card login" hidden>
+    <h2 style="margin-top:0">Admin sign in</h2>
+    <label>Email<input id="em" type="email" autocomplete="email"></label><br>
+    <label>Password<input id="pw" type="password" autocomplete="current-password"></label><br>
+    <button class="btn-cta" id="go" style="width:100%">Sign in</button>
+    <div id="loginMsg"></div>
+  </div>
+
+  <div id="notAdmin" class="card" hidden><b>This account isn't an admin.</b><p class="muted">Run the "make yourself the admin" SQL at the bottom of <code>supabase/schema.sql</code> with your email, then reload.</p></div>
+
+  <div id="app" hidden>
+    <div class="tabs"><button data-tab="contractors" aria-pressed="true">Customers</button><button data-tab="orders" aria-pressed="false">Online orders</button><button data-tab="reps" aria-pressed="false">Sales reps</button><button data-tab="costs" aria-pressed="false">Costs &amp; margins</button></div>
+    <section id="contractors"></section>
+    <section id="orders" hidden></section>
+    <section id="reps" hidden></section>
+    <section id="costs" hidden></section>
+  </div>
+</main>
+
+<script src="config.js"></script>
+<script src="commercial-data.js"></script>
+<script src="inventory.js"></script>
+<script src="pricing.js"></script>
+<script src="commission.js"></script>
+<script src="demo-db.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(async function () {
+  const C = window.NORTHGATE_CONFIG || {};
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const esc = v => String(v ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const money = n => "$" + Math.round(n).toLocaleString("en-US");
+  const INV = window.INVENTORY.filter(u => u.price != null);
+  const itemName = u => `${u.brand} ${u.name}`;
+
+  const DEMO = !C.SUPABASE_URL || !C.SUPABASE_ANON_KEY;
+  $("#notConfigured").hidden = !DEMO;
+  const sb = DEMO ? makeDemoClient("admin") : supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY);
+  let REPS = [], COSTS = {}, ALL_ORDERS = [], ALL_CONTRACTORS = [];
+
+  async function boot() {
+    const { data: { session } } = await sb.auth.getSession();
+    $("#login").hidden = !!session; $("#out").hidden = !session;
+    if (!session) return;
+    const { data: adm } = await sb.from("admins").select("user_id").eq("user_id", session.user.id).maybeSingle();
+    $("#notAdmin").hidden = !!adm; $("#app").hidden = !adm;
+    if (adm) { await loadShared(); await loadContractors(); loadOrders(); renderReps(); renderCosts(); }
+  }
+  $("#go").onclick = async () => {
+    const { error } = await sb.auth.signInWithPassword({ email: $("#em").value.trim(), password: $("#pw").value });
+    $("#loginMsg").innerHTML = error ? `<div class="msg err">${esc(error.message)}</div>` : "";
+    if (!error) boot();
+  };
+  $("#out").onclick = async () => { await sb.auth.signOut(); location.reload(); };
+  document.addEventListener("click", e => {
+    const t = e.target.closest("[data-tab]"); if (!t) return;
+    $$("[data-tab]").forEach(b => b.setAttribute("aria-pressed", b === t));
+    ["contractors", "orders", "reps", "costs"].forEach(id => $("#" + id).hidden = t.dataset.tab !== id);
+  });
+
+  async function loadShared() {
+    const [r, c, o] = await Promise.all([sb.from("reps").select("*").order("created_at"), sb.from("costs").select("*"), sb.from("orders").select("*").order("created_at", { ascending: false }).limit(1000)]);
+    REPS = r.data || []; COSTS = Object.fromEntries((c.data || []).map(x => [x.item_id, +x.cost])); ALL_ORDERS = o.data || [];
+  }
+
+  // ---------------- Contractors: approve + set pricing
+  async function loadContractors() {
+    const { data, error } = await sb.from("contractors").select("*").order("status", { ascending: false }).order("created_at", { ascending: false });
+    if (error) { $("#contractors").innerHTML = `<div class="msg err">${esc(error.message)}</div>`; return; }
+    const order = { pending: 0, approved: 1, rejected: 2 };
+    data.sort((a, b) => order[a.status] - order[b.status]);
+    ALL_CONTRACTORS = data;
+    $("#contractors").innerHTML = `<p class="muted">${data.filter(c => c.status === "pending").length} waiting for approval · ${data.filter(c => c.status === "approved").length} approved</p>` +
+      (data.length ? data.map(cardHTML).join("") : `<div class="card muted">No contractor applications yet.</div>`);
+  }
+  function cardHTML(c) {
+    const overrides = Object.entries(c.prices || {});
+    return `<div class="card" data-user="${c.user_id}">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+        <div><b style="font-size:17px">${esc(c.company || "(no company)")}</b> <span class="pill ${c.status}">${c.status}</span><br>
+          <span class="muted">${esc(c.name || "")} · ${esc(c.role || "")} · ${esc(c.email || "")} · ${esc(c.phone || "")}<br>${esc([c.city, c.state].filter(Boolean).join(", "))}${c.service_areas ? " · serves " + esc(c.service_areas) : ""}<br><b>${esc(c.account_type || "Contractor / business")}</b>${c.zip ? " · ZIP " + esc(c.zip) : ""} · License: ${esc(c.license || "none given")} ${esc(c.license_state || "")} · ${esc(c.volume || "")} systems/mo · ${esc(c.work || "")} · applied ${new Date(c.created_at).toLocaleDateString()}</span></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <label style="min-width:170px">Sales rep<select data-f="rep_code"><option value="">No rep (house account)</option>${REPS.map(r => `<option value="${esc(r.code)}" ${r.code === c.rep_code ? "selected" : ""}>${esc(r.name)} (${esc(r.code)})</option>`).join("")}</select></label>
+          <label style="min-width:140px">Status<select data-f="status">${["pending", "approved", "rejected"].map(s => `<option ${s === c.status ? "selected" : ""}>${s}</option>`).join("")}</select></label>
+        </div>
+      </div>
+      <div class="row">
+        <label>$ off each system<input type="number" min="0" step="10" data-f="discount_system" value="${c.discount_system || 0}"></label>
+        <label>$ off each part<input type="number" min="0" step="5" data-f="discount_part" value="${c.discount_part || 0}"></label>
+        <label>$ off each commercial unit<input type="number" min="0" step="50" data-f="discount_commercial" value="${c.discount_commercial || 0}"></label>
+      </div>
+      <details ${overrides.length ? "open" : ""}><summary>Exact prices for specific items (${overrides.length})</summary>
+        <table class="overrides"><tbody>${overrides.map(([id, p]) => overrideRow(id, p)).join("")}</tbody></table>
+        <div class="row"><label>Add an item<select data-add-item><option value="">Choose an item…</option>${INV.map(u => `<option value="${u.id}">${esc(itemName(u))} (site ${money(u.price)})</option>`).join("")}</select></label></div>
+      </details>
+      <label>Private notes<textarea data-f="notes" rows="2">${esc(c.notes || "")}</textarea></label>
+      <div style="margin-top:10px;display:flex;gap:10px;align-items:center"><button class="btn-cta" data-save>Save</button><span data-msg></span></div>
+    </div>`;
+  }
+  function overrideRow(id, p) {
+    const u = window.INVENTORY.find(x => x.id === id);
+    return `<tr data-ov="${esc(id)}"><td>${esc(u ? itemName(u) : id)}<br><span class="muted">site price ${u?.price != null ? money(u.price) : "n/a"}</span></td>
+      <td><input type="number" min="0" step="10" value="${esc(p)}"></td><td><button class="btn-link" data-rm>remove</button></td></tr>`;
+  }
+  $("#contractors").addEventListener("change", e => {
+    const sel = e.target.closest("[data-add-item]"); if (!sel || !sel.value) return;
+    const card = sel.closest("[data-user]");
+    if (!card.querySelector(`[data-ov="${sel.value}"]`)) card.querySelector(".overrides tbody").insertAdjacentHTML("beforeend", overrideRow(sel.value, INV.find(u => u.id === sel.value).price));
+    sel.value = "";
+  });
+  $("#contractors").addEventListener("click", async e => {
+    if (e.target.closest("[data-rm]")) { e.target.closest("tr").remove(); return; }
+    const btn = e.target.closest("[data-save]"); if (!btn) return;
+    const card = btn.closest("[data-user]"), f = n => card.querySelector(`[data-f="${n}"]`).value;
+    const prices = Object.fromEntries([...card.querySelectorAll("[data-ov]")].map(tr => [tr.dataset.ov, Math.round(+tr.querySelector("input").value)]).filter(([, v]) => v > 0));
+    const patch = { rep_code: f("rep_code") || null, status: f("status"), discount_system: +f("discount_system") || 0, discount_part: +f("discount_part") || 0, discount_commercial: +f("discount_commercial") || 0, prices, notes: f("notes") || null };
+    const { error } = await sb.from("contractors").update(patch).eq("user_id", card.dataset.user);
+    card.querySelector("[data-msg]").innerHTML = error ? `<span class="msg err">${esc(error.message)}</span>` : `<span class="msg ok">Saved</span>`;
+    if (!error) card.querySelector(".pill").className = "pill " + patch.status, card.querySelector(".pill").textContent = patch.status;
+  });
+
+  // ---------------- Sales reps: add reps, set Northgate's % (admin only), see each rep's customers and sales
+  function renderReps() {
+    const stat = r => {
+      const custs = ALL_CONTRACTORS.filter(c => c.rep_code === r.code);
+      const t = Commission.totals(ALL_ORDERS.filter(o => o.rep_code === r.code), COSTS, r);
+      return { custs, t };
+    };
+    const base = location.origin + location.pathname.replace(/admin\.html$/, "");
+    $("#reps").innerHTML = `<div class="card"><h2 style="margin-top:0">Add a sales rep</h2>
+        <p class="muted">The rep then creates a login on the site with this same email (Account login → Apply) and opens <b>rep.html</b>. Customers who sign up through their link belong to them.</p>
+        <div class="row">
+          <label>Name<input id="nrName" placeholder="Mike Alvarez"></label>
+          <label>Email (their login)<input id="nrEmail" type="email"></label>
+          <label>Phone<input id="nrPhone" type="tel"></label>
+          <label>Link code<input id="nrCode" placeholder="MIKE" maxlength="24"></label>
+          <label>Northgate keeps<select id="nrPct"><option value="10">10%</option><option value="15" selected>15%</option><option value="20">20%</option></select></label>
+        </div>
+        <button class="btn-cta" id="nrAdd">Add rep</button> <span id="nrMsg"></span></div>` +
+      (REPS.length ? REPS.map(r => { const { custs, t } = stat(r); return `<div class="card" data-rep="${esc(r.code)}">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+          <div><b style="font-size:17px">${esc(r.name)}</b> <span class="pill ${r.active ? "approved" : "rejected"}">${r.active ? "active" : "inactive"}</span> <span class="muted">${r.user_id ? "· has logged in" : "· hasn't logged in yet"}</span><br>
+            <span class="muted">${esc(r.email)} · ${esc(r.phone || "")} · link: <code>${esc(base)}?rep=${esc(r.code)}</code></span></div>
+          <div class="muted" style="text-align:right">${custs.length} customers (${custs.filter(c => c.status === "approved").length} approved) · ${t.orders} paid orders<br>
+            Sales <b style="color:var(--text)">${money(t.sale)}</b> · Northgate fee <b style="color:var(--ok)">${money(t.fee)}</b> · rep earned ${money(t.earn)}${t.missingCost ? ` · ${t.missingCost} order(s) missing costs` : ""}</div>
+        </div>
+        <div class="row">
+          <label>Northgate keeps (%)<input type="number" min="0" max="100" step="1" data-r="house_pct" value="${esc(r.house_pct)}"></label>
+          <label>% of<select data-r="house_basis"><option value="margin" ${r.house_basis !== "sale" ? "selected" : ""}>the margin</option><option value="sale" ${r.house_basis === "sale" ? "selected" : ""}>the whole sale</option></select></label>
+          <label>Max $ off / system<input type="number" min="0" step="10" data-r="max_discount_system" value="${r.max_discount_system ?? ""}" placeholder="no limit"></label>
+          <label>Max $ off / part<input type="number" min="0" step="5" data-r="max_discount_part" value="${r.max_discount_part ?? ""}" placeholder="no limit"></label>
+          <label>Max $ off / commercial<input type="number" min="0" step="50" data-r="max_discount_commercial" value="${r.max_discount_commercial ?? ""}" placeholder="no limit"></label>
+          <label>Status<select data-r="active"><option value="true" ${r.active ? "selected" : ""}>active</option><option value="false" ${!r.active ? "selected" : ""}>inactive</option></select></label>
+        </div>
+        <button class="btn-cta" data-save-rep>Save</button> <span data-msg></span></div>`; }).join("") : `<div class="card muted">No reps yet.</div>`);
+    const autoCode = () => { if (!$("#nrCode").dataset.touched) $("#nrCode").value = ($("#nrName").value.trim().split(/\s+/)[0] || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 12); };
+    $("#nrName").oninput = autoCode;
+    $("#nrCode").oninput = () => { $("#nrCode").dataset.touched = "1"; $("#nrCode").value = $("#nrCode").value.toUpperCase().replace(/[^A-Z0-9-]/g, ""); };
+    $("#nrAdd").onclick = async () => {
+      const row = { name: $("#nrName").value.trim(), email: $("#nrEmail").value.trim().toLowerCase(), phone: $("#nrPhone").value.trim(), code: $("#nrCode").value.trim(), house_pct: +$("#nrPct").value, house_basis: "margin", active: true, created_at: new Date().toISOString() };
+      if (!row.name || !/^\S+@\S+\.\S+$/.test(row.email) || !row.code) { $("#nrMsg").innerHTML = `<span class="msg err">Enter a name, a valid email and a link code.</span>`; return; }
+      if (REPS.some(r => r.code === row.code)) { $("#nrMsg").innerHTML = `<span class="msg err">That link code is taken.</span>`; return; }
+      const { error } = await sb.from("reps").insert(row);
+      if (error) { $("#nrMsg").innerHTML = `<span class="msg err">${esc(error.message)}</span>`; return; }
+      await loadShared(); renderReps(); loadContractors();
+    };
+  }
+  $("#reps").addEventListener("click", async e => {
+    const btn = e.target.closest("[data-save-rep]"); if (!btn) return;
+    const card = btn.closest("[data-rep]"), f = n => card.querySelector(`[data-r="${n}"]`).value;
+    const num = v => v === "" ? null : Math.max(0, Math.round(+v));
+    const patch = { house_pct: Math.min(100, Math.max(0, +f("house_pct") || 0)), house_basis: f("house_basis"), max_discount_system: num(f("max_discount_system")), max_discount_part: num(f("max_discount_part")), max_discount_commercial: num(f("max_discount_commercial")), active: f("active") === "true" };
+    const { error } = await sb.from("reps").update(patch).eq("code", card.dataset.rep);
+    card.querySelector("[data-msg]").innerHTML = error ? `<span class="msg err">${esc(error.message)}</span>` : `<span class="msg ok">Saved</span>`;
+    if (!error) { Object.assign(REPS.find(r => r.code === card.dataset.rep), patch); setTimeout(renderReps, 600); }
+  });
+
+  // ---------------- Costs: what each item costs you -> margins for you and the reps
+  function renderCosts() {
+    const groups = [
+      ["Home systems", INV.filter(u => !u.commercial && u.unit !== "each")],
+      ["Individual parts", INV.filter(u => u.unit === "each")],
+      ["Commercial rooftop units", INV.filter(u => u.commercial)],
+    ];
+    const row = u => { const c = COSTS[u.id]; return `<tr data-cost="${esc(u.id)}"><td>${esc(itemName(u))}<br><span class="muted">${esc(u.id)}</span></td><td class="num">${money(u.price)}</td>
+      <td><input type="number" min="0" step="10" value="${c ?? ""}" placeholder="not set" style="width:120px"></td><td class="num" data-m>${c == null ? "" : money(u.price - c)}</td></tr>`; };
+    $("#costs").innerHTML = `<div class="card"><p class="muted">Enter what each item costs you (equipment only). Margins show here and on each rep's dashboard. Reps see costs; customers never do.</p>
+      <input id="costFilter" placeholder="Filter, e.g. Trane 3-Ton" style="max-width:360px"> <button class="btn-cta" id="saveCosts">Save changed costs</button> <span id="costMsg"></span></div>` +
+      groups.map(([title, items]) => `<div class="card"><h2 style="margin-top:0">${title} (${items.length})</h2><div style="overflow-x:auto"><table><thead><tr><th>Item</th><th class="num">Site price</th><th>Your cost</th><th class="num">Margin</th></tr></thead><tbody>${items.map(row).join("")}</tbody></table></div></div>`).join("");
+    $("#costFilter").oninput = () => { const q = $("#costFilter").value.toLowerCase(); $$("#costs [data-cost]").forEach(tr => tr.hidden = q && !tr.textContent.toLowerCase().includes(q)); };
+    $("#saveCosts").onclick = async () => {
+      const rows = $$("#costs [data-cost]").map(tr => [tr.dataset.cost, tr.querySelector("input").value]).filter(([id, v]) => v !== "" && +v !== COSTS[id]).map(([item_id, v]) => ({ item_id, cost: +v, updated_at: new Date().toISOString() }));
+      if (!rows.length) { $("#costMsg").innerHTML = `<span class="msg ok">No changes.</span>`; return; }
+      const { error } = await sb.from("costs").upsert(rows);
+      $("#costMsg").innerHTML = error ? `<span class="msg err">${esc(error.message)}</span>` : `<span class="msg ok">Saved ${rows.length} cost(s).</span>`;
+      if (!error) { rows.forEach(r => COSTS[r.item_id] = r.cost); renderReps(); }
+    };
+    $("#costs").addEventListener("input", e => { const tr = e.target.closest("[data-cost]"); if (!tr || e.target.id === "costFilter") return; const u = INV.find(x => x.id === tr.dataset.cost), v = e.target.value; tr.querySelector("[data-m]").textContent = v === "" ? "" : money(u.price - +v); });
+  }
+
+  // ---------------- Orders paid online
+  async function loadOrders() {
+    const { data, error } = await sb.from("orders").select("*").order("created_at", { ascending: false }).limit(200);
+    if (error) { $("#orders").innerHTML = `<div class="msg err">${esc(error.message)}</div>`; return; }
+    const statuses = ["pending", "processing", "paid", "shipped", "picked_up", "failed", "abandoned"];
+    $("#orders").innerHTML = `<div class="card"><table><thead><tr><th>Date</th><th>Customer</th><th>Items</th><th>Delivery</th><th>Total</th><th>Rep</th><th>Status</th></tr></thead><tbody>` +
+      (data.length ? data.map(o => `<tr data-order="${o.id}"><td>${new Date(o.created_at).toLocaleString()}</td>
+        <td>${esc(o.customer_name || "")}<br><span class="muted">${esc(o.customer_email || "")}<br>${esc(o.customer_phone || "")}${o.meta?.company ? "<br>" + esc(o.meta.company) : ""}${o.meta?.contractor ? "<br>Contractor: " + esc(o.meta.contractor) : ""}</span></td>
+        <td>${(o.items || []).map(i => `${i.qty}× ${esc(i.name)}<br><span class="muted">${esc(i.models)}</span>`).join("<br>")}</td>
+        <td>${esc(o.delivery || "")}${o.meta?.liftgate === "yes" ? "<br>+ liftgate" : ""}${o.meta?.commercial_unloading && o.meta.commercial_unloading !== "n/a" ? "<br><b>Unloading:</b> " + esc(o.meta.commercial_unloading) : ""}${o.shipping_address ? `<br><span class="muted">${esc([o.shipping_address.line1, o.shipping_address.city, o.shipping_address.state, o.shipping_address.postal_code].filter(Boolean).join(", "))}</span>` : ""}</td>
+        <td><b>${money((o.total_cents || 0) / 100)}</b><br><span class="muted">${esc(o.payment_method || "")}</span></td>
+        <td>${esc(o.rep_code || "house")}</td>
+        <td><select data-status>${statuses.map(s => `<option ${s === o.status ? "selected" : ""}>${s}</option>`).join("")}</select></td></tr>`).join("")
+      : `<tr><td colspan="7" class="muted">No online orders yet.</td></tr>`) + `</tbody></table></div>`;
+  }
+  $("#orders").addEventListener("change", async e => {
+    const sel = e.target.closest("[data-status]"); if (!sel) return;
+    const { error } = await sb.from("orders").update({ status: sel.value, updated_at: new Date().toISOString() }).eq("id", sel.closest("tr").dataset.order);
+    if (error) alert(error.message);
+  });
+
+  boot();
+})();
+</script>
+</body>
+</html>

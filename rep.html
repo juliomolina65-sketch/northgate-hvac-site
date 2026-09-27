@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Northgate Rep Dashboard</title>
+<link rel="icon" type="image/png" href="img/brand/favicon-64.png">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root { --brand: #13335e; --line: #d8dce2; --muted: #6b7482; --text: #1d2530; --ok: #1f7a35; --warn: #7a5a00; --warn-bg: #fff6dc; --link: #1767b3; --cta: #2b8a3e; --radius: 4px; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.45 Roboto, system-ui, sans-serif; color: var(--text); background: #f3f5f8; }
+  header { background: var(--brand); color: #fff; padding: 12px clamp(16px, 3vw, 40px); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  header b { font-size: 18px; display: flex; align-items: center; gap: 10px; } header a, header button { color: #fff; }
+  header img { height: 34px; background: #fff; border-radius: 4px; padding: 2px; }
+  main { padding: 18px clamp(16px, 3vw, 40px) 60px; max-width: 1500px; margin: 0 auto; }
+  [hidden] { display: none !important; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 16px; margin-bottom: 14px; }
+  h2 { color: var(--brand); font-size: 20px; margin: 22px 0 10px; }
+  button, .btn { font: inherit; border-radius: 4px; border: 1px solid var(--line); background: #fff; padding: 7px 12px; cursor: pointer; }
+  .btn-cta { background: var(--cta); border-color: var(--cta); color: #fff; font-weight: 500; }
+  .btn-link { border: 0; background: none; color: var(--link); padding: 0; }
+  input, select { font: inherit; border: 1px solid var(--line); border-radius: 4px; padding: 7px 9px; width: 100%; }
+  label { display: block; font-size: 13px; color: var(--muted); }
+  label > input, label > select { color: var(--text); margin-top: 3px; }
+  .muted { color: var(--muted); font-size: 13px; }
+  .row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 10px 0; }
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+  .kpi { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; }
+  .kpi small { color: var(--muted); display: block; font-size: 12.5px; }
+  .kpi b { font-size: 24px; color: var(--brand); }
+  .kpi.earn b { color: var(--ok); }
+  .link-box { display: flex; gap: 8px; align-items: center; }
+  .link-box input { font-family: ui-monospace, monospace; font-size: 13.5px; }
+  .pill { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; text-transform: uppercase; letter-spacing: .04em; }
+  .pending { background: var(--warn-bg); color: var(--warn); } .approved, .paid, .shipped, .picked_up { background: #e7f4ea; color: var(--ok); } .rejected { background: #f7e3e3; color: #9b2c2c; } .processing { background: #e8f0fb; color: var(--link); } .failed, .abandoned { background: #eef0f3; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; } th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12.5px; color: var(--muted); font-weight: 500; }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  .earn-txt { color: var(--ok); font-weight: 700; }
+  .msg { padding: 8px 10px; border-radius: 4px; margin: 8px 0; } .msg.ok { background: #e7f4ea; color: var(--ok); } .msg.err { background: var(--warn-bg); color: var(--warn); }
+  .demo-note { background: var(--warn-bg); color: var(--warn); border: 1px solid #efdc9f; border-radius: 6px; padding: 12px 14px; margin-bottom: 14px; }
+  .login { max-width: 380px; margin: 60px auto; }
+  .tabs { display: flex; gap: 6px; margin: 18px 0 12px; flex-wrap: wrap; } .tabs button[aria-pressed="true"] { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .scroll { overflow-x: auto; }
+  @media (max-width: 700px) { .hide-sm { display: none; } }
+</style>
+</head>
+<body>
+<header><b><img src="img/brand/northgate-mark-512.png" alt="">Northgate Rep Dashboard</b><span><a href="./">← Back to site</a> &nbsp; <button class="btn-link" id="out" hidden>Sign out</button></span></header>
+<main>
+  <div id="demo" class="demo-note" hidden><b>Demo preview: sample data.</b> This is what a sales rep sees. Nothing here is saved. It goes live once the database is connected (SETUP.md, step 2).</div>
+
+  <div id="login" class="card login" hidden>
+    <h2 style="margin-top:0">Sales rep sign in</h2>
+    <p class="muted">Use the email Northgate set up for you. First time? Create your login on the main site (Account login → Apply for an account) with that same email, then come back here.</p>
+    <label>Email<input id="em" type="email" autocomplete="email"></label><br>
+    <label>Password<input id="pw" type="password" autocomplete="current-password"></label><br>
+    <button class="btn-cta" id="go" style="width:100%">Sign in</button>
+    <div id="loginMsg"></div>
+  </div>
+
+  <div id="notRep" class="card" hidden><b>This login isn't set up as a Northgate sales rep.</b><p class="muted">Ask the owner to add your email under Admin → Reps, then sign in again.</p></div>
+
+  <div id="app" hidden>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center">
+        <div><b style="font-size:19px" id="repName"></b> <span class="muted" id="repCode"></span><br><span class="muted" id="repDeal"></span></div>
+        <div style="min-width:min(520px,100%)"><label>Your sign-up link: customers who sign up through it are yours</label>
+          <div class="link-box"><input id="repLink" readonly><button class="btn-cta" id="copyLink" type="button">Copy</button></div></div>
+      </div>
+    </div>
+    <div class="kpis" id="kpis"></div>
+
+    <div class="tabs"><button data-tab="customers" aria-pressed="true">My customers</button><button data-tab="orders" aria-pressed="false">Orders &amp; commission</button><button data-tab="prices" aria-pressed="false">Price sheet &amp; margins</button></div>
+    <section id="customers"></section>
+    <section id="orders" hidden></section>
+    <section id="prices" hidden></section>
+  </div>
+</main>
+
+<script src="config.js"></script>
+<script src="commercial-data.js"></script>
+<script src="inventory.js"></script>
+<script src="pricing.js"></script>
+<script src="commission.js"></script>
+<script src="demo-db.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(async function () {
+  const C = window.NORTHGATE_CONFIG || {};
+  const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+  const esc = v => String(v ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const money = n => n == null ? "n/a" : (n < 0 ? "−$" : "$") + Math.abs(Math.round(n)).toLocaleString("en-US");
+  const INV = window.INVENTORY;
+  const DEMO = !C.SUPABASE_URL || !C.SUPABASE_ANON_KEY;
+  $("#demo").hidden = !DEMO;
+  const sb = DEMO ? makeDemoClient("rep") : supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY);
+  let rep = null, costs = {}, customers = [], orders = [];
+
+  async function boot() {
+    const { data: { session } } = await sb.auth.getSession();
+    $("#login").hidden = !!session; $("#out").hidden = !session;
+    if (!session) return;
+    await sb.rpc("claim_rep");                       // links this login to the rep row the admin created
+    const { data } = await sb.from("reps").select("*").eq("user_id", session.user.id).maybeSingle();
+    rep = data;
+    $("#notRep").hidden = !!rep; $("#app").hidden = !rep;
+    if (rep) load();
+  }
+  $("#go").onclick = async () => {
+    const { error } = await sb.auth.signInWithPassword({ email: $("#em").value.trim(), password: $("#pw").value });
+    $("#loginMsg").innerHTML = error ? `<div class="msg err">${esc(error.message)}</div>` : "";
+    if (!error) boot();
+  };
+  $("#out").onclick = async () => { await sb.auth.signOut(); location.reload(); };
+  document.addEventListener("click", e => {
+    const t = e.target.closest("[data-tab]"); if (!t) return;
+    $$("[data-tab]").forEach(b => b.setAttribute("aria-pressed", b === t));
+    ["customers", "orders", "prices"].forEach(id => $("#" + id).hidden = t.dataset.tab !== id);
+  });
+
+  async function load() {
+    const base = location.origin + location.pathname.replace(/rep\.html$/, "");
+    $("#repName").textContent = rep.name;
+    $("#repCode").textContent = `· Rep code ${rep.code}`;
+    $("#repLink").value = `${base}?rep=${rep.code}`;
+    $("#repDeal").textContent = `Northgate fee: ${rep.house_pct}% of ${rep.house_basis === "sale" ? "each sale" : "the margin"} · you keep the rest` +
+      (rep.max_discount_system != null ? ` · max discount: $${rep.max_discount_system}/system, $${rep.max_discount_part ?? 0}/part, $${rep.max_discount_commercial ?? 0}/commercial` : "");
+    const [cu, or, co] = await Promise.all([
+      sb.from("contractors").select("*").order("created_at", { ascending: false }),
+      sb.from("orders").select("*").order("created_at", { ascending: false }).limit(500),
+      sb.from("costs").select("*"),
+    ]);
+    customers = cu.data || []; orders = or.data || [];
+    costs = Object.fromEntries((co.data || []).map(r => [r.item_id, +r.cost]));
+    renderKpis(); renderCustomers(); renderOrders(); renderPrices();
+  }
+  $("#copyLink").onclick = async () => { try { await navigator.clipboard.writeText($("#repLink").value); $("#copyLink").textContent = "Copied"; } catch (e) { $("#repLink").select(); } setTimeout(() => $("#copyLink").textContent = "Copy", 1500); };
+
+  function renderKpis() {
+    const t = Commission.totals(orders, costs, rep);
+    const k = (label, val, cls = "") => `<div class="kpi ${cls}"><small>${label}</small><b>${val}</b></div>`;
+    $("#kpis").innerHTML = [
+      k("Customers", `${customers.filter(c => c.status === "approved").length} <small style="display:inline">approved · ${customers.filter(c => c.status === "pending").length} pending</small>`),
+      k("Paid orders", t.orders),
+      k("Sales (paid)", money(t.sale)),
+      k("Margin", t.missingCost ? money(t.margin) + ` <small style="display:inline">+${t.missingCost} w/o cost</small>` : money(t.margin)),
+      k(`Northgate fee (${rep.house_pct}%)`, money(t.fee)),
+      k("Your earnings", money(t.earn), "earn"),
+      t.pending ? k("Waiting on payment", money(t.pending)) : "",
+    ].join("");
+  }
+
+  // ---------------- customers: rep approves + sets discounts (the database caps them at the rep's max)
+  function renderCustomers() {
+    const salesOf = id => Commission.totals(orders.filter(o => o.user_id === id), costs, rep);
+    const order = { pending: 0, approved: 1, rejected: 2 };
+    const list = [...customers].sort((a, b) => order[a.status] - order[b.status]);
+    $("#customers").innerHTML = list.length ? list.map(c => {
+      const s = salesOf(c.user_id);
+      return `<div class="card" data-user="${c.user_id}">
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+          <div><b style="font-size:17px">${esc(c.company || c.name)}</b> <span class="pill ${c.status}">${c.status}</span><br>
+            <span class="muted">${esc(c.name)} · ${esc(c.role || "")} · <a href="tel:${esc(c.phone)}">${esc(c.phone || "")}</a> · <a href="mailto:${esc(c.email)}">${esc(c.email || "")}</a><br>
+            ${esc([c.city, c.state].filter(Boolean).join(", "))}${c.service_areas ? " · serves " + esc(c.service_areas) : ""} · ${esc(c.volume || "?")} systems/mo · joined ${new Date(c.created_at).toLocaleDateString()}</span></div>
+          <div class="muted" style="text-align:right">${s.orders} paid order${s.orders === 1 ? "" : "s"} · <b style="color:var(--text)">${money(s.sale)}</b><br>you earned <span class="earn-txt">${money(s.earn)}</span></div>
+        </div>
+        <div class="row">
+          <label>Status<select data-f="status">${["pending", "approved", "rejected"].map(v => `<option ${v === c.status ? "selected" : ""}>${v}</option>`).join("")}</select></label>
+          <label>$ off each system<input type="number" min="0" step="10" data-f="discount_system" value="${c.discount_system || 0}"></label>
+          <label>$ off each part<input type="number" min="0" step="5" data-f="discount_part" value="${c.discount_part || 0}"></label>
+          <label>$ off each commercial unit<input type="number" min="0" step="50" data-f="discount_commercial" value="${c.discount_commercial || 0}"></label>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center"><button class="btn-cta" data-save>Save</button><span data-msg class="muted">A discount comes out of the margin, so it lowers your earnings too.</span></div>
+      </div>`;
+    }).join("") : `<div class="card"><b>No customers yet.</b><p class="muted">Send your sign-up link to contractors, technicians and local customers. Anyone who creates an account through it shows up here.</p></div>`;
+  }
+  $("#customers").addEventListener("click", async e => {
+    const btn = e.target.closest("[data-save]"); if (!btn) return;
+    const card = btn.closest("[data-user]"), f = n => card.querySelector(`[data-f="${n}"]`).value;
+    const cap = (v, max) => max == null ? v : Math.min(v, max);
+    const patch = { status: f("status"), discount_system: cap(+f("discount_system") || 0, rep.max_discount_system), discount_part: cap(+f("discount_part") || 0, rep.max_discount_part), discount_commercial: cap(+f("discount_commercial") || 0, rep.max_discount_commercial) };
+    const { error } = await sb.from("contractors").update(patch).eq("user_id", card.dataset.user);
+    const capped = patch.discount_system < (+f("discount_system") || 0) || patch.discount_part < (+f("discount_part") || 0) || patch.discount_commercial < (+f("discount_commercial") || 0);
+    card.querySelector("[data-msg]").innerHTML = error ? `<span class="msg err">${esc(error.message)}</span>` : `<span class="msg ok">Saved${capped ? " (lowered to your max discount)" : ""}</span>`;
+    if (!error) { Object.assign(customers.find(c => c.user_id === card.dataset.user), patch); renderCustomers(); renderKpis(); }
+  });
+
+  // ---------------- orders + commission
+  function renderOrders() {
+    const who = id => customers.find(c => c.user_id === id);
+    $("#orders").innerHTML = `<div class="card scroll"><table><thead><tr><th>Date</th><th>Customer</th><th>Items</th><th>Status</th><th class="num">Sale</th><th class="num hide-sm">Cost</th><th class="num">Margin</th><th class="num">Northgate fee</th><th class="num">You earn</th></tr></thead><tbody>` +
+      (orders.length ? orders.map(o => {
+        const m = Commission.orderMoney(o, costs, rep), c = who(o.user_id);
+        return `<tr><td>${new Date(o.created_at).toLocaleDateString()}</td><td>${esc(c?.company || o.customer_name || "")}</td>
+          <td>${(o.items || []).map(i => `${i.qty}× ${esc(i.name)}`).join("<br>")}</td><td><span class="pill ${o.status}">${esc(o.status)}</span></td>
+          <td class="num">${money(m.sale)}</td><td class="num hide-sm">${m.known ? money(m.cost) : "not set"}</td><td class="num">${money(m.margin)}</td>
+          <td class="num">${money(m.fee)}</td><td class="num"><span class="earn-txt">${m.counted ? money(m.earn) : `<span class="muted">${money(m.earn)} (when paid)</span>`}</span></td></tr>`;
+      }).join("") : `<tr><td colspan="9" class="muted">No orders from your customers yet.</td></tr>`) +
+      `</tbody></table><p class="muted">Earnings count once an order is paid (bank transfers take 3–5 days). "not set" means Northgate hasn't entered the cost for that item yet.</p></div>`;
+  }
+
+  // ---------------- price sheet: site price, cost and margin per system (helps reps decide discounts)
+  function renderPrices() {
+    const systems = INV.filter(u => u.price != null && !u.commercial && u.unit !== "each");
+    const row = u => {
+      const cost = costs[u.id], margin = cost == null ? null : u.price - cost, fee = margin == null ? null : rep.house_basis === "sale" ? u.price * rep.house_pct / 100 : margin * rep.house_pct / 100;
+      return `<tr><td>${esc(u.brand)} ${esc(u.name)}</td><td class="num">${money(u.price)}</td><td class="num">${cost == null ? "not set" : money(cost)}</td><td class="num">${money(margin)}</td><td class="num earn-txt">${money(margin == null ? null : margin - fee)}</td></tr>`;
+    };
+    $("#prices").innerHTML = `<div class="card scroll"><p class="muted">Site price = what a customer pays with no discount (free shipping built in). You earn the margin minus Northgate's ${rep.house_pct}%, and any discount you give comes out of it.</p>
+      <table><thead><tr><th>System</th><th class="num">Site price</th><th class="num">Cost</th><th class="num">Margin</th><th class="num">You'd earn</th></tr></thead><tbody>${systems.map(row).join("")}</tbody></table></div>`;
+  }
+
+  boot();
+})();
+</script>
+</body>
+</html>

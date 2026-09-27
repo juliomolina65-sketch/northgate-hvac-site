@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Northgate | HVAC Equipment</title>
+<meta name="description" content="Carrier, Trane, Goodman and Bryant HVAC equipment: home systems, parts and commercial rooftop units. Free nationwide shipping, monthly payments, or save with local pickup in DFW.">
+<link rel="icon" type="image/png" href="img/brand/favicon-64.png">
+<link rel="apple-touch-icon" href="img/brand/apple-touch-icon.png">
+<meta property="og:title" content="Northgate | HVAC Equipment">
+<meta property="og:image" content="img/brand/northgate-logo-900.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --text: #1f2733;
+    --text-2: #3d4756;
+    --muted: #667181;
+    --line: #d8dce2;
+    --line-2: #e8ebef;
+    --page: #f3f4f6;
+    --white: #ffffff;
+    --brand: #13335e;          /* category bar, headings */
+    --brand-dark: #0c2240;     /* footer */
+    --link: #1767b3;
+    --cta: #2b8a3e;            /* add to order */
+    --cta-dark: #22722f;
+    --gray-btn: #6b7686;
+    --ok: #1f7a35;
+    --warn-bg: #fff6dc;
+    --warn-ink: #7a5a00;
+    --radius: 4px;
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font: 15px/1.5 Roboto, Arial, sans-serif; color: var(--text); background: var(--page); }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  button { font: inherit; }
+  .wrap { max-width: 1840px; margin: 0 auto; padding: 0 clamp(16px, 2.5vw, 40px); }
+  h1, h2, h3, h4 { margin: 0; font-weight: 700; line-height: 1.2; }
+
+  /* ---------- Buttons ---------- */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid transparent; border-radius: var(--radius); padding: 9px 16px; font-weight: 500; font-size: 14px; cursor: pointer; white-space: nowrap; text-decoration: none !important; line-height: 1.2; }
+  .btn-cta { background: var(--cta); color: #fff; }
+  .btn-cta:hover { background: var(--cta-dark); }
+  .btn-gray { background: var(--gray-btn); color: #fff; }
+  .btn-gray:hover { background: #5a6474; }
+  .btn-line { background: #fff; color: var(--text); border-color: var(--line); }
+  .btn-line:hover { border-color: #9aa3af; }
+  .btn-navy { background: var(--brand); color: #fff; }
+  .btn[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+  .icon { width: 18px; height: 18px; flex: none; }
+
+  /* ---------- Wholesale announcement ---------- */
+  .announce { background: linear-gradient(90deg, #0c2240, #16406f); color: #fff; font-size: 14px; }
+  .announce .wrap { display: flex; align-items: center; justify-content: center; gap: 14px; padding-top: 9px; padding-bottom: 9px; flex-wrap: wrap; text-align: center; }
+  .announce .pill { background: #f2b33d; color: #1c1300; font-size: 11px; font-weight: 700; letter-spacing: .08em; padding: 3px 8px; border-radius: 3px; }
+  .announce b { font-weight: 700; }
+  .announce span.msg { color: #dbe6f5; }
+  .announce button { background: #fff; color: var(--brand); border: 0; border-radius: var(--radius); padding: 6px 12px; font-weight: 700; font-size: 13px; cursor: pointer; }
+  .announce button:hover { background: #eaf1fb; }
+  .wholesale-card { background: #0f2c52; color: #fff; border-radius: var(--radius); padding: 16px; }
+  .wholesale-card h3 { color: #f2b33d !important; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+  .wholesale-card p { margin: 0 0 10px; font-size: 13.5px; color: #dbe6f5; }
+  .wholesale-card button { width: 100%; }
+
+  /* Wholesale quote form */
+  .ws-modal { width: min(560px, 100%); }
+  .ws-head { background: var(--brand); color: #fff; padding: 20px 24px; border-radius: 6px 6px 0 0; }
+  .ws-head .pill { background: #f2b33d; color: #1c1300; font-size: 11px; font-weight: 700; letter-spacing: .08em; padding: 3px 8px; border-radius: 3px; }
+  .ws-head h2 { font-size: 24px; margin: 10px 0 6px; }
+  .ws-head p { margin: 0; color: #dbe6f5; font-size: 14px; }
+  .ws-perks { display: grid; gap: 6px; margin: 14px 0 0; padding: 0; list-style: none; font-size: 14px; color: #fff; }
+  .ws-perks li::before { content: "✓"; color: #7bd38c; font-weight: 700; margin-right: 8px; }
+  .ws-body { padding: 18px 24px 24px; display: grid; gap: 12px; }
+  .ws-body label { display: grid; gap: 5px; font-size: 13px; font-weight: 500; color: var(--text-2); }
+  .ws-body input, .ws-body select, .ws-body textarea { border: 1px solid var(--line); border-radius: var(--radius); padding: 9px 11px; font: inherit; font-size: 14px; background: #fff; }
+  .ws-body textarea { min-height: 70px; resize: vertical; }
+  .ws-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ws-freight { display: grid; gap: 8px; }
+  .ws-freight label { display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; cursor: pointer; font-weight: 400; color: var(--text); }
+  .ws-freight label:has(input:checked) { border: 2px solid var(--brand); padding: 9px 11px; background: #f4f7fb; }
+  .ws-freight input { margin-top: 3px; accent-color: var(--brand); }
+  .ws-freight b { display: block; font-weight: 500; }
+  .ws-freight small { color: var(--muted); font-size: 12.5px; }
+  @media (max-width: 520px) { .ws-row { grid-template-columns: 1fr; } .announce .wrap { gap: 8px; } }
+
+  /* ---------- Top bars ---------- */
+  .sample-banner { background: var(--warn-bg); color: var(--warn-ink); font-size: 13px; text-align: center; padding: 6px 16px; border-bottom: 1px solid #efdc9f; }
+  .utility { background: #fff; border-bottom: 1px solid var(--line-2); font-size: 13px; color: var(--text-2); }
+  .utility .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 34px; }
+  .perks { display: flex; gap: 22px; flex-wrap: wrap; }
+  .perks > span { display: inline-flex; align-items: center; gap: 6px; }
+  .perks svg { width: 15px; height: 15px; color: var(--cta); }
+  .utility-links { display: flex; gap: 18px; }
+  .utility-links a { color: var(--text-2); }
+
+  header.main { background: #fff; border-bottom: 1px solid var(--line-2); }
+  header.main .wrap { display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center; padding-top: 14px; padding-bottom: 14px; }
+  .logo { display: flex; align-items: center; gap: 10px; color: var(--brand); text-decoration: none !important; }
+  .logo-img { height: 58px; width: auto; display: block; }
+  .logo-text b { display: block; font-size: 18px; line-height: 1.1; }
+  .logo-text small { display: block; font-size: 11px; letter-spacing: .14em; color: var(--muted); font-weight: 500; }
+  .search { display: flex; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: #fff; max-width: 640px; width: 100%; }
+  .search:focus-within { border-color: var(--link); box-shadow: 0 0 0 3px rgba(23,103,179,.12); }
+  .search input { flex: 1; border: 0; padding: 10px 12px; font: inherit; outline: none; min-width: 0; }
+  .search button { border: 0; background: #fff; padding: 0 12px; color: var(--muted); cursor: pointer; }
+  .search-wrap { position: relative; max-width: 640px; width: 100%; }
+  .search-wrap .search { max-width: none; }
+  .suggest { position: absolute; left: 0; right: 0; top: calc(100% + 4px); background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 12px 32px rgba(20,35,60,.16); z-index: 60; max-height: min(70vh, 520px); overflow: auto; }
+  .suggest-head { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); padding: 10px 12px 4px; }
+  .sug { display: grid; grid-template-columns: 52px 1fr auto; gap: 10px; align-items: center; padding: 8px 12px; cursor: pointer; border: 0; background: none; width: 100%; text-align: left; font: inherit; color: inherit; }
+  .sug:hover, .sug[aria-selected="true"] { background: #f1f5fb; }
+  .sug img { width: 52px; height: 40px; object-fit: contain; background: #f7f8fa; border-radius: 3px; }
+  .sug b { display: block; font-size: 14px; font-weight: 500; color: var(--link); }
+  .sug small { display: block; color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 360px; }
+  .sug .p { font-weight: 700; font-size: 14px; white-space: nowrap; }
+  .sug .p.call { font-weight: 500; color: var(--muted); font-size: 12.5px; }
+  .suggest-all { display: block; width: 100%; border: 0; border-top: 1px solid var(--line-2); background: #fafbfc; padding: 10px 12px; text-align: left; font: inherit; font-weight: 500; color: var(--link); cursor: pointer; }
+  .suggest-all:hover { background: #f1f5fb; }
+  .suggest-empty { padding: 14px 12px; color: var(--text-2); font-size: 14px; }
+  .header-actions { display: flex; gap: 8px; }
+  .order-btn { position: relative; }
+  .order-count { background: #fff; color: var(--cta); border-radius: 3px; font-size: 12px; font-weight: 700; padding: 1px 6px; min-width: 20px; text-align: center; }
+
+  nav.cats { background: var(--brand); }
+  nav.cats .wrap { display: flex; overflow-x: auto; scrollbar-width: none; }
+  nav.cats .wrap::-webkit-scrollbar { display: none; }
+  nav.cats button { background: none; border: 0; color: #fff; padding: 14px 16px; font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; }
+  nav.cats button:hover { background: rgba(255,255,255,.08); }
+  nav.cats button[aria-current="true"] { border-bottom-color: #6fc27f; background: rgba(255,255,255,.06); }
+
+  /* ---------- Page head ---------- */
+  .page-head { padding: 18px 0 8px; }
+  .page-head .c-only, .page-head.is-commercial .r-only { display: none; }
+  .page-head.is-commercial .c-only { display: revert; }
+  .crumbs { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  .page-head h1 { font-size: 28px; }
+  .page-head p { margin: 6px 0 0; color: var(--text-2); }
+  .benefits { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 16px 0 6px; }
+  .benefit { display: flex; gap: 12px; align-items: center; background: #fff; border: 1px solid var(--line-2); border-radius: var(--radius); padding: 12px 14px; }
+  .benefit .ic { width: 38px; height: 38px; border-radius: 50%; background: #e9f4ec; color: var(--cta); display: grid; place-items: center; flex: none; }
+  .benefit b { display: block; font-size: 15px; }
+  .benefit small { color: var(--muted); font-size: 13px; }
+
+  /* ---------- Brand badges ---------- */
+  .bb { display: inline-flex; align-items: center; font-weight: 800; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; line-height: 1.2; color: #fff; white-space: nowrap; }
+  .bb-carrier { background: #0b4ea2; }
+  .bb-goodman { background: #d52b1e; }
+  .bb-bryant { background: #b8322a; }
+  .bb-trane { background: #3a3f45; }
+  .agree-line { font-size: 12.5px; color: var(--muted); text-align: center; margin: 6px 0 0; }
+  .agree-line a { color: var(--link); }
+  .foot-bottom a { color: inherit; text-decoration: underline; }
+  .linkish { border: 0; background: none; padding: 0; color: var(--link); font: inherit; text-decoration: underline; cursor: pointer; }
+  .ca-ref { background: #e7f4ea; color: var(--ok); border-radius: var(--radius); padding: 8px 12px; font-size: 13.5px; margin-bottom: 10px; }
+  .ca-type { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .ca-type label { display: flex; gap: 8px; align-items: flex-start; border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; cursor: pointer; }
+  .ca-type label:has(input:checked) { border-color: var(--brand); background: #f1f6fc; }
+  .ca-type input { margin-top: 3px; }
+  .ca-type b { display: block; font-size: 14px; } .ca-type small { color: var(--text-2); font-size: 12.5px; }
+  .ca-zip-note { align-self: end; font-size: 13px; padding-bottom: 8px; }
+  .ca-zip-note.ok { color: var(--ok); } .ca-zip-note.far { color: var(--warn-ink); }
+  @media (max-width: 520px) { .ca-type { grid-template-columns: 1fr; } }
+  .fields.buyer { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .fields.buyer .span2 { grid-column: 1 / -1; }
+  .fields.buyer input.invalid { border-color: #d9534f; background: #fff7f7; }
+  .warranty-ack { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.45; background: #f1f6fc; border: 1px solid #cfdcec; border-radius: var(--radius); padding: 10px 12px; margin: 10px 0 4px; cursor: pointer; }
+  .warranty-ack input { margin-top: 3px; flex: none; }
+  .warranty-ack.invalid { border-color: #d9534f; background: #fff7f7; }
+  .acct-tag { display: inline-block; background: #e7f4ea; color: var(--ok); font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; margin-right: 6px; vertical-align: 3px; }
+  .list-price { color: var(--muted); font-size: 14px; font-weight: 400; }
+  .monthly { font-size: 13.5px; color: var(--text-2); margin: -4px 0 12px; }
+  .monthly b { color: var(--text); }
+  .pay-btn { width: 100%; justify-content: center; gap: 8px; font-size: 16px; padding: 13px 16px; }
+  .pay-btn .icon { width: 17px; height: 17px; }
+  .pay-btn[aria-busy="true"] { opacity: .7; pointer-events: none; }
+  .pay-methods { font-size: 12.5px; color: var(--text-2); text-align: center; margin: 8px 0 4px; }
+  .pay-error { font-size: 13px; background: var(--warn-bg); color: var(--warn-ink); border: 1px solid #efdc9f; border-radius: var(--radius); padding: 8px 10px; margin: 6px 0; }
+  .or-line { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; margin: 10px 0 8px; }
+  .or-line::before, .or-line::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  .acct-menu { position: relative; }
+  .acct-pop { position: absolute; right: 0; top: calc(100% + 6px); background: #fff; border: 1px solid var(--line); border-radius: 6px; box-shadow: 0 10px 30px rgba(20,35,60,.15); min-width: 240px; padding: 12px; z-index: 60; font-size: 14px; }
+  .acct-pop b { display: block; } .acct-pop small { color: var(--muted); display: block; margin-bottom: 8px; }
+  .acct-pop button, .acct-pop a { display: block; width: 100%; text-align: left; background: none; border: 0; padding: 8px 6px; border-radius: 4px; font: inherit; color: var(--link); cursor: pointer; text-decoration: none; }
+  .acct-pop button:hover, .acct-pop a:hover { background: #f1f5fa; }
+  .ca-tabs { display: flex; gap: 6px; margin-bottom: 12px; }
+  .ca-tabs button { flex: 1; border: 1px solid var(--line); background: #fff; border-radius: 4px; padding: 9px; font: inherit; font-weight: 500; cursor: pointer; }
+  .ca-tabs button[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .ca-msg { font-size: 13.5px; border-radius: var(--radius); padding: 9px 11px; margin: 8px 0; }
+  .ca-msg.ok { background: #e7f4ea; color: var(--ok); } .ca-msg.err { background: var(--warn-bg); color: var(--warn-ink); }
+  .notice-bg { position: fixed; inset: 0; background: rgba(10,20,35,.55); display: grid; place-items: center; z-index: 200; padding: 16px; }
+  .notice { background: #fff; border-radius: 8px; max-width: 460px; width: 100%; padding: 26px 24px; text-align: center; }
+  .notice h2 { color: var(--brand); margin: 8px 0; } .notice p { color: var(--text-2); }
+  .acct-banner { background: #e7f4ea; color: var(--ok); font-size: 13.5px; text-align: center; padding: 7px 16px; border-bottom: 1px solid #cfe8d6; }
+  .acct-banner.pending { background: var(--warn-bg); color: var(--warn-ink); border-bottom-color: #efdc9f; }
+  .brand-bar { display: flex; align-items: center; gap: 16px; margin: 16px 0 0; background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; }
+  .brand-bar .bb-label { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+  .bb-buttons { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; flex: 1; }
+  .bb-buttons button { display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); background: #fff; border-radius: 6px; padding: 10px 12px; font: inherit; color: inherit; cursor: pointer; text-align: left; transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease; }
+  .bb-buttons button:hover { border-color: #b9c1cc; box-shadow: 0 4px 14px rgba(20,35,60,.10); transform: translateY(-1px); }
+  .bb-buttons .bb { flex: none; min-width: 104px; text-align: center; }
+  .bb-buttons small { display: block; color: var(--text-2); font-size: 12.5px; line-height: 1.35; }
+  .bb-buttons small b { color: var(--ok); }
+  @media (max-width: 1100px) { .brand-bar { flex-direction: column; align-items: stretch; gap: 10px; } .bb-buttons { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 520px) { .bb-buttons .bb { min-width: 0; } .bb-buttons button { flex-direction: column; align-items: flex-start; gap: 6px; } }
+  .bb.lg { font-size: 15px; padding: 6px 12px; border-radius: 4px; letter-spacing: .1em; }
+  .subtypes .bb { margin-right: 6px; padding: 2px 6px; font-size: 10px; }
+  .facet label .bb { margin-left: 0; color: #fff; font-size: 11px; font-weight: 800; }   /* sidebar count style shouldn't hit the badge */
+  .card-brand { margin-bottom: -2px; }
+
+  /* ---------- Landing showcase ---------- */
+  .showcase { display: grid; grid-template-columns: 1.3fr 1fr; gap: 14px; margin: 16px 0 6px; }
+  .show-hero { background: linear-gradient(135deg, #0c2240 0%, #13335e 55%, #1b4a83 100%); color: #fff; border-radius: 6px; padding: 26px 26px 22px; position: relative; overflow: hidden; }
+  .show-hero::after { content: ""; position: absolute; right: -60px; bottom: -60px; width: 240px; height: 240px; border-radius: 50%; background: rgba(255,255,255,.06); }
+  .show-hero .pill { background: #f2b33d; color: #1c1300; font-size: 11px; font-weight: 700; letter-spacing: .08em; padding: 3px 8px; border-radius: 3px; }
+  .show-hero h2 { font-size: 30px; margin: 12px 0 8px; max-width: 520px; }
+  .show-hero p { margin: 0 0 16px; color: #d5e1f1; max-width: 520px; }
+  .show-hero .brands-line { display: flex; gap: 8px; margin-bottom: 18px; }
+  .show-hero .ctas { display: flex; flex-wrap: wrap; gap: 8px; position: relative; z-index: 1; }
+  .show-hero .btn-line { background: transparent; color: #fff; border-color: rgba(255,255,255,.45); }
+  .show-hero .btn-line:hover { border-color: #fff; }
+  .brand-cards { display: grid; gap: 14px; }
+  .brand-card { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 16px 18px; display: grid; grid-template-columns: 1fr 110px; gap: 12px; align-items: center; cursor: pointer; text-align: left; font: inherit; color: inherit; transition: box-shadow .15s ease, border-color .15s ease; }
+  .brand-card:hover { border-color: #b9c1cc; box-shadow: 0 4px 16px rgba(20,35,60,.10); }
+  .brand-card img { width: 110px; height: 82px; object-fit: contain; }
+  .brand-card b { display: block; font-size: 16px; margin: 8px 0 2px; }
+  .brand-card small { display: block; color: var(--text-2); font-size: 13px; }
+  .brand-card .from { color: var(--ok); font-weight: 700; font-size: 14px; margin-top: 6px; }
+  .brand-card .go { color: var(--link); font-weight: 500; font-size: 13.5px; margin-top: 4px; display: block; }
+  .offers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 14px 0 4px; }
+  .offer { background: #fff; border: 1px dashed #b9c6d6; border-radius: 6px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; cursor: pointer; text-align: left; font: inherit; color: inherit; }
+  .offer:hover { border-style: solid; border-color: var(--brand); }
+  .offer .amt { font-size: 22px; font-weight: 800; color: var(--cta); line-height: 1; min-width: 64px; }
+  .offer b { display: block; font-size: 14.5px; }
+  .offer small { color: var(--text-2); font-size: 13px; }
+  .com-banner { margin: 16px 0 14px; border-radius: 6px; overflow: hidden; background: #fff; border: 1px solid var(--line); border-top: 4px solid #f2b33d; }
+  .com-top { display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; }
+  .com-stage { position: relative; min-height: 300px; height: 100%; background: radial-gradient(ellipse at 45% 70%, #ffffff 0%, #e9eef5 55%, #dde5ef 100%); overflow: hidden; }
+  .com-stage::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 26%; background: linear-gradient(180deg, rgba(19,51,94,0) 0%, rgba(19,51,94,.07) 100%); }
+  .com-stage img { position: absolute; mix-blend-mode: multiply; object-fit: contain; }
+  .com-stage .back { width: 46%; right: 3%; top: 9%; }
+  .com-stage .front { width: 60%; left: 2%; bottom: 3%; z-index: 1; }
+  .com-tons { position: absolute; left: 18px; top: 16px; z-index: 2; background: var(--brand); color: #fff; border-radius: 4px; padding: 6px 10px 5px; font-size: 11px; font-weight: 700; letter-spacing: .12em; line-height: 1; text-align: center; }
+  .com-tons b { display: block; font-size: 22px; letter-spacing: 0; margin-bottom: 3px; }
+  .com-copy { padding: 26px 28px 22px; }
+  .com-copy .pill { background: #fff3d6; color: #7a5200; border: 1px solid #f2d18a; font-size: 11px; font-weight: 700; letter-spacing: .08em; padding: 3px 8px; border-radius: 999px; }
+  .com-copy h2 { font-size: 28px; margin: 12px 0 8px; color: var(--brand); }
+  .com-copy p { margin: 0 0 16px; color: var(--text-2); max-width: 560px; }
+  .com-copy .ctas { display: flex; flex-wrap: wrap; gap: 8px; }
+  .com-copy .btn-line { background: #fff; color: var(--brand); border-color: var(--brand); }
+  .com-copy .btn-line:hover { background: #f1f5fa; }
+  .com-copy .com-fine { display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; color: var(--muted); margin: 14px 0 0; }
+  .com-copy .com-fine svg { width: 16px; height: 16px; flex: none; margin-top: 1px; fill: none; stroke: currentColor; }
+  .com-stats { display: flex; margin-bottom: 18px; }
+  .com-stats div { padding: 0 18px; border-left: 1px solid var(--line); }
+  .com-stats div:first-child { padding-left: 0; border-left: 0; }
+  .com-stats b { display: block; font-size: 24px; line-height: 1.1; color: var(--brand); }
+  .com-stats small { color: var(--muted); font-size: 12.5px; }
+  .com-types { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line); background: #f7f9fc; }
+  .com-types button { display: flex; justify-content: space-between; align-items: center; gap: 10px; border: 0; border-left: 1px solid var(--line); background: none; padding: 14px 18px; font: inherit; cursor: pointer; text-align: left; transition: background .15s ease; }
+  .com-types button:first-child { border-left: 0; }
+  .com-types button:hover { background: #fff; }
+  .com-types b { color: var(--link); font-weight: 500; }
+  .com-types small { color: var(--muted); font-size: 12.5px; }
+  .com-types .from { color: var(--ok); font-weight: 700; white-space: nowrap; }
+  nav.cats button.hot::after { content: "NEW"; margin-left: 6px; background: #f2b33d; color: #1c1300; font-size: 10px; font-weight: 800; padding: 1px 5px; border-radius: 3px; vertical-align: 1px; }
+  .com-deliver { font-size: 13px; line-height: 1.45; background: var(--warn-bg); color: var(--warn-ink); border: 1px solid #efdc9f; border-radius: var(--radius); padding: 9px 11px; margin: 0 0 12px; }
+  .com-deliver ul { margin: 4px 0 0; padding-left: 18px; }
+  @media (max-width: 960px) { .showcase, .com-top { grid-template-columns: 1fr; } .com-stage { min-height: 230px; } .com-types { grid-template-columns: 1fr; } .com-types button { border-left: 0; border-top: 1px solid var(--line); } .com-types button:first-child { border-top: 0; } }
+  @media (max-width: 520px) { .com-stats div { padding: 0 10px; } .com-stats b { font-size: 20px; } .com-copy { padding: 20px 16px 18px; } .com-copy h2 { font-size: 23px; } }
+  @media (max-width: 720px) { .offers { grid-template-columns: 1fr; } .show-hero h2 { font-size: 24px; } }
+
+  /* ---------- Home sections ---------- */
+  .home-sec { margin: 26px 0 6px; }
+  .sec-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+  .sec-head h2 { font-size: 22px; color: var(--brand); }
+  .sec-head p { margin: 4px 0 0; color: var(--text-2); font-size: 14px; }
+  .feat-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+  .feat-tabs button { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 7px 14px; font-size: 14px; font-weight: 500; color: var(--text-2); cursor: pointer; }
+  .feat-tabs button[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .featured-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .view-all { display: flex; justify-content: center; margin-top: 16px; }
+  .view-all .btn { padding: 12px 28px; font-size: 15px; }
+  .cat-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .cat-tile { background: #fff; border: 1px solid var(--line-2); border-radius: 6px; padding: 12px; cursor: pointer; text-align: center; font: inherit; color: inherit; transition: box-shadow .15s ease, border-color .15s ease; }
+  .cat-tile:hover { border-color: #b9c1cc; box-shadow: 0 4px 16px rgba(20,35,60,.10); }
+  .cat-tile img { width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: #f7f8fa; border-radius: 4px; }
+  .cat-tile b { display: block; color: var(--link); font-weight: 500; margin-top: 8px; font-size: 15px; }
+  .cat-tile small { color: var(--muted); font-size: 12.5px; }
+  .pro { display: grid; grid-template-columns: 1fr 1.6fr; gap: 20px; align-items: center; background: #fff; border: 1px solid var(--line-2); border-radius: 6px; padding: 24px; }
+  .pro h2 { font-size: 24px; color: var(--brand); margin-bottom: 8px; }
+  .pro p { margin: 0 0 14px; color: var(--text-2); }
+  .tools { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .tool { border: 1px solid var(--line); border-radius: 6px; padding: 14px 8px; text-align: center; background: #fff; cursor: pointer; font: inherit; color: var(--text); }
+  .tool:hover { border-color: var(--brand); background: #f7f9fc; }
+  .tool svg { width: 28px; height: 28px; color: var(--brand); display: block; margin: 0 auto 8px; }
+  .tool span { font-size: 13px; font-weight: 500; }
+  .brands-strip { background: #fff; border: 1px solid var(--line-2); border-radius: 6px; padding: 22px; text-align: center; }
+  .brands-strip h2 { font-size: 22px; color: var(--brand); margin-bottom: 6px; }
+  .brands-strip p { color: var(--text-2); margin: 0 auto 16px; max-width: 620px; }
+  .brand-row { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .brand-row button { background: none; border: 0; padding: 0; cursor: pointer; }
+  .brand-row .bb.lg { font-size: 18px; padding: 10px 18px; }
+  .brand-row .soon { border: 1px dashed var(--line); color: var(--muted); border-radius: 4px; padding: 9px 16px; font-size: 14px; }
+  @media (max-width: 960px) { .featured-grid { grid-template-columns: 1fr 1fr; } .cat-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .pro { grid-template-columns: 1fr; } }
+  @media (max-width: 620px) { .featured-grid { grid-template-columns: 1fr; } .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  /* ---------- Catalog ---------- */
+  .catalog { display: grid; grid-template-columns: 240px 1fr; gap: 20px; padding: 14px 0 40px; align-items: start; }
+  .sidebar { background: #fff; border: 1px solid var(--line-2); border-radius: var(--radius); }
+  .facet { padding: 14px 16px; border-bottom: 1px solid var(--line-2); }
+  .facet:last-child { border-bottom: 0; }
+  .facet h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 10px; }
+  .facet label { display: flex; align-items: center; gap: 8px; font-size: 14px; padding: 4px 0; cursor: pointer; }
+  .facet label span { margin-left: auto; color: var(--muted); font-size: 12px; }
+  .facet input { accent-color: var(--brand); width: 16px; height: 16px; }
+  .facet .clear { background: none; border: 0; padding: 0; color: var(--link); font-size: 13px; cursor: pointer; }
+  .side-note { font-size: 13px; color: var(--text-2); }
+  .side-note b { color: var(--text); }
+
+  .bundle-note { display: flex; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: #eaf5ec; border: 1px solid #bfe0c6; border-radius: var(--radius); padding: 12px 16px; margin-bottom: 12px; }
+  .bundle-note .txt { display: flex; gap: 12px; align-items: center; }
+  .bundle-note .ic { width: 36px; height: 36px; border-radius: 50%; background: var(--cta); color: #fff; display: grid; place-items: center; flex: none; }
+  .bundle-note b { display: block; font-size: 15px; color: #16572a; }
+  .bundle-note small { color: #2f5d3a; font-size: 13.5px; }
+  .system-line { font-size: 12.5px; color: var(--text-2); }
+  .system-line button { background: none; border: 0; padding: 0; color: var(--link); font: inherit; font-weight: 500; cursor: pointer; }
+  .system-line button:hover { text-decoration: underline; }
+  .subtypes { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+  .subtypes button { border: 1px solid var(--line); background: #fff; border-radius: 999px; padding: 7px 14px; font-size: 14px; font-weight: 500; color: var(--text-2); cursor: pointer; }
+  .subtypes button:hover { border-color: #9aa3af; }
+  .subtypes button[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .subtypes button span { opacity: .7; font-weight: 400; margin-left: 4px; }
+  .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+  .toolbar .count { color: var(--text-2); font-size: 14px; }
+  .toolbar select { border: 1px solid var(--line); border-radius: var(--radius); padding: 7px 10px; font: inherit; font-size: 14px; background: #fff; }
+  .filters-btn { display: none; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); display: flex; flex-direction: column; cursor: pointer; transition: box-shadow .15s ease, border-color .15s ease; }
+  .card:hover { border-color: #b9c1cc; box-shadow: 0 4px 16px rgba(20,35,60,.10); }
+  .card-img { position: relative; aspect-ratio: 4 / 3; background: #f7f8fa; border-bottom: 1px solid var(--line-2); display: grid; place-items: center; border-radius: var(--radius) var(--radius) 0 0; overflow: hidden; }
+  .card-img img { width: 100%; height: 100%; object-fit: contain; }
+  .badge { position: absolute; top: 10px; left: 10px; background: var(--brand); color: #fff; font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 3px; }
+  .badge.stock { left: auto; right: 10px; background: #e7f4ea; color: var(--ok); }
+  .badge.stock.out { background: #eef0f3; color: var(--muted); }
+  .card-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .card-title { font-size: 16px; font-weight: 500; color: var(--link); line-height: 1.3; }
+  .card:hover .card-title { text-decoration: underline; }
+  .items { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+  .items b { color: var(--text-2); font-weight: 500; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: 12px; font-weight: 500; background: #eef2f7; color: var(--text-2); border-radius: 3px; padding: 3px 7px; }
+  .chip.hi { background: #e3eefb; color: #0f4f8f; }
+  .price-row { margin-top: auto; padding-top: 4px; }
+  .price { font-size: 24px; font-weight: 700; }
+  .price small { font-size: 13px; font-weight: 400; color: var(--muted); }
+  .ship-line { font-size: 13px; color: var(--ok); font-weight: 500; display: flex; align-items: center; gap: 6px; }
+  .ship-line svg { width: 16px; height: 16px; }
+  .pickup-line { font-size: 13px; color: var(--text-2); }
+  .pickup-line b { color: var(--ok); }
+  .buy { display: flex; gap: 8px; }
+  .qty-in { width: 64px; border: 1px solid var(--line); border-radius: var(--radius); padding: 8px; font: inherit; font-size: 14px; text-align: center; }
+  .buy .btn { flex: 1; }
+  .in-order { font-size: 12.5px; color: var(--ok); font-weight: 500; }
+  .card .btn-gray { width: 100%; }
+  .empty { grid-column: 1 / -1; padding: 44px 20px; text-align: center; color: var(--muted); background: #fff; border: 1px dashed var(--line); border-radius: var(--radius); }
+  .empty b { display: block; color: var(--text); font-size: 17px; margin-bottom: 4px; }
+
+  /* ---------- Info sections ---------- */
+  .info { padding: 8px 0 40px; display: grid; gap: 16px; }
+  .panel { background: #fff; border: 1px solid var(--line-2); border-radius: var(--radius); padding: 22px; }
+  .panel > h2 { font-size: 22px; color: var(--brand); margin-bottom: 4px; }
+  .panel > p.lead { margin: 0 0 16px; color: var(--text-2); }
+  .policy { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0 28px; }
+  .policy div { display: flex; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line-2); }
+  .policy svg { width: 22px; height: 22px; color: var(--brand); flex: none; margin-top: 1px; }
+  .policy b { display: block; font-size: 15px; }
+  .policy p { margin: 2px 0 0; font-size: 14px; color: var(--text-2); }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; counter-reset: step; }
+  .step { border: 1px solid var(--line-2); border-radius: var(--radius); padding: 16px; background: #fafbfc; }
+  .step h3 { font-size: 16px; margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+  .step h3::before { counter-increment: step; content: counter(step); width: 26px; height: 26px; border-radius: 50%; background: var(--brand); color: #fff; display: grid; place-items: center; font-size: 13px; flex: none; }
+  .step p { margin: 0; font-size: 14px; color: var(--text-2); }
+  .faq details { border-top: 1px solid var(--line-2); padding: 12px 0; }
+  .faq details:last-child { border-bottom: 1px solid var(--line-2); }
+  .faq summary { font-weight: 500; cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; color: var(--muted); font-size: 20px; line-height: 1; }
+  .faq details[open] summary::after { content: "−"; }
+  .faq p { margin: 8px 0 0; color: var(--text-2); font-size: 14px; }
+  .contact-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+  .contact-box { border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; display: flex; gap: 12px; align-items: center; color: var(--text); text-decoration: none !important; }
+  .contact-box:hover { border-color: var(--link); }
+  .contact-box svg { width: 24px; height: 24px; color: var(--brand); }
+  .contact-box small { display: block; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+  .contact-box b { font-weight: 500; word-break: break-word; }
+
+  footer { background: var(--brand-dark); color: #c3cedd; font-size: 14px; padding: 34px 0 90px; }
+  .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 24px; }
+  footer h4 { color: #fff; font-size: 14px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .06em; }
+  footer a, footer button.link { color: #c3cedd; display: block; padding: 3px 0; background: none; border: 0; text-align: left; cursor: pointer; font-size: 14px; }
+  footer a:hover, footer button.link:hover { color: #fff; }
+  footer p { margin: 0 0 8px; }
+  .foot-bottom { border-top: 1px solid rgba(255,255,255,.12); margin-top: 26px; padding-top: 14px; font-size: 13px; color: #93a3b8; }
+
+  /* ---------- Product detail (modal) ---------- */
+  .modal-bg { position: fixed; inset: 0; background: rgba(12,20,34,.55); z-index: 50; display: none; align-items: flex-start; justify-content: center; overflow: auto; padding: 24px 12px; }
+  .modal-bg.open { display: flex; }
+  .modal { background: #fff; border-radius: 6px; width: min(1040px, 100%); box-shadow: 0 20px 60px rgba(0,0,0,.25); position: relative; }
+  .modal .x { position: absolute; top: 10px; right: 10px; border: 0; background: #f0f2f5; width: 34px; height: 34px; border-radius: 50%; font-size: 20px; cursor: pointer; z-index: 2; }
+  .pd { display: grid; grid-template-columns: 1.05fr 1fr; gap: 28px; padding: 24px; }
+  .gallery-main { border: 1px solid var(--line-2); border-radius: var(--radius); background: #f7f8fa; aspect-ratio: 4 / 3; display: grid; place-items: center; overflow: hidden; }
+  .gallery-main img { width: 100%; height: 100%; object-fit: contain; }
+  .thumbs { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .thumbs button { width: 70px; height: 70px; border: 1px solid var(--line); border-radius: var(--radius); background: #f7f8fa; padding: 3px; cursor: pointer; }
+  .thumbs button[aria-current="true"] { border: 2px solid var(--link); padding: 2px; }
+  .thumbs img { width: 100%; height: 100%; object-fit: contain; }
+  .pd-info .cat { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); font-weight: 500; }
+  .pd-info h2 { font-size: 26px; margin: 4px 0 10px; padding-right: 30px; }
+  .pd-items { font-size: 13.5px; color: var(--text-2); line-height: 1.7; margin-bottom: 12px; }
+  .pd-items b { font-weight: 500; color: var(--text); }
+  .keyspecs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border: 1px solid var(--line-2); border-radius: var(--radius); margin-bottom: 14px; }
+  .keyspecs div { padding: 8px 12px; border-bottom: 1px solid var(--line-2); }
+  .keyspecs div:nth-child(odd) { border-right: 1px solid var(--line-2); }
+  .keyspecs div:nth-last-child(-n+2) { border-bottom: 0; }
+  .keyspecs small { display: block; color: var(--muted); font-size: 12px; }
+  .keyspecs b { font-size: 15px; }
+  .pd-price { font-size: 32px; font-weight: 700; }
+  .pd-price small { font-size: 14px; font-weight: 400; color: var(--muted); }
+  .pd-note { font-size: 13.5px; color: var(--ok); font-weight: 500; margin-bottom: 12px; }
+  .fit-note { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; line-height: 1.45; background: var(--warn-bg); color: var(--warn-ink); border: 1px solid #efdc9f; border-radius: var(--radius); padding: 9px 11px; margin: -4px 0 12px; }
+  .fit-note svg { width: 16px; height: 16px; flex: none; margin-top: 1px; }
+  .line .fit { display: block; color: var(--warn-ink); font-size: 12px; margin-top: 2px; }
+  .opt-label { font-size: 13px; font-weight: 500; color: var(--text-2); margin: 4px 0 6px; }
+  .heat-choice { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; margin-bottom: 12px; }
+  .heat-choice button { border: 1px solid var(--line); background: #fff; border-radius: var(--radius); padding: 9px 10px; text-align: left; cursor: pointer; color: inherit; }
+  .heat-choice button[aria-pressed="true"] { border: 2px solid var(--brand); padding: 8px 9px; background: #f4f7fb; }
+  .heat-choice b { display: block; font-size: 15px; }
+  .heat-choice small { color: var(--muted); font-size: 12px; }
+  .heat-choice .std { color: var(--ok); font-weight: 500; }
+  .heat-line { font-size: 12.5px; color: var(--text-2); }
+  .heat-line b { font-weight: 500; }
+  .ship-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+  .ship-choice button { border: 1px solid var(--line); background: #fff; border-radius: var(--radius); padding: 10px 12px; text-align: left; cursor: pointer; color: inherit; }
+  .ship-choice button[aria-pressed="true"] { border: 2px solid var(--brand); padding: 9px 11px; background: #f4f7fb; }
+  .ship-choice b { display: block; font-size: 14px; }
+  .ship-choice small { color: var(--muted); font-size: 12.5px; }
+  .ship-choice .save { color: var(--ok); font-weight: 700; }
+  .pd .buy .btn { padding: 11px 16px; font-size: 15px; }
+  .pd-help { font-size: 13px; color: var(--muted); margin-top: 10px; }
+  .pd-tabs { border-top: 1px solid var(--line-2); }
+  .tabbar { display: flex; gap: 0; border-bottom: 1px solid var(--line); padding: 0 24px; overflow-x: auto; }
+  .tabbar button { background: none; border: 0; border-bottom: 3px solid transparent; padding: 14px 16px; font-weight: 500; color: var(--text-2); cursor: pointer; white-space: nowrap; }
+  .tabbar button[aria-selected="true"] { color: var(--brand); border-bottom-color: var(--brand); }
+  .tabpanel { padding: 20px 24px 26px; }
+  .comp-head { display: grid; grid-template-columns: 160px 1fr; gap: 18px; margin-bottom: 16px; align-items: start; }
+  .comp-head img { width: 100%; border: 1px solid var(--line-2); border-radius: var(--radius); background: #f7f8fa; }
+  .comp-head h3 { font-size: 18px; }
+  .comp-head .sub { color: var(--muted); font-size: 13.5px; margin: 2px 0 8px; }
+  .highlights { margin: 0; padding-left: 18px; color: var(--text-2); font-size: 14px; display: grid; gap: 3px; }
+  .spec-table { width: 100%; border-collapse: collapse; font-size: 14px; border: 1px solid var(--line-2); }
+  .spec-table th, .spec-table td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+  .spec-table th { width: 40%; color: var(--text-2); font-weight: 500; background: #f7f8fa; }
+  .spec-table caption { text-align: left; font-weight: 700; font-size: 15px; padding: 0 0 8px; }
+  .included { width: 100%; border-collapse: collapse; font-size: 14px; border: 1px solid var(--line-2); }
+  .included th, .included td { padding: 10px 12px; border-bottom: 1px solid var(--line-2); text-align: left; }
+  .included thead th { background: #f7f8fa; font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .included td img { width: 48px; height: 48px; object-fit: contain; vertical-align: middle; background: #f7f8fa; border-radius: 3px; }
+  .included button { background: none; border: 0; padding: 0; color: var(--link); cursor: pointer; }
+
+  /* ---------- Order bar + checkout ---------- */
+  .order-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; background: #fff; border-top: 1px solid var(--line); box-shadow: 0 -6px 20px rgba(20,35,60,.08); transform: translateY(110%); transition: transform .25s ease; }
+  .order-bar.show { transform: none; }
+  .promo { position: fixed; right: 18px; bottom: 18px; z-index: 40; width: 340px; max-width: calc(100vw - 32px); background: #fff; border: 1px solid var(--line); border-top: 4px solid #f2b33d; border-radius: 8px; box-shadow: 0 14px 40px rgba(10,25,50,.22); padding: 16px 16px 14px; transform: translateY(20px); opacity: 0; transition: transform .3s ease, opacity .3s ease; }
+  .promo.in { transform: none; opacity: 1; }
+  .order-bar.show ~ .promo, body.has-order .promo { bottom: 84px; }
+  .promo-tag { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; color: #7a5200; background: #fff3d6; border: 1px solid #f2d18a; border-radius: 999px; padding: 2px 8px; }
+  .promo b { display: block; font-size: 17px; color: var(--brand); margin: 8px 24px 4px 0; line-height: 1.3; }
+  .promo p { margin: 0 0 12px; font-size: 14px; color: var(--text-2); }
+  .promo p strong { color: var(--ok); }
+  .promo-btns { display: flex; gap: 8px; }
+  .promo-btns .btn { flex: 1; justify-content: center; padding: 9px 10px; }
+  .promo-x { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; border: 0; background: none; font-size: 20px; line-height: 1; color: var(--muted); cursor: pointer; border-radius: 50%; }
+  .promo-x:hover { background: #f1f5fa; color: var(--text); }
+  @media (max-width: 520px) { .promo { right: 16px; left: 16px; width: auto; } }
+  .order-bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 10px; padding-bottom: 10px; }
+  .order-bar b { font-size: 20px; }
+  .order-bar small { display: block; color: var(--muted); font-size: 12.5px; }
+  .drawer-bg { position: fixed; inset: 0; background: rgba(12,20,34,.45); z-index: 40; display: none; }
+  .drawer { position: fixed; right: 0; top: 0; bottom: 0; width: min(460px, 100%); background: #fff; z-index: 41; display: none; flex-direction: column; }
+  .drawer.open, .drawer-bg.open { display: flex; }
+  .drawer > header { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: var(--brand); color: #fff; }
+  .drawer > header h3 { font-size: 18px; }
+  .drawer .x { border: 0; background: rgba(255,255,255,.15); color: #fff; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; }
+  .drawer .scroll { flex: 1; overflow: auto; padding: 4px 18px 18px; }
+  .drawer h4 { margin: 18px 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+  .line { display: flex; justify-content: space-between; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--line-2); font-size: 14px; }
+  .line b { display: block; font-weight: 500; }
+  .line small { color: var(--muted); }
+  .step-qty { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: var(--radius); margin-top: 6px; }
+  .step-qty button { border: 0; background: #fff; width: 30px; height: 30px; cursor: pointer; color: var(--text-2); font-size: 16px; }
+  .step-qty span { min-width: 26px; text-align: center; font-weight: 500; }
+  .option { display: flex; gap: 12px; align-items: flex-start; border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; cursor: pointer; margin-bottom: 8px; }
+  .option:has(input:checked) { border: 2px solid var(--brand); padding: 11px; background: #f4f7fb; }
+  .option input { margin-top: 3px; accent-color: var(--brand); width: 17px; height: 17px; flex: none; }
+  .option div { flex: 1; }
+  .option b { display: block; font-size: 14.5px; font-weight: 500; }
+  .option small { color: var(--muted); font-size: 12.5px; }
+  .tag { font-weight: 700; font-size: 14px; white-space: nowrap; }
+  .tag.free { color: var(--ok); }
+  .pay-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+  .pay-choice label { display: flex; gap: 8px; align-items: flex-start; border: 1px solid var(--line); border-radius: var(--radius); padding: 9px 10px; cursor: pointer; font-size: 13.5px; }
+  .pay-choice label:has(input:checked) { border: 2px solid var(--brand); padding: 8px 9px; background: #f4f7fb; }
+  .pay-choice input { accent-color: var(--brand); margin-top: 2px; }
+  .pay-choice b { display: block; font-weight: 500; }
+  .pay-choice small { color: var(--muted); font-size: 12px; }
+  .check { display: flex; justify-content: space-between; gap: 10px; align-items: center; font-size: 14px; cursor: pointer; }
+  .check span { display: flex; gap: 8px; align-items: center; }
+  .check input { width: 16px; height: 16px; accent-color: var(--brand); }
+  .zip-status { font-size: 13px; color: var(--text-2); margin-top: 6px; }
+  .zip-status.err { color: #b3261e; }
+  .sw-note { font-size: 13px; background: var(--warn-bg); color: var(--warn-ink); border-radius: var(--radius); padding: 8px 10px; margin-top: 8px; }
+  .drawer input[type="text"] { width: 100%; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius); font: inherit; background: #fff; }
+  .drawer input[type="text"]:focus { outline: none; border-color: var(--link); box-shadow: 0 0 0 3px rgba(23,103,179,.12); }
+  .fields { display: grid; gap: 8px; }
+  .foot { padding: 14px 18px 18px; border-top: 1px solid var(--line); display: grid; gap: 10px; background: #fafbfc; }
+  .totals { display: grid; gap: 4px; font-size: 14px; }
+  .totals div { display: flex; justify-content: space-between; }
+  .totals .discount { color: var(--ok); }
+  .totals .grand { font-size: 18px; font-weight: 700; padding-top: 6px; border-top: 1px solid var(--line-2); margin-top: 4px; }
+  .send { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .send .btn { padding: 11px; }
+  .fine { font-size: 12px; color: var(--muted); margin: 0; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 960px) {
+    .catalog { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .sidebar.open { display: block; }
+    .filters-btn { display: inline-flex; }
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+    .pd { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .utility-links { display: none; }
+    .perks { gap: 14px; }
+    .perks > span:nth-child(3) { display: none; }
+    header.main .wrap { grid-template-columns: 1fr auto; gap: 12px; }
+    .search-wrap { grid-column: 1 / -1; grid-row: 2; max-width: none; }
+    .sug small { max-width: 180px; }
+    .header-actions .call-btn span { display: none; }
+    .benefits { grid-template-columns: 1fr; }
+    .page-head h1 { font-size: 24px; }
+    .logo-img { height: 42px; }
+    .benefits { display: none; }
+    .utility .wrap { justify-content: center; }
+    .comp-head { grid-template-columns: 1fr; }
+    .comp-head img { max-width: 220px; }
+    .pd { padding: 18px; }
+    .tabbar, .tabpanel { padding-left: 18px; padding-right: 18px; }
+  }
+  @media (max-width: 520px) {
+    .foot-grid { grid-template-columns: 1fr; }
+    .keyspecs { grid-template-columns: 1fr; }
+    .keyspecs div:nth-child(odd) { border-right: 0; }
+    .keyspecs div:nth-last-child(2) { border-bottom: 1px solid var(--line-2); }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>
+  <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><circle cx="7" cy="7" r="1.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.7z"/><path d="M3.3 7 12 12l8.7-5M12 22V12"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-return" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-lift" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/><path d="M4 21h16"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.5V19l4 2v-8.5z"/></symbol>
+</svg>
+
+<div class="announce" role="region" aria-label="Wholesale announcement">
+  <div class="wrap">
+    <span class="pill">WHOLESALE</span>
+    <span><b>Buying in volume or using your own freight carrier?</b> <span class="msg">Get wholesale pricing, well below our listed prices.</span></span>
+    <button type="button" data-wholesale>Get wholesale pricing →</button>
+  </div>
+</div>
+
+<div id="sample" class="sample-banner" hidden>Preview: business name, phone and email are placeholders. Update them in <code>inventory.js</code>.</div>
+
+<div class="utility">
+  <div class="wrap">
+    <div class="perks">
+      <span><svg><use href="#i-truck"/></svg>Free nationwide shipping</span>
+      <span><svg><use href="#i-tag"/></svg><span>$<span data-ship="pickupDiscount"></span> off local pickup (DFW)</span></span>
+      <span><svg><use href="#i-clock"/></svg><span>Ships in <span data-ship="shipsIn"></span></span></span>
+    </div>
+    <div class="utility-links">
+      <a href="#shipping">Shipping &amp; Pickup</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+      <a data-href="tel"><span data-biz="phone"></span></a>
+    </div>
+  </div>
+</div>
+
+<header class="main">
+  <div class="wrap">
+    <a class="logo" href="#" data-cat="home">
+      <img class="logo-img" src="img/brand/northgate-logo-900.png" width="900" height="296" alt="Northgate: HVAC Equipment, Training, Support">
+    </a>
+    <div class="search-wrap">
+      <form class="search" id="searchForm" role="search">
+        <input id="q" type="search" placeholder="Search by model number, tonnage or product" aria-label="Search products"
+          autocomplete="off" role="combobox" aria-expanded="false" aria-controls="suggest" aria-autocomplete="list">
+        <button type="submit" aria-label="Search"><svg class="icon"><use href="#i-search"/></svg></button>
+      </form>
+      <div class="suggest" id="suggest" role="listbox" hidden></div>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-line call-btn" type="button" data-contractor id="acctBtn"><svg class="icon"><use href="#i-shield"/></svg><span>Account login</span></button>
+      <a class="btn btn-line call-btn" data-href="tel"><svg class="icon"><use href="#i-phone"/></svg><span>Call us</span></a>
+      <button class="btn btn-cta order-btn" id="headerOrder" type="button"><svg class="icon"><use href="#i-list"/></svg>Order <span class="order-count" id="orderCount">0</span></button>
+    </div>
+  </div>
+</header>
+
+<nav class="cats" aria-label="Product categories"><div class="wrap" id="catNav"></div></nav>
+
+<main>
+  <div class="wrap">
+    <div class="page-head">
+      <div class="crumbs">Home / <span id="crumb">Residential Equipment</span></div>
+      <h1 id="pageTitle">Residential Equipment</h1>
+      <p class="r-only" data-biz="tagline"></p>
+      <p class="c-only">Carrier and Bryant packaged rooftop units, 3 to 25 tons, with LTL freight built into every price. Pick up in DFW and the freight comes off.</p>
+      <div class="benefits">
+        <div class="benefit"><span class="ic"><svg class="icon"><use href="#i-truck"/></svg></span><div><b class="r-only">Free nationwide shipping</b><b class="c-only">Free freight to your job site</b><small class="r-only">Built into every price. Curbside LTL.</small><small class="c-only">Have a forklift on site to unload. Unloading help is extra.</small></div></div>
+        <div class="benefit r-only"><span class="ic"><svg class="icon"><use href="#i-tag"/></svg></span><div><b>Save $<span data-ship="pickupDiscount"></span> per system</b><small>With local pickup in <span data-biz="pickupArea"></span></small></div></div>
+        <div class="benefit c-only"><span class="ic"><svg class="icon"><use href="#i-tag"/></svg></span><div><b>Pick up and skip the freight</b><small>Freight comes off with local pickup in <span data-biz="pickupArea"></span></small></div></div>
+        <div class="benefit r-only"><span class="ic"><svg class="icon"><use href="#i-shield"/></svg></span><div><b>New R-454B &amp; R-32 equipment</b><small>Carrier, Trane, Goodman &amp; Bryant · full specs on every product</small></div></div>
+        <div class="benefit c-only"><span class="ic"><svg class="icon"><use href="#i-shield"/></svg></span><div><b>Gas/electric, heat pump &amp; straight cool</b><small>208/230V and 460V · full specs on every unit</small></div></div>
+      </div>
+    </div>
+
+    <div id="home">
+    <nav class="brand-bar" aria-label="Brands we carry">
+      <span class="bb-label">Brands we carry</span>
+      <div class="bb-buttons" id="brandBar"></div>
+    </nav>
+    <section id="showcase" aria-label="Brands and offers">
+      <div class="com-banner" id="comBanner">
+        <div class="com-top">
+          <div class="com-stage" aria-hidden="true">
+            <span class="com-tons"><b>3–25</b>TONS</span>
+            <img class="back" src="img/rtu-bryant-582l-en-normal.jpg" alt="">
+            <img class="front" src="img/rtu-carrier-48fe-8-16-en-normal.jpg" alt="">
+          </div>
+          <div class="com-copy">
+            <span class="pill">NEW · COMMERCIAL EQUIPMENT</span>
+            <h2>Commercial rooftop units, 3 to 25 tons</h2>
+            <p>Carrier WeatherMaker and Bryant Legacy packaged units for restaurants, retail, offices and warehouses. Freight to your job site is built into every price, or pick up in DFW and the freight comes off.</p>
+            <div class="com-stats" id="comStats"></div>
+            <div class="ctas">
+              <button class="btn btn-cta" type="button" data-cat="commercial" data-scroll>Shop commercial units →</button>
+              <button class="btn btn-line" type="button" data-wholesale>Get a project quote</button>
+            </div>
+            <p class="com-fine"><svg><use href="#i-truck"/></svg><span>Ships to your job site by freight truck. Have a forklift on site to unload, or we can arrange unloading for an extra charge.</span></p>
+          </div>
+        </div>
+        <div class="com-types" id="comTypes"></div>
+      </div>
+      <div class="showcase">
+        <div class="show-hero">
+          <span class="pill">TOP BRANDS · NEW EQUIPMENT</span>
+          <h2>Carrier, Trane &amp; Goodman systems, shipped free nationwide</h2>
+          <p>Complete electric, gas and heat pump systems from 1.5 to 5 ton, plus individual parts. Full specs on every unit, priced below supply houses.</p>
+          <div class="brands-line"><span class="bb bb-carrier lg">Carrier</span><span class="bb bb-trane lg">Trane</span><span class="bb bb-goodman lg">Goodman</span></div>
+          <div class="ctas">
+            <button class="btn btn-cta" type="button" data-cat="electric">Shop systems</button>
+            <button class="btn btn-line" type="button" data-contractor>Get contractor pricing</button>
+          </div>
+        </div>
+        <div class="brand-cards" id="brandCards"></div>
+      </div>
+      <div class="offers">
+        <button class="offer" type="button" data-offer="pickup"><span class="amt">$<span data-ship="pickupDiscount"></span></span><span><b>Off every system with DFW pickup</b><small>Order online, pick up in <span data-biz="pickupArea"></span>, pay cash if you like.</small></span></button>
+        <button class="offer" type="button" data-contractor><span class="amt">PRO</span><span><b>Contractor accounts</b><small>Contractors get lower account pricing. No license needed. Apply in 2 minutes.</small></span></button>
+        <button class="offer" type="button" data-wholesale><span class="amt">5+</span><span><b>Wholesale &amp; volume pricing</b><small>Buying 5+ systems or using your own freight? Get a quote.</small></span></button>
+      </div>
+    </section>
+
+    <section class="home-sec" aria-label="Featured systems">
+      <div class="sec-head">
+        <div><h2>Featured systems</h2><p>Complete matched systems with free nationwide shipping.</p></div>
+        <div class="feat-tabs" id="featTabs"></div>
+      </div>
+      <div class="featured-grid" id="featuredGrid"></div>
+      <div class="view-all"><button class="btn btn-cta" type="button" id="viewAll">View all systems &amp; parts →</button></div>
+    </section>
+
+    <section class="home-sec" aria-label="Shop by category">
+      <div class="sec-head"><div><h2>Shop by category</h2><p>Systems, outdoor units, indoor units and parts.</p></div></div>
+      <div class="cat-tiles" id="catTiles"></div>
+    </section>
+
+    <section class="home-sec">
+      <div class="pro">
+        <div>
+          <h2>Built for HVAC contractors</h2>
+          <p>Order online or by text, pick up in DFW or get it shipped free, and talk to a real person who knows the equipment.</p>
+          <button class="btn btn-navy" type="button" data-contractor>Apply for contractor pricing</button>
+        </div>
+        <div class="tools">
+          <button class="tool" type="button" data-go="shipping"><svg><use href="#i-truck"/></svg><span>Free nationwide shipping</span></button>
+          <button class="tool" type="button" data-go="shipping"><svg><use href="#i-tag"/></svg><span>$650 off DFW pickup</span></button>
+          <button class="tool" type="button" data-contractor><svg><use href="#i-shield"/></svg><span>Contractor pricing</span></button>
+          <button class="tool" type="button" data-wholesale><svg><use href="#i-box"/></svg><span>Wholesale 5+ systems</span></button>
+          <button class="tool" type="button" data-go="shipping"><svg><use href="#i-clock"/></svg><span>Ships in 3–5 days</span></button>
+          <button class="tool" type="button" data-cat="all"><svg><use href="#i-list"/></svg><span>Full spec sheets</span></button>
+          <a class="tool" data-href="sms"><svg><use href="#i-chat"/></svg><span>Text to order</span></a>
+          <button class="tool" type="button" data-go="faq"><svg><use href="#i-alert"/></svg><span>FAQ &amp; returns</span></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-sec">
+      <div class="brands-strip">
+        <h2>Brands we carry</h2>
+        <p>New equipment from trusted manufacturers, with full manufacturer specs on every product.</p>
+        <div class="brand-row" id="brandRow"></div>
+      </div>
+    </section>
+    </div>
+
+    <div class="catalog" id="inventory">
+      <aside class="sidebar" id="sidebar" aria-label="Filters">
+        <div class="facet"><h3>Category</h3><div id="catFacet"></div></div>
+        <div class="facet"><h3>Tonnage</h3><div id="tonFacet"></div></div>
+        <div class="facet" id="brandFacetWrap"><h3>Brand</h3><div id="brandFacet"></div></div>
+        <div class="facet"><button class="clear" type="button" id="clearFilters">Clear all filters</button></div>
+        <div class="facet"><div class="wholesale-card"><h3>Wholesale buyer?</h3><p>Ordering 5+ systems, or have your own freight carrier? We'll price it for you.</p><button class="btn btn-cta" type="button" data-wholesale>Request wholesale pricing</button></div></div>
+        <div class="facet side-note"><b>Need a different size?</b><br>Text us the model or tonnage and we'll check availability. <a data-href="sms">Text us</a></div>
+      </aside>
+
+      <section>
+        <div class="bundle-note" id="bundleNote" hidden>
+          <div class="txt"><span class="ic"><svg class="icon"><use href="#i-tag"/></svg></span>
+            <div><b>Save money with a complete system</b><small id="bundleNoteText"></small></div></div>
+          <button class="btn btn-cta" type="button" id="bundleNoteBtn">Shop complete systems</button>
+        </div>
+        <div class="subtypes" id="subtypes" role="group" aria-label="Product type"></div>
+        <div class="toolbar">
+          <div style="display:flex;gap:10px;align-items:center">
+            <button class="btn btn-line filters-btn" type="button" id="filtersBtn"><svg class="icon"><use href="#i-filter"/></svg>Filters</button>
+            <span class="count" id="resultCount"></span>
+          </div>
+          <label style="font-size:14px;color:var(--text-2)">Sort by
+            <select id="sort">
+              <option value="featured">Featured</option>
+              <option value="tons">Tonnage: low to high</option>
+              <option value="price-asc">Price: low to high</option>
+              <option value="price-desc">Price: high to low</option>
+            </select>
+          </label>
+        </div>
+        <div class="grid" id="grid"></div>
+      </section>
+    </div>
+
+    <div class="info">
+      <section class="panel" id="shipping">
+        <h2>Shipping &amp; Pickup</h2>
+        <p class="lead">Shipping is built into every price. No freight quotes, no surprises.</p>
+        <div class="policy">
+          <div><svg><use href="#i-truck"/></svg><span><b>Free curbside delivery</b><p>LTL freight to homes, shops and job sites <span data-ship="coverage"></span>. Inside delivery isn't included.</p></span></div>
+          <div><svg><use href="#i-clock"/></svg><span><b>Ships in <span data-ship="shipsIn"></span></b><p>Counted from when your payment clears. Don't schedule the install until the unit arrives.</p></span></div>
+          <div><svg><use href="#i-tag"/></svg><span><b>Pick up &amp; save $<span data-ship="pickupDiscount"></span> per unit</b><p>Order online, then pick up in <span data-biz="pickupArea"></span>. Pay ahead, or <b>pay cash when you pick up</b>. We confirm the address and pickup time by call or text.</p></span></div>
+          <div><svg><use href="#i-lift"/></svg><span><b>Liftgate: <span id="liftgateText"></span></b><p>Add it at checkout if there's no loading dock or forklift where it's delivered.</p></span></div>
+          <div><svg><use href="#i-box"/></svg><span><b>Inspect before you sign</b><p>Count every box and check for damage in front of the driver. Note anything wrong on the delivery receipt.</p></span></div>
+          <div><svg><use href="#i-alert"/></svg><span><b>Report problems fast</b><p>Missing items within <span data-ship="shortageHours"></span> hours, damage within <span data-ship="damageDays"></span> business days, with photos.</p></span></div>
+          <div><svg><use href="#i-return"/></svg><span><b>Returns</b><p data-biz="returnPolicy"></p></span></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>How Ordering Works</h2>
+        <p class="lead">No account needed. Build your order here and we'll take it from there.</p>
+        <div class="steps">
+          <div class="step"><h3>Build your order</h3><p>Add systems, then choose free shipping to your ZIP code, or local pickup in DFW to save $650 per system.</p></div>
+          <div class="step"><h3>Send it to us</h3><p>Text or email the order from checkout. We confirm stock, usually the same day.</p></div>
+          <div class="step"><h3>Pay the invoice</h3><p data-biz="payment"></p></div>
+          <div class="step"><h3>Ship or pick up</h3><p>You get tracking for freight, or the pickup address and time. Inspect freight before signing for it.</p></div>
+        </div>
+      </section>
+
+      <section class="panel faq" id="faq">
+        <h2>Frequently Asked Questions</h2>
+        <p class="lead">Still have a question? Call or text us.</p>
+        <details><summary>What is a contractor account?</summary><p>HVAC contractors, installers and businesses can apply for an account with pricing below what's listed on the site. No license required. Apply online, we call you, and your account is set up with your salesperson. <a href="#" data-contractor>Apply for contractor pricing</a>.</p></details>
+        <details><summary>Do you offer wholesale or volume pricing?</summary><p>Yes. If you're buying several systems at a time, ordering regularly, or want to send your own freight carrier to pick up in <span data-biz="pickupArea"></span>, we'll quote you wholesale pricing well below the prices listed here. <a href="#" data-wholesale>Request wholesale pricing</a>.</p></details>
+        <details><summary>Who can buy?</summary><p>Anyone can buy: contractors, businesses and homeowners. A contractor license isn't required. If you have one, you can add it to your order.</p></details>
+        <details><summary>Is the equipment new?</summary><p data-biz="warrantyNote"></p></details>
+        <details><summary>How are commercial rooftop units delivered?</summary><p>We recommend shipping them straight to the job site; freight is included in the price. The driver does not unload, so have a forklift and operator there (or a crane to set the unit on the roof). If you need us to arrange unloading or a crane, we can for an extra charge, quoted with your order. Picking up in <span data-biz="pickupArea"></span> instead takes the whole freight charge off.</p></details>
+        <details><summary>Is shipping really free?</summary><p>Yes. Curbside LTL freight <span data-ship="coverage"></span> is included in every price. The only extra is a liftgate, if you need one.</p></details>
+        <details><summary>Can I pick up?</summary><p>Yes, and you save $<span data-ship="pickupDiscount"></span> on every system, condenser, air handler, furnace, coil and heat kit. Place your order online, choose local pickup in <span data-biz="pickupArea"></span> at checkout, and we'll call or text to confirm the address and pickup time. You can pay ahead, or pay cash when you pick up.</p></details>
+        <details><summary>What if freight arrives damaged?</summary><p>Inspect every unit before you sign. Write any damage on the delivery receipt and take photos, then text us right away. Signing "clean" makes a freight claim very hard to win.</p></details>
+        <details><summary>Can I return a unit?</summary><p data-biz="returnPolicy"></p></details>
+        <details><summary>How do I pay?</summary><p data-biz="payment"></p></details>
+        <details><summary>Do efficiency rules affect what I can buy?</summary><p>Yes. In the Southeast and Southwest (including TX, OK, FL, GA, AZ and CA), new split AC systems must meet a higher SEER2 minimum. Checkout checks your ZIP code against each unit and warns you if one doesn't qualify.</p></details>
+      </section>
+
+      <section class="panel" id="contact">
+        <h2>Contact Us</h2>
+        <p class="lead">Call, text or email. We answer fast.</p>
+        <div class="contact-row">
+          <a class="contact-box" data-href="tel"><svg><use href="#i-phone"/></svg><span><small>Call</small><b data-biz="phone"></b></span></a>
+          <a class="contact-box" data-href="sms"><svg><use href="#i-chat"/></svg><span><small>Text</small><b data-biz="phone"></b></span></a>
+          <a class="contact-box" data-href="mailto"><svg><use href="#i-mail"/></svg><span><small>Email</small><b data-biz="email"></b></span></a>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4 data-biz="name"></h4>
+        <p>New HVAC equipment for contractors, shipped free nationwide from Dallas, TX, or picked up locally in <span data-biz="pickupArea"></span>.</p>
+      </div>
+      <div><h4>Shop</h4><div id="footCats"></div></div>
+      <div><h4>Help</h4><button class="link" type="button" data-wholesale>Wholesale Pricing</button><a href="#shipping">Shipping &amp; Pickup</a><a href="#faq">FAQ</a><a href="#shipping">Returns</a><a href="#contact">Contact</a><a href="terms.html">Terms of Sale</a><a href="privacy.html">Privacy Policy</a></div>
+      <div><h4>Contact</h4><a data-href="tel" data-biz="phone"></a><a data-href="sms">Text us</a><a data-href="mailto" data-biz="email"></a></div>
+    </div>
+    <div class="foot-bottom">© <span id="yr"></span> <span data-biz="name"></span>. All rights reserved. · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></div>
+  </div>
+</footer>
+
+<!-- Product detail -->
+<div class="modal-bg" id="specsBg">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="specsTitle">
+    <button class="x" id="closeSpecs" aria-label="Close">×</button>
+    <div class="pd">
+      <div>
+        <div class="gallery-main"><img id="galleryMain" alt=""></div>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+      <div class="pd-info">
+        <div class="cat" id="specsCat"></div>
+        <h2 id="specsTitle"></h2>
+        <div class="pd-items" id="specsItems"></div>
+        <div class="keyspecs" id="keySpecs"></div>
+        <div class="pd-price" id="specsPrice"></div>
+        <div class="pd-note" id="specsShipNote"></div>
+        <div class="monthly" id="specsMonthly"></div>
+        <div class="com-deliver" id="comDeliver" hidden><b>How commercial units are delivered</b><ul>
+          <li>We recommend shipping straight to the job site. Freight is included in the price.</li>
+          <li>The truck driver does not unload. Have a forklift and operator on site (or a crane to set it on the roof).</li>
+          <li>Need us to handle unloading or the crane? We can arrange it for an extra charge, quoted with your order.</li>
+          <li>Picking up in DFW instead takes the whole freight charge off. Bring a trailer rated for the unit's weight.</li>
+        </ul></div>
+        <div id="heatWrap"><div class="opt-label">Electric heat kit</div><div class="heat-choice" id="heatChoice"></div><div class="fit-note" id="fitNote" hidden></div></div>
+        <div class="opt-label" id="shipLabel">Delivery</div>
+        <div class="ship-choice" id="shipChoice">
+          <button type="button" data-ship-pick="freight"><b>Ship it</b><small>Free nationwide shipping</small></button>
+          <button type="button" data-ship-pick="pickup"><b>Pick up in DFW</b><small class="save" id="specsSave"></small><small style="display:block">Cash accepted at pickup</small></button>
+        </div>
+        <div class="buy">
+          <input class="qty-in" id="specsQty" type="number" min="1" value="1" aria-label="Quantity">
+          <button class="btn btn-cta" id="specsAdd" type="button">Add To Order</button>
+          <a class="btn btn-cta" id="specsAsk" hidden>Text us for price</a>
+        </div>
+        <div class="pd-help">Questions about this <span id="helpNoun">system</span>? <a data-href="sms">Text us</a> or <a data-href="tel">call</a>.</div>
+      </div>
+    </div>
+    <div class="pd-tabs">
+      <div class="tabbar" id="specTabs" role="tablist"></div>
+      <div class="tabpanel" id="specPanel"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="caBg">
+  <div class="modal ws-modal" role="dialog" aria-modal="true" aria-labelledby="caTitle">
+    <button class="x" id="closeCa" aria-label="Close" style="background:rgba(255,255,255,.15);color:#fff">×</button>
+    <div class="ws-head">
+      <span class="pill">NORTHGATE ACCOUNT</span>
+      <h2 id="caTitle">Get contractor pricing</h2>
+      <p>HVAC contractors and businesses get account pricing below what's listed on the site. No license required. Apply below, we'll call you and set up your account.</p>
+      <ul class="ws-perks">
+        <li>Lower prices on every system and part</li>
+        <li>Priority on stock and orders held for your jobs</li>
+        <li>A direct line to your salesperson: quotes by text, same day</li>
+      </ul>
+    </div>
+    <form class="ws-body" id="caForm">
+      <div class="ca-ref" id="caRef" hidden></div>
+      <div class="ca-type" id="caTypeRow">
+        <label><input type="radio" name="caType" value="Contractor / business" checked><span><b>Contractor or business</b><small>Account pricing on every system and part</small></span></label>
+        <label><input type="radio" name="caType" value="Local customer (within 2 hours of DFW)"><span><b>Local customer</b><small>Within 2 hours of DFW? Apply for local customer pricing</small></span></label>
+      </div>
+      <div class="ws-row">
+        <label>Your name<input id="caName" autocomplete="name" required></label>
+        <label>Company<input id="caCompany" autocomplete="organization"></label>
+      </div>
+      <div class="ws-row">
+        <label>Mobile phone<input id="caPhone" type="tel" autocomplete="tel"></label>
+        <label>Email (your login)<input id="caEmail" type="email" autocomplete="email"></label>
+      </div>
+      <div class="ws-row">
+        <label>Your role
+          <select id="caRole"><option>Contractor / company owner</option><option>HVAC technician</option><option>Installer</option><option>Salesperson</option><option>Property manager / business</option><option>Homeowner</option></select>
+        </label>
+        <label>City<input id="caCity" autocomplete="address-level2" placeholder="e.g. Waco"></label>
+      </div>
+      <div class="ws-row">
+        <label>State<input id="caSt" autocomplete="address-level1" maxlength="2" placeholder="e.g. TX"></label>
+        <label>Areas you serve<input id="caAreas" placeholder="e.g. Waco, Temple, McLennan County"></label>
+      </div>
+      <div class="ws-row">
+        <label>HVAC license # (optional)<input id="caLicense" placeholder="e.g. TACLA12345C"></label>
+        <label>License state (optional)<input id="caState" placeholder="e.g. TX"></label>
+      </div>
+      <div class="ws-row">
+        <label>Your ZIP code<input id="caZip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="e.g. 76706"></label>
+        <span class="ca-zip-note" id="caZipNote"></span>
+      </div>
+      <div class="ws-row">
+        <label>Systems you install per month
+          <select id="caVolume"><option>1 – 4</option><option>5 – 9</option><option>10 – 24</option><option>25+</option></select>
+        </label>
+        <label>Mostly
+          <select id="caWork"><option>Residential replacement</option><option>New construction</option><option>Both</option><option>Commercial</option></select>
+        </label>
+      </div>
+      <div class="send">
+        <a class="btn btn-cta" id="caSms">Text my application</a>
+        <a class="btn btn-line" id="caEmailBtn">Email my application</a>
+      </div>
+      <p class="fine">We'll contact you to activate your account. Approved contractors will sign in here to see their pricing.</p>
+    </form>
+  </div>
+</div>
+
+<div class="modal-bg" id="wsBg">
+  <div class="modal ws-modal" role="dialog" aria-modal="true" aria-labelledby="wsTitle">
+    <button class="x" id="closeWs" aria-label="Close" style="background:rgba(255,255,255,.15);color:#fff">×</button>
+    <div class="ws-head">
+      <span class="pill">WHOLESALE PROGRAM</span>
+      <h2 id="wsTitle">Get wholesale pricing</h2>
+      <p>For contractors and dealers buying in volume. Tell us what you need and we'll send a quote, usually the same day.</p>
+      <ul class="ws-perks">
+        <li>Volume pricing on 5+ systems</li>
+        <li>Use your own freight carrier: pick up in DFW and skip our shipping cost</li>
+        <li>Mix and match tonnages and heat kits on one order</li>
+      </ul>
+    </div>
+    <form class="ws-body" id="wsForm">
+      <div class="ws-row">
+        <label>Company<input id="wsCompany" autocomplete="organization" placeholder="ABC Heating & Air"></label>
+        <label>Your name<input id="wsName" autocomplete="name" placeholder="First and last name"></label>
+      </div>
+      <div class="ws-row">
+        <label>Systems per order
+          <select id="wsVolume"><option>5 – 9</option><option>10 – 24</option><option>25 – 49</option><option>50+</option><option>Not sure yet</option></select>
+        </label>
+        <label>How often?
+          <select id="wsFreq"><option>One-time order</option><option>Monthly</option><option>Weekly</option><option>Project / new construction</option></select>
+        </label>
+      </div>
+      <div class="ws-freight">
+        <label><input type="radio" name="wsShip" value="own" checked><span><b>I'll use my own freight carrier</b><small>Your truck or carrier picks up in <span data-biz="pickupArea"></span>.</small></span></label>
+        <label><input type="radio" name="wsShip" value="ours"><span><b>Ship it for me</b><small>We ship to your ZIP code.</small></span></label>
+      </div>
+      <div class="ws-row">
+        <label>Delivery ZIP / state<input id="wsZip" placeholder="e.g. 33634 or Florida"></label>
+        <label>License # (optional)<input id="wsLicense"></label>
+      </div>
+      <label>What do you need?<textarea id="wsNotes" placeholder="e.g. 6 × 2.5-ton electric systems with 15 kW heat, 4 × 3-ton"></textarea></label>
+      <div class="send">
+        <a class="btn btn-cta" id="wsSms">Text my request</a>
+        <a class="btn btn-line" id="wsEmail">Email my request</a>
+      </div>
+      <p class="fine">Or call us at <a data-href="tel" data-biz="phone"></a>. Nothing is charged; we'll reply with a quote.</p>
+    </form>
+  </div>
+</div>
+
+<aside class="promo" id="promo" role="dialog" aria-labelledby="promoTitle" hidden>
+  <button class="promo-x" type="button" id="promoClose" aria-label="Close">×</button>
+  <span class="promo-tag">CONTRACTORS &amp; BULK BUYERS</span>
+  <b id="promoTitle">HVAC contractor or buying in bulk?</b>
+  <p>Get your own <strong>contractor pricing</strong>, lower than our listed prices on every system and part. Apply in 2 minutes or contact us for a quote.</p>
+  <div class="promo-btns">
+    <button class="btn btn-cta" type="button" data-contractor data-promo-go>Apply now</button>
+    <button class="btn btn-line" type="button" data-wholesale data-promo-go>Contact us</button>
+  </div>
+</aside>
+
+<div class="order-bar" id="orderBar">
+  <div class="wrap">
+    <div><b id="barTotal">$0</b><small id="barCount">0 units</small></div>
+    <button class="btn btn-cta" id="openDrawer" type="button">Review Order</button>
+  </div>
+</div>
+
+<div class="drawer-bg" id="drawerBg"></div>
+<aside class="drawer" id="drawer" aria-label="Your order">
+  <header><h3>Your Order</h3><button class="x" id="closeDrawer" aria-label="Close">×</button></header>
+  <div class="scroll">
+    <h4>Items</h4>
+    <div id="lines"></div>
+
+    <h4>Delivery</h4>
+    <label class="option">
+      <input type="radio" name="ship" value="freight" checked>
+      <div><b>Free shipping nationwide</b><small>Curbside LTL freight · ships in <span data-ship="shipsIn"></span></small></div>
+      <span class="tag free">FREE</span>
+    </label>
+    <label class="option">
+      <input type="radio" name="ship" value="pickup">
+      <div><b>Local pickup in <span data-biz="pickupArea"></span></b><small>Save $<span data-ship="pickupDiscount"></span> per system or major part · pay cash at pickup if you like</small></div>
+      <span class="tag free" id="pickupTag"></span>
+    </label>
+    <div id="payWrap" hidden>
+      <div class="pay-choice">
+        <label><input type="radio" name="pay" value="cash" checked><span><b>Cash at pickup</b><small>Pay when you pick up</small></span></label>
+        <label><input type="radio" name="pay" value="invoice"><span><b>Pay ahead</b><small>ACH, Zelle or card</small></span></label>
+      </div>
+    </div>
+    <div id="zipWrap">
+      <input type="text" id="zip" placeholder="ZIP code where it's going" inputmode="numeric" maxlength="5" autocomplete="postal-code">
+      <div class="zip-status" id="zipStatus"></div>
+      <div id="effNote" class="sw-note" hidden></div>
+      <label class="check" id="liftgateRow" style="margin-top:10px"><span><input type="checkbox" id="liftgate">Home delivery with liftgate (no dock or forklift)</span><b id="liftgatePrice"></b></label>
+      <div id="comUnloadWrap" hidden style="margin-top:10px">
+        <div class="com-deliver" style="margin-bottom:8px"><b>Commercial units:</b> ship them to the job site. The driver does not unload, so have a forklift and operator there (or a crane for the roof).</div>
+        <label class="check"><span><input type="checkbox" id="comUnload">I need unloading help (forklift or crane)</span><b>Quoted extra</b></label>
+      </div>
+    </div>
+
+    <h4>Your info</h4>
+    <div class="fields buyer" id="buyerForm">
+      <input type="text" id="bName" placeholder="Full name *" autocomplete="name" required>
+      <input type="tel" id="bPhone" placeholder="Phone *" autocomplete="tel" required>
+      <input type="email" id="bEmail" placeholder="Email *" autocomplete="email" required class="span2">
+      <input type="text" id="bStreet" placeholder="Street address *" autocomplete="address-line1" required class="span2">
+      <input type="text" id="bApt" placeholder="Apt / suite (optional)" autocomplete="address-line2">
+      <input type="text" id="bCity" placeholder="City *" autocomplete="address-level2" required>
+      <input type="text" id="bState" placeholder="State *" autocomplete="address-level1" maxlength="2" required>
+      <input type="text" id="bZipShow" placeholder="ZIP (above)" disabled>
+      <input type="text" id="company" placeholder="Company name (optional)" autocomplete="organization">
+      <input type="text" id="license" placeholder="Contractor license # (optional)">
+    </div>
+    <label class="warranty-ack" id="warrantyAckRow"><input type="checkbox" id="warrantyAck">
+      <span><b>Warranty registration:</b> Northgate registers all manufacturer warranties under our dealer account and handles any warranty claims for you. Just contact us if something goes wrong. <b>I understand and agree.</b></span></label>
+    <div class="pay-error" id="buyerError" hidden></div>
+  </div>
+  <div class="foot">
+    <div class="totals">
+      <div><span>Equipment</span><span id="tEquip">$0</span></div>
+      <div><span id="tShipLabel">Shipping</span><span id="tShip">$0</span></div>
+      <div class="discount" id="tDiscRow" hidden><span id="tDiscLabel">Local pickup discount</span><span id="tDisc"></span></div>
+      <div class="grand"><span>Total</span><span id="tTotal">$0</span></div>
+    </div>
+    <button class="btn btn-cta pay-btn" id="payOnline" type="button"><svg class="icon"><use href="#i-lock"/></svg>Pay online</button>
+    <p class="agree-line">By placing an order you agree to our <a href="terms.html" target="_blank">Terms of Sale</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</p>
+    <p class="pay-methods" id="payMethods">Card, bank transfer (ACH), Apple Pay / Google Pay, or <b>monthly payments</b> with Affirm or Klarna.</p>
+    <div class="pay-error" id="payError" hidden></div>
+    <div class="or-line"><span>or order by message</span></div>
+    <div class="send">
+      <a class="btn btn-line" id="sendSms">Text Order</a>
+      <a class="btn btn-line" id="sendEmail">Email Order</a>
+    </div>
+    <p class="fine">Text or email: nothing is charged; we confirm stock, then send your invoice or pickup details. Paying online is processed securely by Stripe.</p>
+  </div>
+</aside>
+
+<script src="config.js"></script>
+<script src="commercial-data.js"></script>
+<script src="inventory.js"></script>
+<script src="pricing.js"></script>
+<script>
+(function () {
+  const B = window.BUSINESS, INV = window.INVENTORY, S = window.SHIPPING;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const money = n => "$" + Math.round(n).toLocaleString("en-US");
+  const badge = (b, extra = "") => `<span class="bb bb-${String(b).toLowerCase()} ${extra}">${b}</span>`;
+  const TYPE_BRAND = { "Split AC System": "Goodman" };   // type pills that belong to one brand get its badge
+  const esc = v => String(v).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  // ---------- Static text from inventory.js
+  document.title = `${B.name} | Heating & Cooling Equipment`;
+  $$("[data-biz]").forEach(el => el.textContent = B[el.dataset.biz] || "");
+  $$("[data-ship]").forEach(el => el.textContent = S[el.dataset.ship] ?? "");
+  $("#yr").textContent = new Date().getFullYear();
+  $("#sample").hidden = !B.sampleData;
+  const links = { tel: "tel:" + B.sms, sms: "sms:" + B.sms, mailto: "mailto:" + B.email };
+  $$("[data-href]").forEach(el => el.href = links[el.dataset.href]);
+  $("#liftgateText").textContent = S.liftgatePrice ? money(S.liftgatePrice) + " extra" : "included";
+  $("#liftgatePrice").textContent = S.liftgatePrice ? "+" + money(S.liftgatePrice) : "Included";
+
+  // ---------- Product helpers
+  const title = u => `${u.brand} ${u.name || `${u.tons}-Ton ${u.type}`}`;
+  const models = (u, heat) => u.components ? partsOf(u, heat === undefined ? heatOf(u) : heat).map(c => c.model).join(" + ") : u.model;
+  const pickupOff = u => Pricing.pickupOff(u, S);
+  const byId = id => INV.find(x => x.id === id);
+  // Electric systems come with a standard heat kit (the option with add: 0) and optional upgrades/downgrades.
+  // Order keys are "id" or "id::heatKitModel".
+  const heatOf = Pricing.heatOf;
+  const signed = n => (n < 0 ? "−" : "+") + money(Math.abs(n));
+  const keyOf = (u, model) => u.heatOptions ? `${u.id}::${heatOf(u, model).model}` : u.id;
+  const parseKey = k => { const [id, hm] = k.split("::"); const u = byId(id); return u ? { u, heat: heatOf(u, hm) } : null; };
+  const priceOf = Pricing.priceOf;
+  const askLink = u => `sms:${B.sms}?&body=${encodeURIComponent(`Hi, what's your price on the ${title(u)} (${models(u)})?`)}`;
+  const partsOf = (u, heat) => heat?.part ? [...u.components, heat.part] : u.components;   // "No heat kit" adds nothing
+  const heatLabel = heat => heat?.part ? heat.desc : "";
+  // A furnace upgrade can be wider than the coil; installers bridge it with a simple transition.
+  const width = p => parseFloat(p?.specs?.["Cabinet width"]);
+  const fitNote = (u, heat) => {
+    const coil = u.components?.find(c => c.role === "Coil");
+    if (!coil || heat?.part?.role !== "Furnace") return "";
+    const cw = width(coil), fw = width(heat.part);
+    return cw && fw && Math.abs(cw - fw) >= 1   // 14" coil on a 14.2" furnace is the same nominal size
+      ? `The ${heat.label} furnace is ${fw}" wide and the coil is ${cw}" wide. They connect with a standard transition at install, a small, common adjustment.`
+      : "";
+  };
+
+  // ---------- Categories (nav bar + sidebar)
+  const CATS = [
+    { key: "home", label: "Home", title: "Residential Equipment", test: () => true },   // landing page (not in menus)
+    { key: "all", label: "All Equipment", title: "All Equipment", test: () => true },
+    { key: "electric", label: "Electric & AC Systems", test: u => u.type === "Electric AC System" || u.type === "Split AC System" },
+    { key: "gas", label: "Gas Systems", test: u => u.type === "Gas AC System" },
+    { key: "heatpump", label: "Heat Pumps", test: u => /Heat Pump/.test(u.type) && !u.commercial },
+    { key: "condenser", label: "Condensers", test: u => /Condenser/.test(u.type) },
+    { key: "airhandler", label: "Air Handlers", test: u => u.type === "Air Handler" },
+    { key: "furnace", label: "Furnaces", test: u => u.type === "Furnace" },
+    { key: "coil", label: "Coils", test: u => u.type === "Coil" },
+    { key: "heatkit", label: "Heat Kits", test: u => u.type === "Heat Kit" },
+  ];
+  CATS.splice(2, 0, { key: "commercial", label: "Commercial Rooftop Units", title: "Commercial Packaged Rooftop Units", test: u => u.commercial, hot: true });
+  const state = { cat: "home", sub: "all", tons: new Set(), brands: new Set(), q: "", sort: "featured" };
+  // Friendly names for the type pills shown when a category mixes product types.
+  const TYPE_LABELS = {
+    "Electric AC System": "Electric systems", "Split AC System": "AC systems", "Gas AC System": "Gas systems", "Heat Pump System": "Heat pump systems",
+    "Condenser": "AC condensers", "Heat Pump Condenser": "Heat pump condensers", "Air Handler": "Air handlers",
+    "Furnace": "Furnaces", "Coil": "Coils", "Heat Kit": "Heat kits",
+    "Gas/Electric Rooftop": "Gas / electric", "Heat Pump Rooftop": "Heat pump", "Cooling Only Rooftop": "Straight cool",
+  };
+  // Inside the Condensers tab the shorter names read better.
+  const CAT_TYPE_LABELS = { condenser: { "Condenser": "Straight cool (AC)", "Heat Pump Condenser": "Heat pump" } };
+  function renderSubtypes() {
+    const cat = CATS.find(c => c.key === state.cat);
+    const pool = INV.filter(u => matches(u, true));   // everything the other filters allow
+    const types = [...new Set(pool.map(u => u.type))];
+    const bar = $("#subtypes");
+    bar.hidden = types.length < 2;
+    if (bar.hidden) { state.sub = "all"; return; }
+    if (state.sub !== "all" && !types.includes(state.sub)) state.sub = "all";
+    const n = t => pool.filter(u => t === "all" || u.type === t).length;
+    bar.innerHTML = ["all", ...types].map(t => `<button type="button" data-sub="${esc(t)}" aria-pressed="${state.sub === t}">${TYPE_BRAND[t] ? badge(TYPE_BRAND[t]) : ""}${t === "all" ? "All" : esc(CAT_TYPE_LABELS[state.cat]?.[t] || TYPE_LABELS[t] || t)}<span>${n(t)}</span></button>`).join("");
+  }
+
+  const MENU_CATS = CATS.filter(c => c.key !== "home");
+  $("#catNav").innerHTML = MENU_CATS.map(c => `<button type="button" data-cat="${c.key}"${c.hot ? ' class="hot"' : ""}>${c.label}</button>`).join("");
+  $("#footCats").innerHTML = MENU_CATS.slice(1).map(c => `<button class="link" type="button" data-cat="${c.key}">${c.label}</button>`).join("");
+  $("#catFacet").innerHTML = MENU_CATS.map(c => {
+    const n = INV.filter(c.test).length;
+    return `<label><input type="radio" name="cat" value="${c.key}">${c.label}<span>${n}</span></label>`;
+  }).join("");
+  const tonsList = [...new Set(INV.map(u => u.tons).filter(t => t != null))].sort((a, b) => a - b);
+  $("#tonFacet").innerHTML = tonsList.map(t => `<label><input type="checkbox" value="${t}" data-f="tons">${t} Ton<span>${INV.filter(u => u.tons === t).length}</span></label>`).join("");
+  const BRAND_ORDER = ["Carrier", "Trane", "Goodman", "Bryant"];
+  const brandList = [...new Set(INV.map(u => u.brand))].sort((a, b) => (BRAND_ORDER.indexOf(a) + 1 || 99) - (BRAND_ORDER.indexOf(b) + 1 || 99));
+  $("#brandFacetWrap").hidden = brandList.length < 2;
+  $("#brandFacet").innerHTML = brandList.map(b => `<label><input type="checkbox" value="${esc(b)}" data-f="brands">${badge(b)}<span>${INV.filter(u => u.brand === b).length}</span></label>`).join("");
+
+  function resetFilters() {
+    state.tons.clear(); state.brands.clear(); state.q = ""; state.sub = "all"; $("#q").value = "";
+    $$('#sidebar input[type="checkbox"]').forEach(c => c.checked = false);
+  }
+  // keepFilters: used by search "See all results", which switches to All Equipment but keeps the query.
+  function setCat(key, scroll, keepFilters) {
+    if (state.cat !== key) { state.sub = "all"; if (!keepFilters) resetFilters(); }
+    state.cat = key;
+    const c = CATS.find(x => x.key === key);
+    $$("#catNav button").forEach(b => b.setAttribute("aria-current", b.dataset.cat === key));
+    $$('input[name="cat"]').forEach(r => r.checked = r.value === key);
+    $("#pageTitle").textContent = c.title || c.label;
+    $("#crumb").textContent = c.title || c.label;
+    $(".page-head").classList.toggle("is-commercial", key === "commercial");
+    render();
+    if (scroll) $("#inventory").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  document.addEventListener("click", e => {
+    const b = e.target.closest?.("[data-cat]");
+    if (b) { if (b.matches("a")) e.preventDefault(); setCat(b.dataset.cat, b.closest("footer, nav") || b.hasAttribute("data-scroll")); if (b.dataset.cat === "home") window.scrollTo({ top: 0, behavior: "smooth" }); }
+  });
+  $("#catFacet").addEventListener("change", e => setCat(e.target.value));
+  $("#sidebar").addEventListener("change", e => {
+    const f = e.target.dataset.f; if (!f) return;
+    const v = f === "tons" ? +e.target.value : e.target.value;
+    e.target.checked ? state[f].add(v) : state[f].delete(v);
+    render();
+  });
+  $("#clearFilters").onclick = () => { resetFilters(); setCat("all"); };
+  // "Clear filters" inside the empty-results message keeps the current category.
+  $("#grid").addEventListener("click", e => { if (e.target.closest("[data-clear-filters]")) { resetFilters(); render(); } });
+  $("#filtersBtn").onclick = () => $("#sidebar").classList.toggle("open");
+  // Live search: suggestions drop down while typing; Enter or "See all" shows every match in the catalog.
+  let sugIndex = -1, sugIds = [];
+  function renderSuggest() {
+    const raw = $("#q").value.trim(), box = $("#suggest");
+    if (!raw) { box.hidden = true; $("#q").setAttribute("aria-expanded", "false"); return; }
+    const found = INV.filter(u => queryMatch(u, raw));
+    // systems first, then parts; smaller tonnage first
+    const wantsKit = parseQuery(raw).kw != null;   // "10 kw": show the heat kit itself first
+    found.sort((a, b) => (wantsKit ? (b.type === "Heat Kit") - (a.type === "Heat Kit") : 0) ||
+      (/System/.test(b.type) - /System/.test(a.type)) || ((a.tons || 0) - (b.tons || 0)));
+    sugIds = found.slice(0, 8).map(u => u.id);
+    sugIndex = -1;
+    box.innerHTML = found.length
+      ? `<div class="suggest-head">${found.length} match${found.length === 1 ? "" : "es"}</div>` +
+        found.slice(0, 8).map((u, i) => `<button type="button" class="sug" role="option" data-sug="${u.id}" aria-selected="false">
+          ${u.image ? `<img src="${u.image}" alt="">` : "<span></span>"}
+          <span><b>${esc(title(u))}</b><small>${esc(models(u))}</small></span>
+          ${u.price == null ? `<span class="p call">Call for price</span>` : `<span class="p">${money(u.price)}</span>`}</button>`).join("") +
+        `<button type="button" class="suggest-all" data-sug-all>See all ${found.length} result${found.length === 1 ? "" : "s"} for "${esc(raw)}" →</button>`
+      : `<div class="suggest-empty">No matches for "${esc(raw)}". Try a tonnage like "3 ton" or a model number, or <a data-href="sms" href="${links.sms}">text us</a>.</div>`;
+    box.hidden = false;
+    $("#q").setAttribute("aria-expanded", "true");
+  }
+  function closeSuggest() { $("#suggest").hidden = true; $("#q").setAttribute("aria-expanded", "false"); }
+  function showAllResults() {
+    state.q = $("#q").value.trim();
+    if (state.cat !== "all") setCat("all", false, true); else render();
+    closeSuggest();
+    $("#inventory").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  function moveSug(d) {
+    const items = $$("#suggest .sug"); if (!items.length) return;
+    sugIndex = (sugIndex + d + items.length) % items.length;
+    items.forEach((b, i) => b.setAttribute("aria-selected", i === sugIndex));
+    items[sugIndex].scrollIntoView({ block: "nearest" });
+  }
+  $("#q").addEventListener("input", () => { state.q = $("#q").value.trim(); render(); renderSuggest(); });
+  $("#q").addEventListener("focus", renderSuggest);
+  $("#q").addEventListener("keydown", e => {
+    if (e.key === "ArrowDown") { e.preventDefault(); moveSug(1); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); moveSug(-1); }
+    else if (e.key === "Escape") closeSuggest();
+    else if (e.key === "Enter" && sugIndex >= 0 && !$("#suggest").hidden) { e.preventDefault(); closeSuggest(); openSpecs(sugIds[sugIndex]); }
+  });
+  $("#searchForm").addEventListener("submit", e => { e.preventDefault(); showAllResults(); });
+  $("#suggest").addEventListener("click", e => {
+    const b = e.target.closest("[data-sug]");
+    if (b) { closeSuggest(); openSpecs(b.dataset.sug); return; }
+    if (e.target.closest("[data-sug-all]")) showAllResults();
+  });
+  document.addEventListener("click", e => { if (!e.target.closest?.(".search-wrap")) closeSuggest(); });
+  $("#sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
+  $("#subtypes").addEventListener("click", e => { const b = e.target.closest("[data-sub]"); if (b) { state.sub = b.dataset.sub; render(); } });
+
+  // ---------- Order (kept in this browser only)
+  let order = {};
+  try { order = JSON.parse(localStorage.getItem("orderList") || "{}"); } catch (e) {}
+  const save = () => { try { localStorage.setItem("orderList", JSON.stringify(order)); } catch (e) {} };
+
+  // Turn "three and a half ton" / "3.5 ton" / "3 1/2 ton" into a tonnage filter plus leftover words.
+  const NUM_WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5 };
+  function parseQuery(raw) {
+    let q = raw.toLowerCase().replace(/[-,]/g, " ").replace(/\s+/g, " ").trim();
+    q = q.replace(/\b(one|two|three|four|five)\b/g, w => NUM_WORDS[w]);
+    q = q.replace(/(\d)\s*(?:and a half|& a half|and half|1\/2|½)/g, "$1.5");
+    let tons = null;
+    q = q.replace(/(\d+(?:\.\d+)?)\s*(?:tons?|t\b)/, (_, n) => { tons = +n; return " "; });
+    let kw = null;
+    q = q.replace(/(\d+)\s*kw\b/, (_, n) => { kw = +n; return " "; });
+    return { tons, kw, words: q.split(" ").filter(Boolean) };
+  }
+  function queryMatch(u, raw) {
+    if (!raw) return true;
+    const { tons, kw, words } = parseQuery(raw);
+    if (tons != null && u.tons !== tons) return false;
+    // "10 kw" matches heat kits of that size, and systems whose heat options include it
+    if (kw != null && !(u.components?.[0]?.kw === kw || u.heatOptions?.some(o => o.part?.kw === kw))) return false;
+    const hay = `${title(u)} ${models(u)} ${u.type} ${u.tons ?? ""} ton ${u.refrigerant || ""} ${u.badge || ""}`.toLowerCase();
+    // A bare size like "3" or "2.5" (up to 5) means that tonnage; anything longer is matched as text (model numbers).
+    return words.every(w => /^[1-5](\.5)?$/.test(w) && tons == null ? u.tons === +w : hay.includes(w));
+  }
+
+  function matches(u, ignoreSub) {
+    if (!CATS.find(c => c.key === state.cat).test(u)) return false;
+    if (!ignoreSub && state.sub !== "all" && u.type !== state.sub) return false;
+    if (state.tons.size && !state.tons.has(u.tons)) return false;
+    if (state.brands.size && !state.brands.has(u.brand)) return false;
+    if (state.q && !queryMatch(u, state.q)) return false;
+    return true;
+  }
+
+  const PART_CATS = ["condenser", "airhandler", "furnace", "coil", "heatkit"];
+  function renderBundleNote() {
+    const show = PART_CATS.includes(state.cat);
+    $("#bundleNote").hidden = !show;
+    if (!show) return;
+    const systems = INV.filter(u => /System/.test(u.type) && u.price != null);
+    const from = Math.min(...systems.map(u => u.price));
+    const what = { condenser: "a condenser", airhandler: "an air handler", furnace: "a furnace", coil: "a coil", heatkit: "a heat kit" }[state.cat];
+    $("#bundleNoteText").textContent = `Buying ${what} plus the rest of the parts separately costs more than a matched system. ` +
+      `Complete systems (outdoor unit + indoor unit + heat) start at ${money(from)} with free shipping, and save $${S.pickupDiscount} each with local pickup.`;
+  }
+  $("#bundleNoteBtn").onclick = () => setCat(state.cat === "furnace" || state.cat === "coil" ? "gas" : "electric", true);
+
+  function updateFacetCounts() {
+    const cat = CATS.find(c => c.key === state.cat);
+    const inCat = INV.filter(cat.test);
+    $$("#brandFacet label, #tonFacet label").forEach(l => {
+      const i = l.querySelector("input"), n = inCat.filter(u => i.dataset.f === "tons" ? u.tons === +i.value : u.brand === i.value).length;
+      l.querySelector("span:last-child").textContent = n;   // the count, not the brand badge
+      i.disabled = !n && !i.checked;
+      l.style.opacity = i.disabled ? .45 : 1;
+    });
+  }
+
+  // Landing showcase: one card per brand with what it offers and its lowest system price.
+  const BRAND_PHOTO = { Carrier: "img/bundle-carrier-1.5t-electric.jpg", Goodman: "img/bundle-goodman-ac.jpg", Bryant: "img/rtu-bryant-582l-en-normal.jpg" };
+  $("#brandCards").innerHTML = brandList.map(b => {
+    const res = INV.filter(u => u.brand === b && /System/.test(u.type) && u.price != null);
+    const com = !res.length;   // e.g. Bryant: commercial rooftop units only
+    const sys = com ? INV.filter(u => u.brand === b && u.commercial && u.price != null) : res;
+    if (!sys.length) return "";
+    const kinds = com ? ["commercial rooftop"] : [...new Set(sys.map(u => /Gas/.test(u.type) ? "gas" : /Heat Pump/.test(u.type) ? "heat pump" : "AC"))];
+    const tons = sys.map(u => u.tons);
+    return `<button class="brand-card" type="button" data-shop-brand="${esc(b)}"${com ? ' data-shop-cat="commercial"' : ""}>
+      <span>${badge(b, "lg")}<b>${sys.length} ${kinds.join(", ")} ${com ? "units" : "systems"}</b>
+        <small>${Math.min(...tons)} to ${Math.max(...tons)} ton · ${[...new Set(sys.map(u => u.refrigerant).filter(Boolean))].join(" / ")}</small>
+        <span class="from">From ${money(Math.min(...sys.map(u => u.price)))}</span><span class="go">Shop ${esc(b)} →</span></span>
+      <img src="${BRAND_PHOTO[b] || sys[0]?.image || ""}" alt="">
+    </button>`;
+  }).join("");
+  // Top-of-page brand buttons: what each brand covers and where it starts.
+  $("#brandBar").innerHTML = brandList.map(b => {
+    const mine = INV.filter(u => u.brand === b);
+    const res = mine.filter(u => !u.commercial), com = mine.filter(u => u.commercial);
+    const what = [res.some(u => /System/.test(u.type)) && "home systems", res.some(u => u.unit === "each") && "parts", com.length && "commercial rooftop"].filter(Boolean);
+    const priced = (res.some(u => /System/.test(u.type)) ? res.filter(u => /System/.test(u.type)) : mine).filter(u => u.price != null);
+    return `<button type="button" data-shop-brand="${esc(b)}"${res.length ? "" : ' data-shop-cat="commercial"'}>${badge(b, "lg")}
+      <span><small>${what.join(" · ").replace(/^./, c => c.toUpperCase())}</small>${priced.length ? `<small>from <b>${money(Math.min(...priced.map(u => u.price)))}</b></small>` : ""}</span></button>`;
+  }).join("");
+
+  // Commercial banner: live counts and a shortcut per rooftop type.
+  {
+    const com = INV.filter(u => u.commercial), priced = com.filter(u => u.price != null);
+    const tons = com.map(u => u.tons);
+    $("#comStats").innerHTML = [[com.length, "units to choose from"], [`${Math.min(...tons)}–${Math.max(...tons)}`, "tons"], [money(Math.min(...priced.map(u => u.price))), "starting price"]]
+      .map(([v, l]) => `<div><b>${v}</b><small>${l}</small></div>`).join("");
+    $("#comTypes").innerHTML = ["Gas/Electric Rooftop", "Heat Pump Rooftop", "Cooling Only Rooftop"].map(t => {
+      const us = priced.filter(u => u.type === t);
+      if (!us.length) return "";
+      return `<button type="button" data-com-sub="${esc(t)}"><span><b>${esc(TYPE_LABELS[t])} rooftop units</b><br><small>${com.filter(u => u.type === t).length} units · ${Math.min(...us.map(u => u.tons))} to ${Math.max(...us.map(u => u.tons))} ton</small></span><span class="from">from ${money(Math.min(...us.map(u => u.price)))}</span></button>`;
+    }).join("");
+  }
+  document.addEventListener("click", e => {
+    const t = e.target.closest?.("[data-com-sub]");
+    if (t) { setCat("commercial", true); state.sub = t.dataset.comSub; render(); return; }
+    const b = e.target.closest?.("[data-shop-brand]");
+    if (b) {
+      setCat(b.dataset.shopCat || "all"); resetFilters();
+      state.brands.add(b.dataset.shopBrand);
+      $$('#brandFacet input').forEach(i => i.checked = state.brands.has(i.value));
+      render(); $("#inventory").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    if (e.target.closest?.('[data-offer="pickup"]')) $("#shipping").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  // ---------- Home page: featured row (tabs), category tiles, brand strip
+  const findSys = (brand, type, tons) => INV.find(u => u.brand === brand && u.type === type && u.tons === tons);
+  const FEATURED = {
+    "Best sellers": [findSys("Carrier", "Electric AC System", 3), findSys("Goodman", "Split AC System", 3), findSys("Carrier", "Gas AC System", 3)],
+    "Carrier": [findSys("Carrier", "Electric AC System", 2), findSys("Carrier", "Gas AC System", 3), findSys("Carrier", "Heat Pump System", 3)],
+    "Goodman": [findSys("Goodman", "Split AC System", 2), findSys("Goodman", "Split AC System", 3), findSys("Goodman", "Heat Pump System", 3)],
+    "Heat pumps": [findSys("Carrier", "Heat Pump System", 3), findSys("Goodman", "Heat Pump System", 3), findSys("Goodman", "Heat Pump System", 2)],
+    "Commercial": [findSys("Carrier", "Gas/Electric Rooftop", 5), findSys("Carrier", "Gas/Electric Rooftop", 7.5), findSys("Bryant", "Gas/Electric Rooftop", 10)],
+  };
+  let featTab = "Best sellers";
+  function renderHome() {
+    $("#featTabs").innerHTML = Object.keys(FEATURED).map(t => `<button type="button" data-feat="${t}" aria-pressed="${t === featTab}">${t}</button>`).join("");
+    $("#featuredGrid").innerHTML = FEATURED[featTab].filter(Boolean).map(cardHTML).join("");
+    $("#catTiles").innerHTML = MENU_CATS.slice(1).map(c => {
+      const items = INV.filter(c.test);
+      if (!items.length) return "";
+      const sys = items.filter(u => /System/.test(u.type) && u.price != null);
+      const priced = sys.length ? sys : items.filter(u => u.price != null);   // "from" = cheapest system when the category has systems
+      const img = (items.find(u => u.image) || {}).image || "";
+      return `<button class="cat-tile" type="button" data-cat="${c.key}" data-scroll>
+        <img src="${img}" alt="" loading="lazy"><b>${esc(c.label)}</b>
+        <small>${items.length} product${items.length === 1 ? "" : "s"}${priced.length ? ` · from ${money(Math.min(...priced.map(u => u.price)))}` : ""}</small></button>`;
+    }).join("");
+    $("#brandRow").innerHTML = brandList.map(b => `<button type="button" data-shop-brand="${esc(b)}" aria-label="Shop ${esc(b)}">${badge(b, "lg")}</button>`).join("") +
+      `<span class="soon">More brands coming soon</span>`;
+  }
+  $("#featTabs").addEventListener("click", e => { const b = e.target.closest("[data-feat]"); if (b) { featTab = b.dataset.feat; renderHome(); } });
+  $("#viewAll").onclick = () => setCat("all", true);
+  document.addEventListener("click", e => {
+    const g = e.target.closest?.("[data-go]");
+    if (g) $("#" + g.dataset.go).scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  function render() {
+    const home = state.cat === "home";
+    $("#home").hidden = !home;
+    $("#inventory").hidden = home;
+    if (home) { renderHome(); return; }
+    updateFacetCounts();
+    renderSubtypes();
+    renderBundleNote();
+    let list = INV.filter(u => matches(u));
+    if (state.sort === "tons") list = [...list].sort((a, b) => a.tons - b.tons);
+    const pr = (u, d) => u.price == null ? d : u.price;
+    if (state.sort === "price-asc") list = [...list].sort((a, b) => pr(a, Infinity) - pr(b, Infinity));
+    if (state.sort === "price-desc") list = [...list].sort((a, b) => pr(b, -Infinity) - pr(a, -Infinity));
+    $("#resultCount").textContent = `${list.length} product${list.length === 1 ? "" : "s"}`;
+    const grid = $("#grid");
+    if (!list.length) {
+      const cat = CATS.find(c => c.key === state.cat);
+      const active = [
+        state.brands.size && `Brand: ${[...state.brands].join(", ")}`,
+        state.tons.size && `Tonnage: ${[...state.tons].sort((a, b) => a - b).join(", ")} ton`,
+        state.q && `Search: "${state.q}"`,
+        state.sub !== "all" && `Type: ${TYPE_LABELS[state.sub] || state.sub}`,
+      ].filter(Boolean);
+      grid.innerHTML = INV.some(cat.test)
+        ? `<div class="empty"><b>No ${cat.label.toLowerCase()} match your filters</b>${active.length ? `Active filters: ${esc(active.join(" · "))}<br>` : ""}
+           <button class="btn btn-cta" type="button" data-clear-filters style="margin-top:12px">Clear filters</button></div>`
+        : `<div class="empty"><b>${cat.label}: coming soon</b>We're adding these now. Text us what you need and we'll check availability.</div>`;
+      return;
+    }
+    grid.innerHTML = list.map(cardHTML).join("");
+  }
+
+  function cardHTML(u) {
+    {
+      const q = Object.entries(order).reduce((n, [k, v]) => n + (k.split("::")[0] === u.id ? v : 0), 0);
+      const std = heatOf(u);
+      const stock = u.inStock == null ? '<span class="badge stock">Available</span>' : u.inStock > 0 ? `<span class="badge stock">${u.inStock} in stock</span>` : '<span class="badge stock out">Call for availability</span>';
+      const items = u.components
+        ? partsOf(u, std).map(c => `<div><b>${esc(c.role)}:</b> ${esc(c.model)}</div>`).join("")
+        : `<div><b>Model:</b> ${esc(u.model)}</div>`;
+      const chips = [u.seer2 && `<span class="chip hi">${u.seer2} SEER2</span>`, u.eer2 && `<span class="chip">${u.eer2} EER2</span>`,
+        u.hspf2 && `<span class="chip">${u.hspf2} HSPF2</span>`, u.afue && `<span class="chip hi">${u.afue}% AFUE</span>`,
+        ...(u.chips || []).filter(Boolean).map(c => `<span class="chip">${esc(c)}</span>`),
+        u.refrigerant && `<span class="chip">${esc(u.refrigerant)}</span>`].filter(Boolean).join("");
+      return `<article class="card" data-card="${u.id}">
+        <div class="card-img"><span class="badge">${u.badge || u.tons + " TON"}</span>${stock}${u.image ? `<img src="${u.image}" alt="${esc(title(u))}" loading="lazy">` : ""}</div>
+        <div class="card-body">
+          <div class="card-brand">${badge(u.brand)}</div>
+          <div class="card-title">${esc(title(u))}</div>
+          <div class="items">${items}</div>
+          <div class="chips">${chips}</div>
+          ${u.heatText && !std ? `<div class="heat-line"><b>Heat:</b> ${esc(u.heatText)}</div>` : ""}
+          ${(() => {
+            if (!/Condenser/.test(u.type)) return "";
+            const sys = INV.find(x => x.type === (u.type === "Condenser" ? "Electric AC System" : "Heat Pump System") && x.tons === u.tons && x.price != null);
+            return sys ? `<div class="system-line">Complete ${u.tons}-ton system from <b>${money(sys.price)}</b> · <button type="button" data-specs="${sys.id}">See system</button></div>` : "";
+          })()}
+          ${u.heatNote ? `<div class="heat-line"><b>${esc(u.heatNote)}</b></div>` : std ? `<div class="heat-line"><b>${std.desc} standard</b>${u.heatOptions.length > 1 ? ` · ${u.heatOptions.filter(o => o !== std).map(o => o.label).join(" or ")} available` : ""}${u.afue ? ` · ${u.afue}% AFUE` : ""}</div>` : ""}
+          ${u.price == null
+            ? `<div class="price-row"><span class="price" style="font-size:20px">Call for price</span></div>`
+            : `<div class="price-row">${u.listPrice > u.price ? `<span class="acct-tag">Your price</span>` : ""}<span class="price">${money(u.price)}</span> <small style="color:var(--muted)">/ ${u.unit || "system"}</small>${u.listPrice > u.price ? ` <s class="list-price">${money(u.listPrice)}</s>` : ""}</div>`}
+          <div class="ship-line"><svg><use href="#i-truck"/></svg>${u.commercial ? "Free freight to your job site · forklift needed to unload" : `Free shipping nationwide · ships in ${S.shipsIn}`}</div>
+          ${pickupOff(u) && u.price != null ? `<div class="pickup-line">Local pickup in DFW: <b>${money(u.price - pickupOff(u))}</b></div>` : ""}
+          ${u.price == null
+            ? `<div class="buy"><a class="btn btn-cta" href="${askLink(u)}">Text us for price</a></div>`
+            : `<div class="buy">
+            <input class="qty-in" type="number" min="1" value="1" aria-label="Quantity" data-qty="${u.id}">
+            <button class="btn btn-cta" type="button" data-add="${u.id}">Add To Order</button>
+          </div>`}
+          ${q ? `<div class="in-order">✓ ${q} in your order · <a href="#" data-review>Review</a></div>` : ""}
+          ${u.components ? `<button class="btn btn-gray" type="button" data-specs="${u.id}">View Specs</button>` : ""}
+        </div>
+      </article>`;
+    }
+  }
+
+  function change(id, d) {
+    order[id] = Math.max(0, (order[id] || 0) + d);
+    if (!order[id]) delete order[id];
+    save(); render(); updateOrder();
+  }
+  const onCardClick = e => {
+    if (e.target.closest("[data-review]")) { e.preventDefault(); return openDrawer(); }
+    if (e.target.closest(".buy, .qty-in")) {
+      const add = e.target.closest("[data-add]");
+      if (add) {
+        const qty = Math.max(1, parseInt(add.closest(".card").querySelector("[data-qty]").value, 10) || 1);
+        change(keyOf(byId(add.dataset.add)), qty);
+        flash(add);
+      }
+      return;
+    }
+    const specs = e.target.closest("[data-specs]");
+    const card = e.target.closest("[data-card]");
+    const id = specs?.dataset.specs || card?.dataset.card;
+    if (id && byId(id)?.components) openSpecs(id);   // clicking anywhere on a card opens the product page
+  };
+  $("#grid").addEventListener("click", onCardClick);
+  $("#featuredGrid").addEventListener("click", onCardClick);
+  function flash(btn) {
+    const b = $(`[data-add="${btn.dataset.add}"]`); if (!b) return;
+    b.textContent = "Added ✓";
+    setTimeout(() => { const n = $(`[data-add="${btn.dataset.add}"]`); if (n) n.textContent = "Add To Order"; }, 1200);
+  }
+  $("#lines").addEventListener("click", e => {
+    const t = e.target.closest("button[data-id]"); if (t) change(t.dataset.id, +t.dataset.d);
+  });
+
+  // ---------- Delivery: shipping is free and built into prices; only the liftgate is extra.
+  const units = () => Object.values(order).reduce((a, b) => a + b, 0);
+  const equipment = () => Object.entries(order).reduce((s, [k, q]) => { const it = parseKey(k); return s + (it ? priceOf(it.u, it.heat) * q : 0); }, 0);
+  const method = () => $('input[name="ship"]:checked').value;
+  const inRanges = (z3, ranges) => ranges.some(([lo, hi]) => z3 >= lo && z3 <= hi);
+  const pickupSavings = () => Object.entries(order).reduce((s, [k, q]) => s + pickupOff(parseKey(k)?.u || {}) * q, 0);
+  const nearSavings = () => Object.entries(order).reduce((s, [k, q]) => s + Pricing.nearDfwOff(parseKey(k)?.u || {}, S) * q, 0);
+
+  function zipInfo() {
+    const zip = $("#zip").value.trim();
+    if (!/^\d{5}$/.test(zip)) return { ok: false, zip, msg: "Enter the ZIP code so we can check shipping and efficiency rules." };
+    const z3 = +zip.slice(0, 3);
+    if (z3 <= 9 || (z3 >= 967 && z3 <= 969) || z3 >= 995)
+      return { ok: false, zip, offshore: true, msg: "Alaska, Hawaii and territories aren't included in free shipping. We'll quote freight on your invoice." };
+    const region = Object.keys(S.regions).find(r => inRanges(z3, S.regions[r])) || "North";
+    return { ok: true, zip, region };
+  }
+
+  // Split AC units below the regional SEER2 minimum can't be installed new in the Southeast/Southwest.
+  function failsEfficiency(u, region) {
+    if (region === "North" || /Heat Pump/.test(u.type) || !/AC System|Condenser/.test(u.type) || u.seer2 == null) return false;
+    const min = u.tons >= 3.75 ? S.minAcSeer2South.over45k : S.minAcSeer2South.under45k;
+    return u.seer2 < min;
+  }
+
+  function updateOrder() {
+    const n = units(), eq = equipment(), shipping = method() === "freight";
+    $("#lines").innerHTML = Object.entries(order).map(([k, q]) => {
+      const it = parseKey(k); if (!it) return "";
+      const { u, heat } = it, each = priceOf(u, heat);
+      const fn = fitNote(u, heat);
+      return `<div class="line"><div><b>${esc(title(u))}${heat?.part ? ` · ${heatLabel(heat)}` : ""}</b><small>${esc(models(u, heat))} · ${money(each)} each</small>${fn ? `<small class="fit">Transition needed at install (furnace wider than coil)</small>` : ""}<br>
+        <span class="step-qty"><button type="button" data-id="${k}" data-d="-1" aria-label="Less">−</button><span>${q}</span><button type="button" data-id="${k}" data-d="1" aria-label="More">+</button></span></div>
+        <div>${money(each * q)}</div></div>`;
+    }).join("") || '<p class="fine" style="padding:12px 0">No items yet. Add some from the catalog.</p>';
+
+    const z = zipInfo();
+    const hasCom = Object.keys(order).some(k => parseKey(k)?.u.commercial);
+    const onlyCom = hasCom && Object.keys(order).every(k => parseKey(k)?.u.commercial);
+    $("#liftgateRow").hidden = !shipping || onlyCom;   // a liftgate can't handle a rooftop unit
+    $("#comUnloadWrap").hidden = !shipping || !hasCom;
+    $("#payWrap").hidden = shipping;
+    $("#zip").placeholder = shipping ? "ZIP code where it's going" : "ZIP code where it'll be installed";
+    const lift = shipping && !onlyCom && $("#liftgate").checked ? S.liftgatePrice : 0;
+    const status = $("#zipStatus");
+    status.className = "zip-status" + (!z.ok && z.zip.length === 5 ? " err" : "");
+    status.textContent = z.ok ? (shipping ? (Pricing.nearDfw(z.zip, S) ? `Near DFW: lower delivery price to ${z.zip} · ships in ${S.shipsIn}` : `Free curbside shipping to ${z.zip} · ships in ${S.shipsIn}`) : `Installing in ${z.zip}`) : z.msg;
+
+    const bad = z.ok ? Object.keys(order).map(k => parseKey(k)?.u).filter(u => u && failsEfficiency(u, z.region)) : [];
+    $("#effNote").hidden = !bad.length;
+    if (bad.length) $("#effNote").textContent = `Heads up: ${bad.map(u => `${u.tons}-ton ${u.seer2} SEER2`).join(", ")} doesn't meet the ${z.region} efficiency minimum for new AC installs. Pick a higher-SEER2 unit, or text us.`;
+
+    const near = shipping && z.ok && Pricing.nearDfw(z.zip, S);
+    const disc = shipping ? (near ? nearSavings() : 0) : pickupSavings();
+    $("#tDiscLabel").textContent = shipping ? "Near-DFW delivery discount" : "Local pickup discount";
+    $("#bZipShow").value = z.zip || "";
+    $("#pickupTag").textContent = pickupSavings() ? "−" + money(pickupSavings()) : "FREE";
+    $("#tEquip").textContent = money(eq);
+    $("#tShipLabel").textContent = shipping ? (lift ? "Shipping + liftgate" : "Shipping") : "Local pickup (DFW)";
+    $("#tShip").textContent = shipping && z.offshore ? "Quote" : lift ? money(lift) : "FREE";
+    $("#tDiscRow").hidden = !disc;
+    $("#tDisc").textContent = "−" + money(disc);
+    $("#tTotal").textContent = money(eq + lift - disc);
+
+    $("#orderBar").classList.toggle("show", n > 0);
+    $("#orderCount").textContent = n;
+    $("#barTotal").textContent = money(eq - disc);
+    $("#barCount").textContent = `${n} item${n === 1 ? "" : "s"} · ${shipping ? (disc ? "near-DFW delivery, " + money(disc) + " off" : "free shipping") : "local pickup, " + money(disc) + " off"}`;
+
+    ["#sendSms", "#sendEmail"].forEach(s => $(s).setAttribute("aria-disabled", !n));
+    const body = encodeURIComponent(orderText(z, shipping, eq, lift, hasCom));
+    $("#sendSms").href = `sms:${B.sms}?&body=${body}`;
+    $("#sendEmail").href = `mailto:${B.email}?subject=${encodeURIComponent("Equipment order")}&body=${body}`;
+  }
+
+  function orderText(z, shipping, eq, lift, hasCom) {
+    const lines = Object.entries(order).map(([k, q]) => {
+      const it = parseKey(k); if (!it) return null;
+      const { u, heat } = it;
+      return `${q} x ${title(u)}${heat?.part ? ` w/ ${heatLabel(heat)}` : ""} (${models(u, heat)}) @ ${money(priceOf(u, heat))}` +
+        (fitNote(u, heat) ? " [furnace wider than coil: transition needed]" : "");
+    }).filter(Boolean);
+    const where = z.zip ? ` to ZIP ${z.zip}` : " (ZIP not given)";
+    const near = shipping && z.ok && Pricing.nearDfw(z.zip, S);
+    const disc = shipping ? (near ? nearSavings() : 0) : pickupSavings();
+    const ship = shipping
+      ? (z.offshore ? `Delivery: SHIP${where} (Alaska/Hawaii, please quote freight)` : `Delivery: FREE SHIPPING${where}`) + (near ? ` (near DFW: −${money(disc)})` : "") + (lift ? `\nLiftgate: yes (+${money(lift)})` : "") +
+        (hasCom ? `\nCommercial unloading: ${$("#comUnload").checked ? "NEED HELP (forklift/crane), please quote" : "we will have a forklift on site"}` : "")
+      : `Delivery: LOCAL PICKUP in ${B.pickupArea}` + (disc ? ` (−${money(disc)} pickup discount)` : "") + (z.zip ? `, installing in ${z.zip}` : "") +
+        `\nPayment: ${$('input[name="pay"]:checked').value === "cash" ? "CASH at pickup" : "pay ahead (ACH/Zelle/card)"}`;
+    const company = $("#company").value.trim(), lic = $("#license").value.trim();
+    const bi = buyerInfo();
+    const buyer = `\nName: ${bi.name}\nPhone: ${bi.phone}\nEmail: ${bi.email}\nAddress: ${[bi.street, bi.apt, bi.city, bi.state, z.zip].filter(Boolean).join(", ")}` +
+      (bi.warrantyAck ? "\nWarranty: agreed, Northgate registers the warranty" : "");
+    return `Hi, I'd like to order:\n${lines.join("\n")}\n${ship}\nTotal: ${money(eq + lift - disc)}` + buyer +
+      (company ? `\nCompany: ${company}` : "") + (lic ? `\nLicense #: ${lic}` : "") +
+      (window.NGRep?.code() ? `\nRep: ${window.NGRep.code()}` : "") +
+      (window.I18N?.lang === "es" ? "\n(Customer prefers Spanish / Prefiere español)" : "");
+  }
+
+  $$('input[name="ship"]').forEach(r => r.addEventListener("change", updateOrder));
+  $("#drawer").addEventListener("input", updateOrder);
+  $("#drawer").addEventListener("change", updateOrder);
+
+  // ---------- Product detail
+  let specsId = null, specsHeat = null;
+  function gallery(u, src) {
+    $("#galleryMain").src = src; $("#galleryMain").alt = title(u);
+    $$("#thumbs button").forEach(b => b.setAttribute("aria-current", b.dataset.src === src));
+  }
+  // Tab 0 is the overview (what's included); tabs 1..n are each component's spec sheet.
+  function showTab(u, i) {
+    $$("#specTabs button").forEach((b, j) => b.setAttribute("aria-selected", i === j));
+    if (i === 0) {
+      $("#specPanel").innerHTML = `<table class="included"><thead><tr><th></th><th>Included</th><th>Model</th><th>Description</th></tr></thead><tbody>` +
+        partsOf(u, heatOf(u, specsHeat)).map((c, k) => `<tr><td>${c.image ? `<img src="${c.image}" alt="">` : ""}</td><td><b>${esc(c.role)}</b></td>
+          <td><button type="button" data-tab="${k + 1}">${esc(c.model)}</button></td><td>${esc(c.name)}</td></tr>`).join("") + `</tbody></table>`;
+      return;
+    }
+    const c = partsOf(u, heatOf(u, specsHeat))[i - 1];
+    if (c.image) gallery(u, c.image);
+    $("#specPanel").innerHTML = `<div class="comp-head">${c.image ? `<img src="${c.image}" alt="${esc(c.role)} ${esc(c.model)}">` : "<span></span>"}
+        <div><h3>${esc(c.role)}: ${esc(c.model)}</h3><div class="sub">${esc(c.name)}</div>
+        ${c.highlights?.length ? `<ul class="highlights">${c.highlights.map(h => `<li>${esc(h)}</li>`).join("")}</ul>` : ""}</div></div>
+      <table class="spec-table"><caption>Specifications</caption><tbody>${Object.entries(c.specs).map(([k, v]) => `<tr><th>${esc(k)}</th><td>${esc(v)}</td></tr>`).join("")}</tbody></table>`;
+  }
+  function openSpecs(id) {
+    const u = byId(id); if (!u) return;
+    specsId = id;
+    specsHeat = heatOf(u)?.model || null;
+    $("#specsCat").innerHTML = `${badge(u.brand)} &nbsp;${u.unit === "each" ? "Individual part · " : ""}${esc(u.type)}`;
+    $("#comDeliver").hidden = !u.commercial;
+    $("#specsTitle").textContent = title(u);
+    renderSpecsParts(u);
+    const pics = renderTabsAndThumbs(u);
+    gallery(u, pics[0] || "");
+    $("#specsQty").value = 1;
+    renderSpecsPrice(u);
+    showTab(u, 0);
+    $("#specsBg").classList.add("open");
+    $("#specsBg").scrollTop = 0;
+  }
+  // Tabs and thumbnails follow the selected option (e.g. adding a heat kit to an air handler adds its tab).
+  function renderTabsAndThumbs(u) {
+    const parts = partsOf(u, heatOf(u, specsHeat));
+    const pics = [...new Set([u.image, ...parts.map(c => c.image)].filter(Boolean))];
+    $("#thumbs").innerHTML = pics.map(p => `<button type="button" data-src="${p}"><img src="${p}" alt=""></button>`).join("");
+    $("#specTabs").innerHTML = [`<button type="button" role="tab" data-tab="0">What's Included</button>`,
+      ...parts.map((c, i) => `<button type="button" role="tab" data-tab="${i + 1}">${esc(c.role)} Specs</button>`)].join("");
+    return pics;
+  }
+  function renderSpecsParts(u) {
+    const heat = heatOf(u, specsHeat);
+    $("#specsItems").innerHTML = partsOf(u, heat).map(c => `<div><b>${esc(c.role)}:</b> ${esc(c.model)}</div>`).join("");
+    const ks = [["Cooling", u.tons ? `${u.tons} Ton` : null], ...(u.keySpecsExtra || []), ["SEER2", u.seer2 ? (u.seer2Exact ? `${u.seer2}` : `Up to ${u.seer2}`) : null], ["EER2", u.eer2 ? `Up to ${u.eer2}` : null],
+      ["HSPF2", u.hspf2 ? `Up to ${u.hspf2}` : null], ["Heat", heat ? heat.spec : (u.heatText || null)],
+      ["Refrigerant", u.refrigerant], ["Voltage", u.voltage || u.components?.[0]?.specs?.["Voltage / Phase"]]].filter(([, v]) => v != null);
+    $("#keySpecs").innerHTML = ks.map(([k, v]) => `<div><small>${k}</small><b>${esc(v)}</b></div>`).join("");
+    $("#heatWrap").hidden = !u.heatOptions || u.heatOptions.length < 2;
+    $("#heatChoice").innerHTML = (u.heatOptions || []).map(o => o.add == null
+      ? `<button type="button" disabled style="opacity:.55;cursor:not-allowed"><b>${o.label}</b><small>Price coming soon</small></button>`
+      : `<button type="button" data-heat="${o.model}" aria-pressed="${o.model === heat?.model}">
+      <b>${o.label}</b><small class="${o.add ? "" : "std"}">${o.add ? signed(o.add) : (o.part ? "Standard" : "Base price")}</small></button>`).join("");
+    $("#heatWrap .opt-label").textContent = u.optionTitle || "Options";
+    const fn = fitNote(u, heat);
+    $("#fitNote").hidden = !fn;
+    $("#fitNote").innerHTML = fn ? `<svg><use href="#i-alert"/></svg><span><b>Size note:</b> ${esc(fn)}</span>` : "";
+  }
+  $("#heatChoice").addEventListener("click", e => {
+    const b = e.target.closest("[data-heat]"); if (!b) return;
+    const u = byId(specsId);
+    specsHeat = b.dataset.heat;
+    const cur = $$("#specTabs button").findIndex(t => t.getAttribute("aria-selected") === "true");
+    renderSpecsParts(u); renderSpecsPrice(u); renderTabsAndThumbs(u);
+    showTab(u, Math.min(Math.max(0, cur), $$("#specTabs button").length - 1));
+  });
+  function renderSpecsPrice(u) {
+    const noPrice = u.price == null;
+    $("#specsAdd").hidden = noPrice; $("#specsQty").hidden = noPrice;
+    $("#specsAsk").hidden = !noPrice; $("#specsAsk").href = askLink(u);
+    if (noPrice) {
+      $("#shipChoice").hidden = true;
+      $("#shipLabel").hidden = true;
+      $("#specsPrice").innerHTML = `<span style="font-size:24px">Call for price</span>`;
+      $("#specsShipNote").textContent = `Free shipping nationwide · ships in ${S.shipsIn}`;
+      $("#specsMonthly").innerHTML = "";
+      return;
+    }
+    const pick = method() === "pickup" && pickupOff(u);
+    const base = priceOf(u, heatOf(u, specsHeat));
+    $("#shipChoice").hidden = !pickupOff(u);
+    $("#shipLabel").hidden = !pickupOff(u);
+    $("#helpNoun").textContent = u.unit === "each" ? "part" : u.commercial ? "unit" : "system";
+    $("#specsSave").textContent = `Save ${money(pickupOff(u))} → ${money(base - pickupOff(u))}`;
+    $$("[data-ship-pick]").forEach(b => b.setAttribute("aria-pressed", b.dataset.shipPick === method()));
+    const list = u.listPrice > u.price ? u.listPrice + (heatOf(u, specsHeat)?.add || 0) : null;
+    $("#specsPrice").innerHTML = `${list ? `<span class="acct-tag">Your contractor price</span><br>` : ""}${money(pick ? base - pickupOff(u) : base)} <small>/ ${u.unit || "system"}</small>${list ? ` <s class="list-price">${money(pick ? list - pickupOff(u) : list)}</s>` : ""}`;
+    $("#specsShipNote").textContent = pick ? `Local pickup in DFW · you save ${money(pickupOff(u))}` : u.commercial ? "Free freight to your job site · forklift needed to unload" : `Free shipping nationwide · ships in ${S.shipsIn}`;
+    // Monthly payments line (account.js swaps in Stripe's official Affirm/Klarna message when Stripe is connected).
+    const amount = pick ? base - pickupOff(u) : base;
+    $("#specsMonthly").innerHTML = `Or <b>pay monthly</b> with Affirm or Klarna. Pick it at checkout.`;
+    document.dispatchEvent(new CustomEvent("ng:price", { detail: { amount } }));
+  }
+  $("#thumbs").addEventListener("click", e => { const b = e.target.closest("button"); if (b) gallery(byId(specsId), b.dataset.src); });
+  $("#shipChoice").addEventListener("click", e => {
+    const b = e.target.closest("[data-ship-pick]"); if (!b) return;
+    $(`input[name="ship"][value="${b.dataset.shipPick}"]`).checked = true;
+    renderSpecsPrice(byId(specsId)); updateOrder();
+  });
+  [$("#specTabs"), $("#specPanel")].forEach(el => el.addEventListener("click", e => {
+    const t = e.target.closest("[data-tab]"); if (t) showTab(byId(specsId), +t.dataset.tab);
+  }));
+  function closeSpecs() { $("#specsBg").classList.remove("open"); }
+  $("#closeSpecs").onclick = closeSpecs;
+  $("#specsBg").addEventListener("click", e => { if (e.target.id === "specsBg") closeSpecs(); });
+  $("#specsAdd").onclick = () => {
+    change(keyOf(byId(specsId), specsHeat), Math.max(1, parseInt($("#specsQty").value, 10) || 1));
+    closeSpecs(); openDrawer();
+  };
+
+  // ---------- Wholesale quote request
+  function wsText() {
+    const v = id => $("#" + id).value.trim();
+    const own = $('input[name="wsShip"]:checked').value === "own";
+    return [
+      "Hi, I'd like WHOLESALE pricing.",
+      v("wsCompany") && `Company: ${v("wsCompany")}`,
+      v("wsName") && `Name: ${v("wsName")}`,
+      `Systems per order: ${v("wsVolume")} · ${v("wsFreq")}`,
+      own ? `Freight: I'll use my own carrier (pickup in ${B.pickupArea})` : "Freight: please ship it",
+      v("wsZip") && `Delivery ZIP/state: ${v("wsZip")}`,
+      v("wsLicense") && `License #: ${v("wsLicense")}`,
+      v("wsNotes") && `Need: ${v("wsNotes")}`,
+    ].filter(Boolean).join("\n");
+  }
+  function updateWs() {
+    const body = encodeURIComponent(wsText());
+    $("#wsSms").href = `sms:${B.sms}?&body=${body}`;
+    $("#wsEmail").href = `mailto:${B.email}?subject=${encodeURIComponent("Wholesale pricing request")}&body=${body}`;
+  }
+  // ---------- Contractor account application (goes to the owner by text/email; accounts are set up by the salesperson)
+  function caText() {
+    const v = id => $("#" + id).value.trim();
+    return [
+      `Hi, I'd like an account: ${$('input[name="caType"]:checked').value}.`,
+      `Role: ${v("caRole")}`,
+      (v("caCity") || v("caSt")) && `Location: ${[v("caCity"), v("caSt").toUpperCase()].filter(Boolean).join(", ")}`,
+      v("caAreas") && `Areas served: ${v("caAreas")}`,
+      v("caZip") && `ZIP: ${v("caZip")}${Pricing.nearDfw(v("caZip"), S) ? " (within ~2 hrs of DFW)" : ""}`,
+      window.NGRep?.code() && `Referred by rep: ${window.NGRep.code()}`,
+      v("caName") && `Name: ${v("caName")}`,
+      v("caCompany") && `Company: ${v("caCompany")}`,
+      v("caPhone") && `Phone: ${v("caPhone")}`,
+      v("caEmail") && `Email: ${v("caEmail")}`,
+      (v("caLicense") || v("caState")) && `License: ${v("caLicense")} ${v("caState")}`.trim(),
+      `Installs per month: ${v("caVolume")} · ${v("caWork")}`,
+    ].filter(Boolean).join("\n");
+  }
+  function caZipNote() {
+    const zip = $("#caZip").value.trim(), local = $('input[name="caType"]:checked').value.startsWith("Local");
+    const el = $("#caZipNote");
+    if (!/^\d{5}$/.test(zip)) { el.textContent = ""; el.className = "ca-zip-note"; return; }
+    const near = Pricing.nearDfw(zip, S);
+    el.className = "ca-zip-note " + (near ? "ok" : local ? "far" : "");
+    el.textContent = near ? "✓ Within our local area (about 2 hours of DFW)" : local ? "Outside our local area, but apply as a contractor or text us" : "";
+  }
+  function updateCa() {
+    caZipNote();
+    const body = encodeURIComponent(caText());
+    $("#caSms").href = `sms:${B.sms}?&body=${body}`;
+    $("#caEmailBtn").href = `mailto:${B.email}?subject=${encodeURIComponent("Contractor account application")}&body=${body}`;
+  }
+  function openCa() { closeSpecs(); closeDrawer(); closeWs(); updateCa(); $("#caBg").classList.add("open"); }
+  function closeCa() { $("#caBg").classList.remove("open"); }
+  document.addEventListener("click", e => { if (e.target.closest?.("[data-contractor]")) { e.preventDefault(); openCa(); } });
+  $("#caForm").addEventListener("input", updateCa);
+  $("#caForm").addEventListener("change", updateCa);
+  $("#caForm").addEventListener("submit", e => e.preventDefault());
+  $("#closeCa").onclick = closeCa;
+  $("#caBg").addEventListener("click", e => { if (e.target.id === "caBg") closeCa(); });
+
+  function openWs() { closeSpecs(); closeDrawer(); updateWs(); $("#wsBg").classList.add("open"); }
+  function closeWs() { $("#wsBg").classList.remove("open"); }
+  document.addEventListener("click", e => { if (e.target.closest?.("[data-wholesale]")) { e.preventDefault(); openWs(); } });
+  $("#wsForm").addEventListener("input", updateWs);
+  $("#wsForm").addEventListener("change", updateWs);
+  $("#wsForm").addEventListener("submit", e => e.preventDefault());
+  $("#closeWs").onclick = closeWs;
+  $("#wsBg").addEventListener("click", e => { if (e.target.id === "wsBg") closeWs(); });
+
+  // ---------- Drawer
+  function openDrawer() { $("#drawer").classList.add("open"); $("#drawerBg").classList.add("open"); updateOrder(); }
+  function closeDrawer() { $("#drawer").classList.remove("open"); $("#drawerBg").classList.remove("open"); }
+  $("#openDrawer").onclick = openDrawer;
+  $("#headerOrder").onclick = openDrawer;
+  $("#closeDrawer").onclick = closeDrawer;
+  $("#drawerBg").onclick = closeDrawer;
+  document.addEventListener("keydown", e => { if (e.key === "Escape") { closeSpecs(); closeDrawer(); closeWs(); closeCa(); } });
+
+  setCat("home"); updateOrder();
+
+  // ---------- Bulk / contractor pricing pop-up: once, a few seconds in; closed = stays closed.
+  (function promo() {
+    const box = $("#promo");
+    const KEY = "promoClosed";
+    let closed = false;
+    try { closed = localStorage.getItem(KEY) === "1"; } catch (e) {}
+    if (closed) return;
+    const busy = () => $$(".modal-bg.open, .drawer.open, .notice-bg").length > 0 || !!$("#acctBanner:not([hidden])");
+    const close = () => { box.classList.remove("in"); setTimeout(() => { box.hidden = true; }, 300); try { localStorage.setItem(KEY, "1"); } catch (e) {} };
+    const show = () => {
+      if (busy()) return setTimeout(show, 4000);          // wait until no product page / order / form is open
+      box.hidden = false; requestAnimationFrame(() => box.classList.add("in"));
+    };
+    setTimeout(show, 8000);
+    $("#promoClose").onclick = close;
+    box.addEventListener("click", e => { if (e.target.closest("[data-promo-go]")) close(); });
+    // Sit above the order bar when it's showing.
+    new MutationObserver(() => document.body.classList.toggle("has-order", $("#orderBar").classList.contains("show")))
+      .observe($("#orderBar"), { attributes: true, attributeFilter: ["class"] });
+  })();
+
+  // ---------- Buyer details: required before any order (warranty registration + delivery)
+  function buyerInfo() {
+    const v = id => $("#" + id).value.trim();
+    return { name: v("bName"), phone: v("bPhone"), email: v("bEmail"), street: v("bStreet"), apt: v("bApt"), city: v("bCity"),
+      state: v("bState").toUpperCase(), company: v("company"), license: v("license"), warrantyAck: $("#warrantyAck").checked };
+  }
+  function checkBuyer() {
+    const need = [["bName", "full name"], ["bPhone", "phone"], ["bEmail", "email"], ["bStreet", "street address"], ["bCity", "city"], ["bState", "state"]];
+    const missing = need.filter(([id]) => !$("#" + id).value.trim());
+    const badEmail = $("#bEmail").value.trim() && !/^\S+@\S+\.\S+$/.test($("#bEmail").value.trim());
+    const z = zipInfo();
+    need.forEach(([id]) => $("#" + id).classList.toggle("invalid", missing.some(m => m[0] === id) || (id === "bEmail" && badEmail)));
+    $("#warrantyAckRow").classList.toggle("invalid", !$("#warrantyAck").checked);
+    const problems = [...missing.map(m => m[1]), ...(badEmail ? ["a valid email"] : []), ...(!z.ok && !z.offshore ? ["ZIP code"] : [])];
+    let msg = problems.length ? `Please fill in your ${problems.join(", ")}.` : "";
+    if (!$("#warrantyAck").checked) msg += (msg ? " " : "") + "Check the warranty box to continue.";
+    $("#buyerError").hidden = !msg; $("#buyerError").textContent = msg;
+    if (msg) (missing[0] ? $("#" + missing[0][0]) : !z.ok ? $("#zip") : $("#warrantyAck")).focus();
+    return !msg;
+  }
+  ["#sendSms", "#sendEmail"].forEach(sel => $(sel).addEventListener("click", e => {
+    if (!units()) { e.preventDefault(); return; }
+    if (!checkBuyer()) e.preventDefault();
+    else updateOrder();   // make sure the message has the latest details
+  }));
+  $("#drawer").addEventListener("input", e => { if (e.target.closest("#buyerForm") || e.target.id === "warrantyAck") { e.target.classList.remove("invalid"); updateOrder(); } });
+  $("#warrantyAck").addEventListener("change", () => { $("#warrantyAckRow").classList.remove("invalid"); if (!$("#buyerError").hidden) checkBuyer(); updateOrder(); });
+
+  // Hooks for account.js (contractor sign-in, online checkout).
+  window.NG = {
+    INV, S, B, money, title, byId, parseKey, priceOf, pickupOff, method, zipInfo,
+    get order() { return order; },
+    clearOrder() { order = {}; save(); render(); updateOrder(); },
+    refresh() { render(); updateOrder(); if (specsId && $("#specsBg").classList.contains("open")) { const u = byId(specsId); renderSpecsParts(u); renderSpecsPrice(u); } },
+    openContractor: openCa, closeContractor: closeCa, closeDrawer,
+    deliveryInfo: () => ({ method: method(), zip: $("#zip").value.trim(), liftgate: $("#liftgate").checked, comUnload: $("#comUnload").checked }),
+    customerInfo: () => buyerInfo(),
+    checkBuyer,
+    specsItem: () => specsId && $("#specsBg").classList.contains("open") ? byId(specsId) : null,
+  };
+  document.dispatchEvent(new Event("ng:ready"));
+})();
+</script>
+<script src="account.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>
