@@ -497,6 +497,14 @@
     "Ships to your job site by freight truck. Have a forklift on site to unload, or we can arrange unloading for an extra charge.":
       "Se envían a su obra en camión de carga. Tenga un montacargas en el sitio para descargar, o podemos coordinar la descarga con un cargo extra.",
     "Shop commercial units →": "Ver unidades comerciales →", "Get a project quote": "Pida una cotización de proyecto",
+    "HOME SYSTEMS · FREE SHIPPING": "SISTEMAS RESIDENCIALES · ENVÍO GRATIS",
+    "Complete home AC & heating systems, 1.5 to 5 tons": "Sistemas completos de A/C y calefacción para el hogar, de 1.5 a 5 toneladas",
+    "Matched Carrier, Trane and Goodman systems: electric, gas furnace and heat pump. Free shipping nationwide is built into every price, or pick up in DFW and save.":
+      "Sistemas combinados Carrier, Trane y Goodman: eléctricos, con horno de gas y bomba de calor. El envío gratis a todo el país está incluido en cada precio, o recójalos en DFW y ahorre.",
+    "Ships in 3–5 business days by freight truck to your curb. Monthly payments available with Klarna.":
+      "Se envían en 3 a 5 días hábiles en camión de carga hasta su banqueta. Pagos mensuales disponibles con Klarna.",
+    "Shop home systems →": "Ver sistemas residenciales →", "Save with DFW pickup": "Ahorre recogiendo en DFW",
+    "systems to choose from": "sistemas para elegir",
     "Brands we carry": "Marcas que vendemos",
     "Terms of Sale": "Términos de venta", "Privacy Policy": "Política de privacidad", "Terms": "Términos", "Privacy": "Privacidad",
     "By placing an order you agree to our": "Al hacer un pedido acepta nuestros", "and": "y",
@@ -657,6 +665,7 @@
     [/^([\d.]+) to ([\d.]+) ton · (R-[\w-]+) \/ (R-[\w-]+)$/, "$1 a $2 toneladas · $3 / $4"],
     [/^(\d+) commercial rooftop units$/, "$1 unidades comerciales de techo"],
     [/^(\d+) units · ([\d.]+) to ([\d.]+) ton$/, "$1 unidades · $2 a $3 toneladas"],
+    [/^(\d+) systems · ([\d.]+) to ([\d.]+) ton$/, "$1 sistemas · $2 a $3 toneladas"],
     [/^Shop (\w+) →$/, "Ver $1 →"],
     [/^from (\$[\d,]+)$/, "desde $1"],
     [/^([\d.]+) Ton$/, "$1 toneladas"],

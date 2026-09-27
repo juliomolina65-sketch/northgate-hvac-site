@@ -267,6 +267,13 @@
   .com-types b { color: var(--link); font-weight: 500; }
   .com-types small { color: var(--muted); font-size: 12.5px; }
   .com-types .from { color: var(--ok); font-weight: 700; white-space: nowrap; }
+  .res-banner { border-top-color: var(--brand); }
+  .res-banner .com-copy .pill { background: #e8f0fa; color: var(--brand); border-color: #bcd0ea; }
+  .res-banner .com-stage { background: #eef1f5; }
+  .res-banner .com-stage::after { display: none; }
+  .res-banner .com-stage .full { inset: 0; width: 100%; height: 100%; object-fit: cover; mix-blend-mode: normal; }
+  .com-stats b { white-space: nowrap; }
+  @media (max-width: 960px) { .res-banner .com-stage { min-height: 0; aspect-ratio: 4 / 3; } }
   nav.cats button.hot::after { content: "NEW"; margin-left: 6px; background: #f2b33d; color: #1c1300; font-size: 10px; font-weight: 800; padding: 1px 5px; border-radius: 3px; vertical-align: 1px; }
   .com-deliver { font-size: 13px; line-height: 1.45; background: var(--warn-bg); color: var(--warn-ink); border: 1px solid #efdc9f; border-radius: var(--radius); padding: 9px 11px; margin: 0 0 12px; }
   .com-deliver ul { margin: 4px 0 0; padding-left: 18px; }
@@ -651,26 +658,25 @@
       <div class="bb-buttons" id="brandBar"></div>
     </nav>
     <section id="showcase" aria-label="Brands and offers">
-      <div class="com-banner" id="comBanner">
+      <div class="com-banner res-banner" id="resBanner">
         <div class="com-top">
           <div class="com-stage" aria-hidden="true">
-            <span class="com-tons"><b>3–25</b>TONS</span>
-            <img class="back" src="img/rtu-bryant-582l-en-normal.jpg" alt="">
-            <img class="front" src="img/rtu-carrier-48fe-8-16-en-normal.jpg" alt="">
+            <span class="com-tons"><b>1.5–5</b>TONS</span>
+            <img class="full" src="img/bundle-carrier-heatpump.jpg" alt="">
           </div>
           <div class="com-copy">
-            <span class="pill">NEW · COMMERCIAL EQUIPMENT</span>
-            <h2>Commercial rooftop units, 3 to 25 tons</h2>
-            <p>Carrier WeatherMaker and Bryant Legacy packaged units for restaurants, retail, offices and warehouses. Freight to your job site is built into every price, or pick up in DFW and the freight comes off.</p>
-            <div class="com-stats" id="comStats"></div>
+            <span class="pill">HOME SYSTEMS · FREE SHIPPING</span>
+            <h2>Complete home AC &amp; heating systems, 1.5 to 5 tons</h2>
+            <p>Matched Carrier, Trane and Goodman systems: electric, gas furnace and heat pump. Free shipping nationwide is built into every price, or pick up in DFW and save.</p>
+            <div class="com-stats" id="resStats"></div>
             <div class="ctas">
-              <button class="btn btn-cta" type="button" data-cat="commercial" data-scroll>Shop commercial units →</button>
-              <button class="btn btn-line" type="button" data-wholesale>Get a project quote</button>
+              <button class="btn btn-cta" type="button" data-cat="all" data-scroll>Shop home systems →</button>
+              <button class="btn btn-line" type="button" data-offer="pickup">Save with DFW pickup</button>
             </div>
-            <p class="com-fine"><svg><use href="#i-truck"/></svg><span>Ships to your job site by freight truck. Have a forklift on site to unload, or we can arrange unloading for an extra charge.</span></p>
+            <p class="com-fine"><svg><use href="#i-truck"/></svg><span>Ships in 3–5 business days by freight truck to your curb. Monthly payments available with Klarna.</span></p>
           </div>
         </div>
-        <div class="com-types" id="comTypes"></div>
+        <div class="com-types" id="resTypes"></div>
       </div>
       <div class="showcase">
         <div class="show-hero">
@@ -699,6 +705,30 @@
       </div>
       <div class="featured-grid" id="featuredGrid"></div>
       <div class="view-all"><button class="btn btn-cta" type="button" id="viewAll">View all systems &amp; parts →</button></div>
+    </section>
+
+    <section class="home-sec" aria-label="Commercial rooftop units">
+      <div class="com-banner" id="comBanner">
+        <div class="com-top">
+          <div class="com-stage" aria-hidden="true">
+            <span class="com-tons"><b>3–25</b>TONS</span>
+            <img class="back" src="img/rtu-bryant-582l-en-normal.jpg" alt="">
+            <img class="front" src="img/rtu-carrier-48fe-8-16-en-normal.jpg" alt="">
+          </div>
+          <div class="com-copy">
+            <span class="pill">NEW · COMMERCIAL EQUIPMENT</span>
+            <h2>Commercial rooftop units, 3 to 25 tons</h2>
+            <p>Carrier WeatherMaker and Bryant Legacy packaged units for restaurants, retail, offices and warehouses. Freight to your job site is built into every price, or pick up in DFW and the freight comes off.</p>
+            <div class="com-stats" id="comStats"></div>
+            <div class="ctas">
+              <button class="btn btn-cta" type="button" data-cat="commercial" data-scroll>Shop commercial units →</button>
+              <button class="btn btn-line" type="button" data-wholesale>Get a project quote</button>
+            </div>
+            <p class="com-fine"><svg><use href="#i-truck"/></svg><span>Ships to your job site by freight truck. Have a forklift on site to unload, or we can arrange unloading for an extra charge.</span></p>
+          </div>
+        </div>
+        <div class="com-types" id="comTypes"></div>
+      </div>
     </section>
 
     <section class="home-sec" aria-label="Shop by category">
@@ -1343,6 +1373,19 @@
       <span><small>${what.join(" · ").replace(/^./, c => c.toUpperCase())}</small>${priced.length ? `<small>from <b>${money(Math.min(...priced.map(u => u.price)))}</b></small>` : ""}</span></button>`;
   }).join("");
 
+  // Residential banner (top of the landing page): live counts and a shortcut per system type.
+  {
+    const sys = INV.filter(u => /System/.test(u.type) && !u.commercial), priced = sys.filter(u => u.price != null);
+    const tons = sys.map(u => u.tons);
+    $("#resStats").innerHTML = [[sys.length, "systems to choose from"], [`${Math.min(...tons)}–${Math.max(...tons)}`, "tons"], [money(Math.min(...priced.map(u => u.price))), "starting price"]]
+      .map(([v, l]) => `<div><b>${v}</b><small>${l}</small></div>`).join("");
+    $("#resTypes").innerHTML = ["electric", "gas", "heatpump"].map(key => {
+      const c = CATS.find(x => x.key === key);
+      const all = sys.filter(c.test), us = all.filter(u => u.price != null);
+      if (!us.length) return "";
+      return `<button type="button" data-cat="${key}" data-scroll><span><b>${esc(c.label)}</b><br><small>${all.length} systems · ${Math.min(...us.map(u => u.tons))} to ${Math.max(...us.map(u => u.tons))} ton</small></span><span class="from">from ${money(Math.min(...us.map(u => u.price)))}</span></button>`;
+    }).join("");
+  }
   // Commercial banner: live counts and a shortcut per rooftop type.
   {
     const com = INV.filter(u => u.commercial), priced = com.filter(u => u.price != null);
