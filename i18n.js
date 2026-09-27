@@ -64,7 +64,7 @@
     "Trade accounts": "Cuentas comerciales",
     "TRADE ACCOUNT": "CUENTA COMERCIAL",
     "Monthly payments": "Pagos mensuales",
-    "Pay over time with Affirm or Klarna at checkout, subject to approval.": "Pague a plazos con Affirm o Klarna al pagar, sujeto a aprobación.",
+    "Pay over time with Klarna at checkout, subject to approval.": "Pague a plazos con Klarna al pagar, sujeto a aprobación.",
     "Save $": "Ahorre $", " with DFW pickup": " al recoger en DFW",
     "Account pricing on every system and part": "Precios de cuenta en cada sistema y pieza",
     "For HVAC contractors and businesses. No license required. Apply below and we'll call you to set up your account.":
@@ -376,8 +376,8 @@
     "Send it to us": "Envíenoslo",
     "Text or email the order from checkout. We confirm stock, usually the same day.": "Envíe el pedido por mensaje o correo. Confirmamos existencias, normalmente el mismo día.",
     "Pay the invoice": "Pague la factura",
-    "Pay online by card, bank transfer (ACH), Apple Pay / Google Pay, or monthly with Affirm or Klarna. Prefer an invoice? Pay by ACH or Zelle. We ship once payment clears. Picking up in DFW? You can also pay cash at pickup.":
-      "Pague en línea con tarjeta, transferencia bancaria (ACH), Apple Pay / Google Pay, o en pagos mensuales con Affirm o Klarna. ¿Prefiere factura? Pague por ACH o Zelle. Enviamos cuando se acredita el pago. ¿Recoge en DFW? También puede pagar en efectivo al recoger.",
+    "Pay online by card, bank transfer (ACH), Apple Pay / Google Pay, or monthly with Klarna. Prefer an invoice? Pay by ACH or Zelle. We ship once payment clears. Picking up in DFW? You can also pay cash at pickup.":
+      "Pague en línea con tarjeta, transferencia bancaria (ACH), Apple Pay / Google Pay, o en pagos mensuales con Klarna. ¿Prefiere factura? Pague por ACH o Zelle. Enviamos cuando se acredita el pago. ¿Recoge en DFW? También puede pagar en efectivo al recoger.",
     "Ship or pick up": "Envío o recogida",
     "You get tracking for freight, or the pickup address and time. Inspect freight before signing for it.": "Recibe el rastreo del flete, o la dirección y hora de recogida. Inspeccione antes de firmar.",
     "Frequently Asked Questions": "Preguntas frecuentes",
@@ -534,7 +534,7 @@
     // ---- Online checkout + contractor accounts (account.js)
     "Pay online": "Pagar en línea", "or order by message": "o pida por mensaje",
     "Card, bank transfer (ACH), Apple Pay / Google Pay, or": "Tarjeta, transferencia bancaria (ACH), Apple Pay / Google Pay, o",
-    "monthly payments": "pagos mensuales", "with Affirm or Klarna.": "con Affirm o Klarna.",
+    "monthly payments": "pagos mensuales", "with Klarna.": "con Klarna.",
     "Text or email: nothing is charged; we confirm stock, then send your invoice or pickup details. Paying online is processed securely by Stripe.":
       "Por mensaje o correo: no se cobra nada; confirmamos inventario y le enviamos su factura o detalles de recogida. El pago en línea lo procesa Stripe de forma segura.",
     "Online payment isn't switched on yet. Please send your order by text or email below and we'll invoice you.":
@@ -544,7 +544,7 @@
     "Something in your order needs a price quote. Please text or email your order.": "Algo en su pedido necesita cotización. Envíe su pedido por mensaje o correo.",
     "Alaska, Hawaii and territories need a freight quote. Please text or email your order.": "Alaska, Hawái y territorios necesitan cotización de flete. Envíe su pedido por mensaje o correo.",
     "Couldn't reach the payment page. Check your connection, or text/email your order.": "No se pudo abrir la página de pago. Revise su conexión o envíe su pedido por mensaje o correo.",
-    "Or": "O", "pay monthly": "pague mensualmente", "with Affirm or Klarna. Pick it at checkout.": "con Affirm o Klarna. Elíjalo al pagar.",
+    "Or": "O", "pay monthly": "pague mensualmente", "with Klarna. Pick it at checkout.": "con Klarna. Elíjalo al pagar.",
     "Your price": "Su precio", "Your contractor price": "Su precio de contratista",
     "Apply for an account": "Solicitar una cuenta", "Sign in": "Iniciar sesión", "Contractor sign in": "Acceso para contratistas",
     "Create a password": "Cree una contraseña", "Create account & apply": "Crear cuenta y solicitar",

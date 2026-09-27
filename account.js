@@ -295,7 +295,7 @@
       const amount = Math.round((e.detail.amount || 0) * 100);
       const host = $("#specsMonthly");
       if (!host || amount < 5000) return;
-      const opts = { amount, currency: "USD", countryCode: "US", paymentMethodTypes: ["affirm", "klarna"] };
+      const opts = { amount, currency: "USD", countryCode: "US", paymentMethodTypes: ["klarna"] };
       host.innerHTML = '<div id="pmme"></div>';
       el = elements.create("paymentMethodMessaging", opts);
       el.mount("#pmme");

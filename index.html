@@ -687,7 +687,7 @@
       </div>
       <div class="offers">
         <button class="offer" type="button" data-offer="pickup"><span class="amt">$<span data-ship="pickupDiscount"></span></span><span><b>Off every system with DFW pickup</b><small>Order online, pick up in <span data-biz="pickupArea"></span>, pay cash if you like.</small></span></button>
-        <button class="offer" type="button" data-go="faq"><span class="amt">$/mo</span><span><b>Monthly payments</b><small>Pay over time with Affirm or Klarna at checkout, subject to approval.</small></span></button>
+        <button class="offer" type="button" data-go="faq"><span class="amt">$/mo</span><span><b>Monthly payments</b><small>Pay over time with Klarna at checkout, subject to approval.</small></span></button>
         <button class="offer" type="button" data-wholesale><span class="amt">5+</span><span><b>Wholesale &amp; volume pricing</b><small>Buying 5+ systems or using your own freight? Get a quote.</small></span></button>
       </div>
     </section>
@@ -1058,7 +1058,7 @@
     </div>
     <button class="btn btn-cta pay-btn" id="payOnline" type="button"><svg class="icon"><use href="#i-lock"/></svg>Pay online</button>
     <p class="agree-line">By placing an order you agree to our <a href="terms.html" target="_blank">Terms of Sale</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</p>
-    <p class="pay-methods" id="payMethods">Card, bank transfer (ACH), Apple Pay / Google Pay, or <b>monthly payments</b> with Affirm or Klarna.</p>
+    <p class="pay-methods" id="payMethods">Card, bank transfer (ACH), Apple Pay / Google Pay, or <b>monthly payments</b> with Klarna.</p>
     <div class="pay-error" id="payError" hidden></div>
     <div class="or-line"><span>or order by message</span></div>
     <div class="send">
@@ -1708,7 +1708,7 @@
     $("#specsShipNote").textContent = pick ? `Local pickup in DFW · you save ${money(pickupOff(u))}` : u.commercial ? "Free freight to your job site · forklift needed to unload" : `Free shipping nationwide · ships in ${S.shipsIn}`;
     // Monthly payments line (account.js swaps in Stripe's official Affirm/Klarna message when Stripe is connected).
     const amount = pick ? base - pickupOff(u) : base;
-    $("#specsMonthly").innerHTML = `Or <b>pay monthly</b> with Affirm or Klarna. Pick it at checkout.`;
+    $("#specsMonthly").innerHTML = `Or <b>pay monthly</b> with Klarna. Pick it at checkout.`;
     document.dispatchEvent(new CustomEvent("ng:price", { detail: { amount } }));
   }
   $("#thumbs").addEventListener("click", e => { const b = e.target.closest("button"); if (b) gallery(byId(specsId), b.dataset.src); });

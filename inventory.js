@@ -16,7 +16,7 @@ window.BUSINESS = {
   policiesUpdated: "September 24, 2026",  // date shown on the Terms & Privacy pages
   pickupArea: "Dallas–Fort Worth",        // exact pickup address is sent after the order is confirmed
   warrantyNote: "New in box. Confirm warranty terms for your install when you order.",
-  payment: "Pay online by card, bank transfer (ACH), Apple Pay / Google Pay, or monthly with Affirm or Klarna. Prefer an invoice? Pay by ACH or Zelle. We ship once payment clears. Picking up in DFW? You can also pay cash at pickup.",
+  payment: "Pay online by card, bank transfer (ACH), Apple Pay / Google Pay, or monthly with Klarna. Prefer an invoice? Pay by ACH or Zelle. We ship once payment clears. Picking up in DFW? You can also pay cash at pickup.",
   returnPolicy: "Unopened units can be returned within 30 days, minus original shipping and a 15% restocking fee. Buyer pays return shipping.",  // <- your policy
   // Set to false once the units below are your real inventory.
   sampleData: true,
