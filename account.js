@@ -14,6 +14,7 @@
 
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   let sb = null, session = null, profile = null, isAdmin = false, myRepCode = null;
+  let stripeP = null, payForm = null;   // Stripe.js (loaded once) and the open on-page payment form
 
   // ---------------------------------------------------------- Rep links: yoursite/?rep=CODE
   // The code is remembered on this device for 90 days; whoever signs up belongs to that rep.
@@ -270,7 +271,6 @@
   }
 
   // ---------------------------------------------------------- Payment form on our own page (Stripe embedded Checkout)
-  let stripeP = null, payForm = null;
   function getStripe() {
     if (!STRIPE_PK) return Promise.resolve(null);
     stripeP = stripeP || loadScript("https://js.stripe.com/v3/").then(() => window.Stripe(STRIPE_PK)).catch(() => { stripeP = null; return null; });
@@ -281,7 +281,7 @@
     if (bg) return bg;
     const css = document.createElement("style");
     css.textContent = `
-      #payBg { position: fixed; inset: 0; z-index: 90; background: rgba(12,34,64,.55); display: none; overflow-y: auto; padding: 24px 12px; }
+      #payBg { position: fixed; inset: 0; z-index: 1000; background: rgba(12,34,64,.55); display: none; overflow-y: auto; padding: 24px 12px; }
       #payBg.open { display: block; }
       #payBg .pay-box { max-width: 1000px; margin: 0 auto; background: #fff; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden; }
       #payBg .pay-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 18px; border-bottom: 1px solid #e3e7ee; }
