@@ -1405,6 +1405,81 @@ const FINAL_PRICES = {
 [...TRANE_ELECTRIC, ...TRANE_GAS, ...ELECTRIC, ...GAS, ...HEAT_PUMPS, ...GOODMAN, ...GOODMAN_HEAT_PUMPS, ...GOODMAN_GAS, ...PART_ITEMS, ...COMMERCIAL]
   .forEach(u => { if (FINAL_PRICES[u.id] != null) u.price = FINAL_PRICES[u.id]; });
 
+// ------------------------------------------------------------
+// CARRIER SPECIALTY AIR HANDLERS (Sibi Pro, pulled Sept 28, 2026; cost = your Sibi price):
+//   FMA5X front-return upflow, 14.5" wide (apartment/closet style, TXV), 1.5 – 3 ton (largest made)
+//   FMC5Z ceiling-mount (horizontal, cased), 1.5 – 3 ton
+// Sold on their own (cost + PART_SHIPPING + PART_COMMISSION + insurance, same as the Carrier FJ5 air handlers)
+// and as Carrier electric AC and heat pump bundles: the Carrier system of the same size with the FJ5 fan coil swapped
+// for this air handler at their individual site prices, and the KFFEH kit swapped for the matching kit at cost.
+// Heat kits: FMA5 takes only HK2 kits (10 kW max, so 10 kW on every size); FMC5Z takes EHC kits (10 kW to 2.5 ton, 15 kW at 3 ton).
+// ------------------------------------------------------------
+const altKit = (model, kw, fits) => ({
+  role: "Heat Kit", model, kw, image: "img/heatkit-kffeh.jpg",
+  name: `Carrier ${kw} kW Electric Heat Kit with Circuit Breaker (${model})`,
+  highlights: [`${kw} kW, 230V`, "Built-in circuit breaker", `Fits ${fits}`],
+  specs: { "Heating capacity": `${kw} kW at 230V`, "Disconnect": "Circuit breaker", "Voltage / Phase": "230V, 1-phase, 60 Hz", "Fits": fits },
+});
+const fma5 = (tons, model, hp, suction) => ({
+  role: "Air Handler", model, image: "img/airhandler-fma5.jpg",
+  name: `Carrier ${tons} Ton Upflow Front-Return Air Handler, 14.5" Wide, R-454B`,
+  highlights: ["Front return: fits closets and apartments", '14.5" wide upflow cabinet', "Factory TXV (R-454B)", "Accepts HK2 electric heat kits up to 10 kW"],
+  specs: {
+    "Configuration": "Upflow, front return", "Cabinet width": '14.5"', "Cooling capacity": `${tons} ton`, "Refrigerant": "R-454B (not for R-410A)",
+    "Metering device": "TXV", "Blower motor": `${hp} HP, 1050 RPM`, "Liquid line": '3/8" sweat', "Suction line": `${suction} sweat`,
+    "Voltage / Phase": "208/230V, 1-phase, 60 Hz", "Electric heat": "HK2 kits, 5 to 10 kW", "Series": "FMA5X (R-410A version: FMA4X)",
+  },
+});
+const fmc5 = (tons, model) => ({
+  role: "Air Handler", model, image: "img/airhandler-fmc5.jpg",
+  name: `Carrier ${tons} Ton Ceiling-Mount Air Handler, R-454B`,
+  highlights: ["Ceiling mount: hangs horizontally above the ceiling", "Cased cabinet", "R-454B", "Accepts EHC electric heat kits"],
+  specs: {
+    "Configuration": "Ceiling-mount (horizontal)", "Cabinet width": '28.375"', "Cooling capacity": `${tons} ton`, "Refrigerant": "R-454B (not for R-410A)",
+    "Coil casing": "Cased", "Voltage / Phase": "208/230V, 1-phase, 60 Hz", "Electric heat": "EHC kits", "Series": "FMC5Z (R-410A version: FMC4Z)",
+  },
+});
+Object.assign(PARTS, {
+  FMA5X1800AL: fma5(1.5, "FMA5X1800AL", "1/3", '3/4"'), FMA5X2400AL: fma5(2, "FMA5X2400AL", "1/3", '3/4"'),
+  FMA5X3000AL: fma5(2.5, "FMA5X3000AL", "1/2", '3/4"'), FMA5X3600AL: fma5(3, "FMA5X3600AL", "1/2", '3/4"'),
+  FMC5Z1800AL: fmc5(1.5, "FMC5Z1800AL"), FMC5Z2400AL: fmc5(2, "FMC5Z2400AL"), FMC5Z3000AL: fmc5(2.5, "FMC5Z3000AL"), FMC5Z3600AL: fmc5(3, "FMC5Z3600AL"),
+  "HK2-10B": altKit("HK2-10B", 10, "FMA front-return air handlers"),
+  EHC10CKB: altKit("EHC10CKB", 10, "1.5 ton FMC ceiling-mount air handlers"),
+  EHC10BKB: altKit("EHC10BKB", 10, "2 to 5 ton FMC ceiling-mount air handlers"),
+  EHC15BKB: altKit("EHC15BKB", 15, "2 to 5 ton FMC ceiling-mount air handlers"),
+});
+const ALT_AH = {
+  front: { key: "frontreturn", label: "Front-Return Air Handler", short: "Front return", img: { ac: "img/bundle-carrier-electric-fma5.jpg", hp: "img/bundle-carrier-heatpump-fma5.jpg" },
+    sizes: { 1.5: ["FMA5X1800AL", 684], 2: ["FMA5X2400AL", 707], 2.5: ["FMA5X3000AL", 727], 3: ["FMA5X3600AL", 771] },
+    kit: () => ["HK2-10B", 163] },
+  ceiling: { key: "ceiling", label: "Ceiling-Mount Air Handler", short: "Ceiling mount", img: { ac: "img/bundle-carrier-electric-fmc5.jpg", hp: "img/bundle-carrier-heatpump-fmc5.jpg" },
+    sizes: { 1.5: ["FMC5Z1800AL", 790], 2: ["FMC5Z2400AL", 849], 2.5: ["FMC5Z3000AL", 1004], 3: ["FMC5Z3600AL", 1170] },
+    kit: t => t <= 1.5 ? ["EHC10CKB", 153] : t <= 2.5 ? ["EHC10BKB", 129] : ["EHC15BKB", 251] },
+};
+const KFFEH_STD_COST = t => t <= 2.5 ? 157 : 240;   // cost of the standard KFFEH kit in the regular Carrier bundle
+const CARRIER_ALT_AH_PARTS = Object.values(ALT_AH).flatMap(a => Object.entries(a.sizes).map(([t, [model, cost]]) => ({
+  id: `part-${model.toLowerCase()}`, brand: "Carrier", name: `${t}-Ton ${a.label}`, type: "Air Handler", tons: +t, refrigerant: "R-454B",
+  price: cost + PART_SHIPPING["Air Handler"] + PART_COMMISSION + SHIPPING_INSURANCE, pickupDiscount: PART_SHIPPING["Air Handler"] + SHIPPING_INSURANCE,
+  unit: "each", inStock: null, image: PARTS[model].image, components: [PARTS[model]], chips: [a.short, PARTS[model].specs["Cabinet width"] + " wide"],
+})).sort(byTons));
+const altPart = model => CARRIER_ALT_AH_PARTS.find(p => p.components[0].model === model);
+const CARRIER_ALT_AH_SYSTEMS = Object.values(ALT_AH).flatMap(a => [...ELECTRIC, ...HEAT_PUMPS].filter(b => a.sizes[b.tons]).map(b => {
+  const [model, cost] = a.sizes[b.tons], [kit, kitCost] = a.kit(b.tons);
+  const hp = /Heat Pump/.test(b.type), base = b.regularPrice ?? b.price;
+  return {
+    id: `carrier-${b.tons}t-${hp ? "heatpump" : "electric"}-${a.key}`, brand: "Carrier",
+    name: `${b.tons}-Ton ${hp ? "Heat Pump" : "Electric AC"} System with ${a.label}`, type: b.type, tons: b.tons,
+    seer2: b.seer2, eer2: b.eer2, hspf2: b.hspf2, refrigerant: "R-454B", voltage: b.voltage,
+    // swap the FJ5 fan coil for this air handler at their individual site prices (both include freight + margin)
+    price: Math.round((base - PART_ITEMS.find(p => p.components[0].model === b.components[1].model).price + altPart(model).price + kitCost - KFFEH_STD_COST(b.tons)) / 10) * 10,
+    msrp: null, inStock: null, image: a.img[hp ? "hp" : "ac"],
+    components: [b.components[0], PARTS[model]],
+    optionTitle: hp ? "Backup (auxiliary) heat kit" : "Electric heat kit",
+    heatOptions: [{ model: kit, add: 0, part: PARTS[kit], label: `${PARTS[kit].kw} kW`, desc: `${PARTS[kit].kw} kW heat`, spec: `${PARTS[kit].kw} kW electric${hp ? " backup" : ""}` }],
+    chips: [a.short],
+  };
+}));
+
 // SALES: $ off the site price for a limited time (after the final prices above). The card and product page show a
 // SALE tag with the regular price crossed out; checkout charges the sale price. Remove a line to end that sale.
 const SALES = {
@@ -1512,7 +1587,7 @@ const PAYNE_GAS = PAYNE_TONS.map(t => {
   };
 });
 
-window.INVENTORY = [...ELECTRIC, ...TRANE_ELECTRIC, ...GAS, ...TRANE_GAS, ...GOODMAN_GAS, ...HEAT_PUMPS, ...GOODMAN, ...GOODMAN_HEAT_PUMPS, ...PAYNE_ELECTRIC, ...PAYNE_GAS, ...PAYNE_HEAT_PUMPS, ...PART_ITEMS, ...COMMERCIAL];
+window.INVENTORY = [...ELECTRIC, ...CARRIER_ALT_AH_SYSTEMS, ...TRANE_ELECTRIC, ...GAS, ...TRANE_GAS, ...GOODMAN_GAS, ...HEAT_PUMPS, ...GOODMAN, ...GOODMAN_HEAT_PUMPS, ...PAYNE_ELECTRIC, ...PAYNE_GAS, ...PAYNE_HEAT_PUMPS, ...PART_ITEMS, ...CARRIER_ALT_AH_PARTS, ...COMMERCIAL];
 
 
 // ============================================================

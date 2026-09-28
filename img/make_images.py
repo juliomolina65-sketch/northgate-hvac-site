@@ -180,4 +180,18 @@ if __name__ == "__main__":
             ("coil-cvava.png", 14.7 * 1.25, 470, 1150)], "bundle-carrier-gas-brand.jpg")
     bundle([("carrier-ah-brand.png", 44.0, 330, 1045), ("carrier-hp-brand.png", 28.0, 760, 1075),
             ("heatkit-kffeh.png", 8.0 * 2.1, 490, 1150)], "bundle-carrier-heatpump-brand.jpg")
+    # Carrier specialty air handlers from Sibi (FMA5X front return, FMC5Z ceiling mount), Sept 28, 2026
+    single("carrier-FMA4-HANDLER.png", "airhandler-fma5.jpg")
+    single("carrier-FMC5Z-series.png", "airhandler-fmc5.jpg")
+    bundle([("carrier-FMA4-HANDLER.png", 44.0, 390, 1045), ("carrier-cond-brand.png", 34.0, 860, 1075),
+            ("heatkit-kffeh.png", 8.0 * 2.1, 530, 1150)], "bundle-carrier-electric-fma5.jpg")
+    bundle([("carrier-FMA4-HANDLER.png", 44.0, 330, 1045), ("carrier-hp-brand.png", 28.0, 780, 1075),
+            ("heatkit-kffeh.png", 8.0 * 2.1, 480, 1150)], "bundle-carrier-heatpump-fma5.jpg")
+    for cond, h, out, cx in [("carrier-cond-brand.png", 34.0, "bundle-carrier-electric-fmc5.jpg", 860),
+                             ("carrier-hp-brand.png", 28.0, "bundle-carrier-heatpump-fmc5.jpg", 790)]:
+        canvas = background((1600, 1200))   # ceiling unit drawn "hanging" (no floor shadow)
+        place(canvas, load_flat("carrier-FMC5Z-series.png"), 22 * 21.5, 110, 640, shadow=False)
+        place(canvas, load_flat(cond), h * 21.5, cx, 1075)
+        place(canvas, load_flat("heatkit-kffeh.png"), 8.0 * 2.1 * 21.5, 230, 1150)
+        canvas.save(os.path.join(HERE, out), quality=86, optimize=True, progressive=True)
     print("done")
