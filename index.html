@@ -2275,6 +2275,8 @@
         equip = INV.find(x => x.brand === u.brand && x.tons === tons && x.type === (type === "heatpump" ? "Heat Pump Condenser" : "Condenser") && x.price != null) || null;
         heat = undefined; equipPrice = equip?.price ?? null; kitFree = 0;
       }
+      // DFW-area job ZIP: same local delivery discount checkout gives (Payne: $500, other systems: $250).
+      if (equip && equipPrice != null && Pricing.nearDfw(inVal("inZip"), S)) equipPrice -= Pricing.nearDfwOff(equip, S);
       const total = jobPrice == null || equipPrice == null ? null : equipPrice - kitFree + jobPrice + addonsTotal;
       // Card / bank: 75% of the package now (whole dollars), the rest after the install. Same math as the server.
       const now = total == null ? null : Math.round(total * IN_SHARE), later = total == null ? null : total - now;

@@ -17,7 +17,7 @@
     const d = shipping.nearDfwDiscount || {};
     const pick = pickupOff(u, shipping);
     if (!pick) return 0;
-    const want = u.commercial ? d.commercial : u.unit === "each" ? d.part : d.system;
+    const want = u.nearDfwDiscount ?? (u.commercial ? d.commercial : u.unit === "each" ? d.part : d.system);   // item can set its own
     return Math.min(want || 0, pick);
   };
 
