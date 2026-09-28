@@ -1398,7 +1398,7 @@ window.INVENTORY = [...ELECTRIC, ...TRANE_ELECTRIC, ...GAS, ...TRANE_GAS, ...GOO
 // ============================================================
 window.INSTALL = {
   jobs: [
-    { key: "changeout", label: "Full system change-out (indoor + outdoor)", equip: "system",  price: { standard: 3500, mid: 3750, high: 4000 } },
+    { key: "changeout", label: "Full system change-out (indoor + outdoor)", equip: "system",  price: { standard: 3800, mid: 4050, high: 4300 } },   // +$300 covers Klarna's higher fee vs cards (same price for everyone)
     { key: "outdoor",   label: "Outdoor unit swap only (AC or heat pump)",  equip: "outdoor", price: { standard: 1800, mid: 2000, high: 2200 } },
     { key: "new",       label: "New install (no existing system or ductwork)", equip: "system", custom: true },
   ],
