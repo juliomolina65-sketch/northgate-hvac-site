@@ -1202,12 +1202,12 @@
       <div id="inPayWrap">
         <div class="in-package"><span>Your installed package</span><b id="inPkgTotal"></b><small>Equipment, installation, materials and 1-year labor warranty</small></div>
         <div class="in-paychoice" role="radiogroup" aria-label="How do you want to pay?">
-          <label><input type="radio" name="inPay" value="card" checked><span><b>Card or bank · 2 payments</b><small>Pay for your system now, the installation after it's done</small></span></label>
+          <label><input type="radio" name="inPay" value="card" checked><span><b>Card or bank · 2 payments</b><small id="inCardSub">75% now, 25% after the install</small></span></label>
           <label id="inPayKlarnaOpt"><input type="radio" name="inPay" value="klarna"><span><b>Monthly payments with Klarna</b><small id="inKlarnaSub">Finance the whole package in one payment</small></span></label>
         </div>
         <div class="in-split" id="inSplitCard">
-          <div><small>Payment 1 · today</small><b id="inDueNow"></b><span>Due at checkout. Card, bank transfer, or Apple Pay / Google Pay.</span></div>
-          <div><small>Payment 2 · after your install</small><b id="inDueLater"></b><span>Paid online once the installation is finished.</span></div>
+          <div><small id="inNowLabel">75% · today</small><b id="inDueNow"></b><span>Due at checkout. Card, bank transfer, or Apple Pay / Google Pay.</span></div>
+          <div><small id="inLaterLabel">25% · after your install</small><b id="inDueLater"></b><span>Paid online once the installation is finished.</span></div>
         </div>
         <div class="in-klarna" id="inSplitKlarna" hidden>
           <div><small>Financed with Klarna</small><b id="inKlarnaTotal"></b><span>The whole package in one checkout. Klarna pays us, and you pay Klarna monthly (subject to approval). Nothing more is due to us after the install.</span>
@@ -1338,7 +1338,7 @@
       <div class="eq-row"><span>Equipment</span><span id="tEquip">$0</span></div>
       <div class="eq-row"><span id="tShipLabel">Shipping</span><span id="tShip">$0</span></div>
       <div class="discount" id="tDiscRow" hidden><span id="tDiscLabel">Local pickup discount</span><span id="tDisc"></span></div>
-      <div id="tLaterRow" hidden><span>Payment 2 · after your install</span><span id="tLater"></span></div>
+      <div id="tLaterRow" hidden><span id="tLaterLabel">Due after your install</span><span id="tLater"></span></div>
       <div class="grand"><span id="tTotalLabel">Total</span><span id="tTotal">$0</span></div>
     </div>
     <button class="btn btn-cta pay-btn" id="payOnline" type="button"><svg class="icon"><use href="#i-lock"/></svg>Pay online</button>
@@ -1549,6 +1549,7 @@
   let order = {};
   try { order = JSON.parse(localStorage.getItem("orderList") || "{}"); } catch (e) {}
   var installCtx = null;   // set when a customer checks out from an installation quote
+  function cardShare() { const s = window.INSTALL?.cardDeposit; return s > 0 && s <= 1 ? s : 0.75; }
   try { installCtx = JSON.parse(localStorage.getItem("installCtx") || "null"); } catch (e) {}
   const save = () => { try { localStorage.setItem("orderList", JSON.stringify(order)); } catch (e) {} };
 
@@ -1888,7 +1889,13 @@
     $("#tDiscRow").hidden = !disc;
     $("#tDisc").textContent = "−" + money(disc);
     $("#tTotal").textContent = money(eq + lift - disc);
-    if (installCtx) $("#tPkg").textContent = money(eq + lift - disc + installCtx.balance);   // package = payment 1 + payment 2
+    if (installCtx) {   // package = system (as priced in the order) + installation part; card pays IN_SHARE now
+      const share = cardShare(), pkg = eq + lift - disc + (installCtx.installPart ?? installCtx.balance), now = Math.round(pkg * share);
+      $("#tPkg").textContent = money(pkg);
+      $("#tLater").textContent = money(pkg - now);
+      $("#tLaterLabel").textContent = `Remaining ${100 - Math.round(share * 100)}% · after your install`;
+      if (installCtx.pay !== "klarna") $("#tTotal").textContent = money(now);
+    }
     if (installCtx?.pay === "klarna") $("#tTotal").textContent = money(eq + lift - disc + installCtx.balance);   // Klarna: whole package at checkout
 
     $("#orderBar").classList.toggle("show", n > 0);
@@ -1921,7 +1928,7 @@
     const bi = buyerInfo();
     const buyer = `\nName: ${bi.name}\nPhone: ${bi.phone}\nEmail: ${bi.email}\nAddress: ${[bi.street, bi.apt, bi.city, bi.state, z.zip].filter(Boolean).join(", ")}` +
       (bi.warrantyAck ? "\nWarranty: agreed, Northgate registers the warranty" : "") +
-      (installCtx && order[installCtx.key] ? `\nINSTALLED PACKAGE: ${installCtx.job}${installCtx.addons.length ? ` + ${installCtx.addons.join(", ")}` : ""} · ${installCtx.pay === "klarna" ? `wants Klarna monthly for the whole package (${money(installCtx.estimate)})` : `payment 1 (above) now, payment 2 ${money(installCtx.balance)} after the install`}${installCtx.notes ? `\nJob notes: ${installCtx.notes}` : ""}` : "");
+      (installCtx && order[installCtx.key] ? `\nINSTALLED PACKAGE: ${installCtx.job}${installCtx.addons.length ? ` + ${installCtx.addons.join(", ")}` : ""} · ${installCtx.pay === "klarna" ? `wants Klarna monthly for the whole package (${money(installCtx.estimate)})` : `package ${money(installCtx.estimate)}: ${Math.round(cardShare() * 100)}% now, ${money(installCtx.balance)} after the install`}${installCtx.notes ? `\nJob notes: ${installCtx.notes}` : ""}` : "");
     return `Hi, I'd like to order:\n${lines.join("\n")}\n${ship}\nTotal: ${money(eq + lift - disc)}` + buyer +
       (company ? `\nCompany: ${company}` : "") + (lic ? `\nLicense #: ${lic}` : "") +
       (window.NGRep?.code() ? `\nRep: ${window.NGRep.code()}` : "") +
@@ -2147,8 +2154,10 @@
         heat = undefined; equipPrice = equip?.price ?? null; kitFree = 0;
       }
       const total = jobPrice == null || equipPrice == null ? null : equipPrice - kitFree + jobPrice + addonsTotal;
-      const later = total == null ? null : total - equipPrice;   // payment 2
-      return { u, equip, heat, kitFree, equipPrice, later, jobPrice, addonsTotal, total, cmp: job.key === "changeout" ? inCompare(total, tons) : null };
+      // Card / bank: 75% of the package now (whole dollars), the rest after the install. Same math as the server.
+      const now = total == null ? null : Math.round(total * IN_SHARE), later = total == null ? null : total - now;
+      const installPart = total == null ? null : total - equipPrice;   // installation + add-ons − free heat kit
+      return { u, equip, heat, kitFree, equipPrice, installPart, now, later, jobPrice, addonsTotal, total, cmp: job.key === "changeout" ? inCompare(total, tons) : null };
     }).sort((a, b) => (a.total ?? 1e9) - (b.total ?? 1e9));
     return { type, tons, brand, job, addons, quotes };
   }
@@ -2215,7 +2224,9 @@
       $("#inPayWrap").hidden = !canPay; $("#inCheckout").hidden = !canPay;
       if (canPay) {
         $("#inPkgTotal").textContent = money(q.total);
-        $("#inDueNow").textContent = money(q.equipPrice);
+        $("#inNowLabel").textContent = `${IN_PCT}% · today`; $("#inLaterLabel").textContent = `${100 - IN_PCT}% · after your install`;
+        $("#inCardSub").textContent = `${IN_PCT}% now, ${100 - IN_PCT}% after the install`;
+        $("#inDueNow").textContent = money(q.now);
         $("#inDueLater").textContent = money(q.later);
         $("#inKlarnaTotal").textContent = money(q.total);
         // Klarna finances the whole package in one payment (up to $10,000; not offered in IA, WV, MA).
@@ -2227,7 +2238,7 @@
         $("#inSplitCard").hidden = pay !== "card"; $("#inSplitKlarna").hidden = pay !== "klarna";
         const steps = pay === "klarna"
           ? [["Check out with Klarna.", "Apply once for the whole package and choose your monthly plan."], ...IN_STEPS_MID, ["That's it.", "Nothing more is due to us after the install; you pay Klarna monthly."]]
-          : [["Check out and make payment 1.", "Your system, by card, bank transfer or Apple Pay / Google Pay."], ...IN_STEPS_MID, ["Make payment 2 online", "once the installation is finished."]];
+          : [[`Check out and pay ${IN_PCT}% (${money(q.now)}).`, "By card, bank transfer or Apple Pay / Google Pay."], ...IN_STEPS_MID, [`Pay the remaining ${100 - IN_PCT}% (${money(q.later)}) online`, "once the installation is finished."]];
         $("#inHowSteps").innerHTML = steps.map(([b, t]) => `<li><b>${esc(b)}</b> ${esc(t)}</li>`).join("");
         $("#inCheckout").textContent = pay === "klarna" ? `Check out with Klarna · ${money(q.total)} installed package →` : `Check out · ${money(q.total)} installed package →`;
       }
@@ -2237,6 +2248,7 @@
     }
     updateInSend(r);
   }
+  const IN_SHARE = IN.cardDeposit > 0 && IN.cardDeposit <= 1 ? IN.cardDeposit : 0.75, IN_PCT = Math.round(IN_SHARE * 100);
   const IN_STEPS_MID = [
     ["Sign your installation agreement.", "We email it to you right after checkout."],
     ["We ship your system.", "It arrives in 1–3 business days."],
@@ -2334,7 +2346,7 @@
     installCtx = {
       key, system: inName(q), models: inModels(q), job: r.job.label, jobKey: r.job.key, addonKeys: r.addons.map(a => a.key),
       pay: inPayMode() === "klarna" && !klarnaBlock(q.total) ? "klarna" : "card", state: inVal("inState"),
-      addons: r.addons.map(a => a.label), balance: q.later, estimate: q.total, heatKitFree: q.kitFree > 0 ? `${kwOf(q.heat)} kW heat kit included free` : "",
+      addons: r.addons.map(a => a.label), balance: q.later, installPart: q.installPart, estimate: q.total, heatKitFree: q.kitFree > 0 ? `${kwOf(q.heat)} kW heat kit included free` : "",
       address: [inVal("inStreet"), inVal("inCity"), [inVal("inState"), inVal("inZip")].filter(Boolean).join(" ")].filter(Boolean).join(", "),
       notes: inVal("inNotes"),
     };
@@ -2386,17 +2398,17 @@
     $("#tPkgRow").hidden = !installCtx || klarna;
     $("#tLaterRow").hidden = !installCtx || klarna;
     $("#totals").classList.toggle("pkg", !!installCtx);
-    $("#tTotalLabel").textContent = klarna ? "Installed package · monthly with Klarna" : installCtx ? "Payment 1 · due today" : "Total";
+    $("#tTotalLabel").textContent = klarna ? "Installed package · monthly with Klarna" : installCtx ? `${Math.round(cardShare() * 100)}% · due today` : "Total";
     if (pickup) pickup.disabled = !!installCtx;
     if (!installCtx) return;
     if (pickup?.checked) $('input[name="ship"][value="freight"]').checked = true;
-    $("#tLater").textContent = money(installCtx.balance);
+
     const what = `${esc(installCtx.system)}${installCtx.addons.length ? ` + ${esc(installCtx.addons.join(", "))}` : ""}, installed${installCtx.address ? ` at ${esc(installCtx.address)}` : ""}.`;
     note.innerHTML = klarna
       ? `<b>Installed package: ${money(installCtx.estimate)}, monthly with Klarna</b><br>${what}
         ${installCtx.heatKitFree ? "Heat kit included free. " : ""}The whole package is financed in one checkout with Klarna (subject to approval); Klarna pays us and you pay Klarna monthly. Nothing more is due to us after the install. We'll email your installation agreement right after checkout.`
       : `<b>Installed package: ${money(installCtx.estimate)}</b><br>${what}
-        ${installCtx.heatKitFree ? `The heat kit is included free with your installation (its price comes off payment 2). ` : ""}Paid in 2 payments: payment 1 today, payment 2 (<b>${money(installCtx.balance)}</b>) online after your install. We'll email your installation agreement right after checkout.`;
+        ${installCtx.heatKitFree ? "Heat kit included free. " : ""}You pay ${Math.round(cardShare() * 100)}% today and the remaining ${100 - Math.round(cardShare() * 100)}% online after your install. We'll email your installation agreement right after checkout.`;
   }
 
   // ---------- Drawer

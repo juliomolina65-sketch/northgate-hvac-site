@@ -1407,6 +1407,8 @@ window.INSTALL = {
     mid:  ["AZ", "CO", "DE", "FL", "IL", "MD", "MN", "NH", "NV", "PA", "RI", "VA", "VT"],
   },
   laborWarrantyYears: 1,
+  // Card / bank buyers pay this share of the installed package at checkout, the rest after the install.
+  cardDeposit: 0.75,
   // Shown as "What's included" with every installed estimate. gasOnly lines show for gas furnace systems.
   included: [
     { text: "New drain pan with a flood (float) sensor" },
