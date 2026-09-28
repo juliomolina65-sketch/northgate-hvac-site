@@ -136,6 +136,10 @@
   .in-chosen { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; background: #f4f7fb; border: 1px solid var(--line-2); border-radius: var(--radius); padding: 10px 12px; font-size: 14px; }
   .in-chosen b { font-size: 18px; white-space: nowrap; }
   #inPayWrap { display: grid; gap: 12px; }
+  .in-package { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 2px 12px; background: var(--brand); color: #fff; border-radius: 6px; padding: 12px 14px; }
+  .in-package span { font-weight: 700; font-size: 15px; }
+  .in-package b { font-size: 26px; grid-row: span 2; align-self: center; }
+  .in-package small { color: #d5e1f1; font-size: 12.5px; }
   #inPayWrap[hidden] { display: none; }
   .in-split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .in-split > div { border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; }
@@ -152,6 +156,7 @@
   .in-alt a { color: var(--link); cursor: pointer; }
   .install-note { background: #eaf5ec; border: 1px solid #bfe0c6; border-radius: var(--radius); padding: 10px 12px; margin: 8px 0 4px; font-size: 13px; color: #2f5d3a; }
   .install-note b { color: #16572a; }
+  .totals.pkg .eq-row { display: none; }
   .install-note button { background: none; border: 0; padding: 0; color: var(--link); font: inherit; cursor: pointer; text-decoration: underline; }
   .in-total { text-align: right; }
   .in-total b { display: block; font-size: 22px; color: var(--text); line-height: 1.1; }
@@ -1178,18 +1183,19 @@
       <div class="in-step" id="inBookStep"><span class="in-num">5</span><b>Check out</b></div>
       <div class="in-chosen" id="inChosen"></div>
       <div id="inPayWrap">
+        <div class="in-package"><span>Your installed package</span><b id="inPkgTotal"></b><small>Equipment, installation, materials and 1-year labor warranty, paid in 2 payments</small></div>
         <div class="in-split">
-          <div><small>Pay today</small><b id="inDueNow"></b><span>Your equipment. Card, bank transfer, Apple Pay / Google Pay, or monthly payments with Klarna.</span></div>
-          <div><small>Pay after your install</small><b id="inDueLater"></b><span>Installation<span id="inDueLaterAddons"></span>, paid online once the job is done.</span></div>
+          <div><small>Payment 1 · today</small><b id="inDueNow"></b><span>Due at checkout. Card, bank transfer, Apple Pay / Google Pay, or monthly payments with Klarna.</span></div>
+          <div><small>Payment 2 · after your install</small><b id="inDueLater"></b><span>Paid online once the installation is finished.</span></div>
         </div>
         <div class="in-how">
           <b>How it works</b>
           <ol>
-            <li><b>Check out and pay for your system.</b> Pay in full or choose monthly payments.</li>
+            <li><b>Check out and make payment 1.</b> Pay it in full or choose monthly payments.</li>
             <li><b>Sign your installation agreement.</b> We email it to you right after checkout.</li>
             <li><b>We ship your system.</b> It arrives in 1–3 business days.</li>
             <li><b>We install it 1–2 days after it arrives.</b> We call or text you to set the time.</li>
-            <li><b>Pay for the installation online</b> once the job is finished.</li>
+            <li><b>Make payment 2 online</b> once the installation is finished.</li>
           </ol>
         </div>
       </div>
@@ -1308,11 +1314,13 @@
     <div class="pay-error" id="buyerError" hidden></div>
   </div>
   <div class="foot">
-    <div class="totals">
-      <div><span>Equipment</span><span id="tEquip">$0</span></div>
-      <div><span id="tShipLabel">Shipping</span><span id="tShip">$0</span></div>
+    <div class="totals" id="totals">
+      <div id="tPkgRow" hidden><span>Installed package</span><span id="tPkg"></span></div>
+      <div class="eq-row"><span>Equipment</span><span id="tEquip">$0</span></div>
+      <div class="eq-row"><span id="tShipLabel">Shipping</span><span id="tShip">$0</span></div>
       <div class="discount" id="tDiscRow" hidden><span id="tDiscLabel">Local pickup discount</span><span id="tDisc"></span></div>
-      <div class="grand"><span>Total</span><span id="tTotal">$0</span></div>
+      <div id="tLaterRow" hidden><span>Payment 2 · after your install</span><span id="tLater"></span></div>
+      <div class="grand"><span id="tTotalLabel">Total</span><span id="tTotal">$0</span></div>
     </div>
     <button class="btn btn-cta pay-btn" id="payOnline" type="button"><svg class="icon"><use href="#i-lock"/></svg>Pay online</button>
     <p class="agree-line">By placing an order you agree to our <a href="terms.html" target="_blank">Terms of Sale</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</p>
@@ -1861,6 +1869,7 @@
     $("#tDiscRow").hidden = !disc;
     $("#tDisc").textContent = "−" + money(disc);
     $("#tTotal").textContent = money(eq + lift - disc);
+    if (installCtx) $("#tPkg").textContent = money(eq + lift - disc + installCtx.balance);   // package = payment 1 + payment 2
 
     $("#orderBar").classList.toggle("show", n > 0);
     $("#orderCount").textContent = n;
@@ -1892,7 +1901,7 @@
     const bi = buyerInfo();
     const buyer = `\nName: ${bi.name}\nPhone: ${bi.phone}\nEmail: ${bi.email}\nAddress: ${[bi.street, bi.apt, bi.city, bi.state, z.zip].filter(Boolean).join(", ")}` +
       (bi.warrantyAck ? "\nWarranty: agreed, Northgate registers the warranty" : "") +
-      (installCtx && order[installCtx.key] ? `\nINSTALLATION: ${installCtx.job}${installCtx.addons.length ? ` + ${installCtx.addons.join(", ")}` : ""} · install balance ${money(installCtx.balance)} after the job${installCtx.notes ? `\nJob notes: ${installCtx.notes}` : ""}` : "");
+      (installCtx && order[installCtx.key] ? `\nINSTALLED PACKAGE: ${installCtx.job}${installCtx.addons.length ? ` + ${installCtx.addons.join(", ")}` : ""} · payment 1 (above) now, payment 2 ${money(installCtx.balance)} after the install${installCtx.notes ? `\nJob notes: ${installCtx.notes}` : ""}` : "");
     return `Hi, I'd like to order:\n${lines.join("\n")}\n${ship}\nTotal: ${money(eq + lift - disc)}` + buyer +
       (company ? `\nCompany: ${company}` : "") + (lic ? `\nLicense #: ${lic}` : "") +
       (window.NGRep?.code() ? `\nRep: ${window.NGRep.code()}` : "") +
@@ -2169,10 +2178,10 @@
       const canPay = q.total != null;
       $("#inPayWrap").hidden = !canPay; $("#inCheckout").hidden = !canPay;
       if (canPay) {
+        $("#inPkgTotal").textContent = money(q.total);
         $("#inDueNow").textContent = money(q.equipPrice);
         $("#inDueLater").textContent = money(q.jobPrice + q.addonsTotal);
-        $("#inDueLaterAddons").textContent = r.addons.length ? " and add-ons" : "";
-        $("#inCheckout").textContent = `Check out · pay ${money(q.equipPrice)} for your system →`;
+        $("#inCheckout").textContent = `Check out · ${money(q.total)} installed package →`;
       }
       $(".in-alt").firstChild.textContent = canPay ? "Rather talk to someone first? " : "We'll quote this one personally: ";
     }
@@ -2303,18 +2312,16 @@
     if (installCtx && !order[installCtx.key]) { installCtx = null; try { localStorage.removeItem("installCtx"); } catch (e) {} }
     const pickup = $('input[name="ship"][value="pickup"]');
     note.hidden = !installCtx;
+    $("#tPkgRow").hidden = $("#tLaterRow").hidden = !installCtx;
+    $("#totals").classList.toggle("pkg", !!installCtx);
+    $("#tTotalLabel").textContent = installCtx ? "Payment 1 · due today" : "Total";
     if (pickup) pickup.disabled = !!installCtx;
     if (!installCtx) return;
     if (pickup?.checked) $('input[name="ship"][value="freight"]').checked = true;
-    note.innerHTML = `<b>Installation order:</b> ${esc(installCtx.system)}${installCtx.address ? ` installed at ${esc(installCtx.address)}` : ""}.
-      You pay for the system now. The installation balance of <b>${money(installCtx.balance)}</b>${installCtx.addons.length ? ` (includes ${esc(installCtx.addons.join(", "))})` : ""} is paid online after your install.
-      We'll email your installation agreement after checkout. <button type="button" data-drop-install>Buy the system only (no install)</button>`;
+    $("#tLater").textContent = money(installCtx.balance);
+    note.innerHTML = `<b>Installed package: ${money(installCtx.estimate)}</b><br>${esc(installCtx.system)}${installCtx.addons.length ? ` + ${esc(installCtx.addons.join(", "))}` : ""}, installed${installCtx.address ? ` at ${esc(installCtx.address)}` : ""}.
+      Paid in 2 payments: payment 1 today, payment 2 (<b>${money(installCtx.balance)}</b>) online after your install. We'll email your installation agreement right after checkout.`;
   }
-  document.addEventListener("click", e => {
-    if (!e.target.closest?.("[data-drop-install]")) return;
-    installCtx = null; try { localStorage.removeItem("installCtx"); } catch (err) {}
-    updateOrder();
-  });
 
   // ---------- Drawer
   function openDrawer() { $("#drawer").classList.add("open"); $("#drawerBg").classList.add("open"); updateOrder(); }
