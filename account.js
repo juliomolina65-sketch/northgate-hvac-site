@@ -357,5 +357,17 @@
       el = elements.create("paymentMethodMessaging", opts);
       el.mount("#pmme");
     });
+    // Installation quote: Klarna estimate for payment 1 (any element on the page, by selector).
+    let n = 0;
+    const mountAt = ({ host, amount }) => {
+      const box = document.querySelector(host), cents = Math.round((amount || 0) * 100);
+      if (!box || cents < 5000) return;
+      const id = "pmmi" + (++n);
+      box.innerHTML = `<div id="${id}"></div>`;
+      elements.create("paymentMethodMessaging", { amount: cents, currency: "USD", countryCode: "US", paymentMethodTypes: ["klarna"] }).mount("#" + id);
+    };
+    document.addEventListener("ng:monthly", e => mountAt(e.detail));
+    (window.NG_MONTHLY_QUEUE || []).forEach(mountAt);   // requests made before Stripe loaded
+    window.NG_MONTHLY_READY = true;
   }
 })();
