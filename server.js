@@ -22,7 +22,7 @@ const FUNCTIONS = {
 };
 
 // Working files that must never be served.
-const BLOCKED_DIRS = ["/commercial/", "/supabase/", "/netlify/", "/img/src/", "/img/__pycache__/", "/node_modules/"];
+const BLOCKED_DIRS = ["/commercial/", "/supabase/", "/netlify/", "/img/src/", "/img/__pycache__/", "/node_modules/", "/sibi/"];
 const BLOCKED_EXT = new Set([".md", ".py", ".pyc", ".sql", ".toml", ".mjs", ".example"]);
 const BLOCKED_FILES = new Set(["/server.js", "/package.json", "/package-lock.json", "/railway.json"]);
 

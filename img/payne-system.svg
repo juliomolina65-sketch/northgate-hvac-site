@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Payne system, photo coming soon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f9fc"/><stop offset="1" stop-color="#e6ebf2"/></linearGradient>
+    <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c9d0d9"/><stop offset=".5" stop-color="#e9edf2"/><stop offset="1" stop-color="#b9c1cc"/></linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <ellipse cx="400" cy="470" rx="300" ry="26" fill="#d3dae4"/>
+  <!-- air handler -->
+  <rect x="150" y="150" width="170" height="310" rx="6" fill="url(#metal)" stroke="#9aa4b2" stroke-width="3"/>
+  <line x1="150" y1="300" x2="320" y2="300" stroke="#9aa4b2" stroke-width="3"/>
+  <rect x="175" y="175" width="120" height="14" rx="3" fill="#aeb7c3"/>
+  <!-- condenser -->
+  <rect x="380" y="220" width="270" height="240" rx="10" fill="url(#metal)" stroke="#9aa4b2" stroke-width="3"/>
+  <g stroke="#a5aeba" stroke-width="3">
+    <line x1="395" y1="250" x2="635" y2="250"/><line x1="395" y1="275" x2="635" y2="275"/><line x1="395" y1="300" x2="635" y2="300"/>
+    <line x1="395" y1="325" x2="635" y2="325"/><line x1="395" y1="350" x2="635" y2="350"/><line x1="395" y1="375" x2="635" y2="375"/>
+    <line x1="395" y1="400" x2="635" y2="400"/><line x1="395" y1="425" x2="635" y2="425"/>
+  </g>
+  <ellipse cx="515" cy="222" rx="110" ry="16" fill="#8f99a6"/>
+  <text x="400" y="110" text-anchor="middle" font-family="Roboto, Arial, sans-serif" font-size="44" font-weight="700" fill="#13335e" letter-spacing="3">PAYNE</text>
+  <text x="400" y="540" text-anchor="middle" font-family="Roboto, Arial, sans-serif" font-size="24" fill="#6b7686">Product photo coming soon</text>
+</svg>

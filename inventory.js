@@ -1388,7 +1388,101 @@ const FINAL_PRICES = {
 [...TRANE_ELECTRIC, ...TRANE_GAS, ...ELECTRIC, ...GAS, ...HEAT_PUMPS, ...GOODMAN, ...GOODMAN_HEAT_PUMPS, ...GOODMAN_GAS, ...PART_ITEMS, ...COMMERCIAL]
   .forEach(u => { if (FINAL_PRICES[u.id] != null) u.price = FINAL_PRICES[u.id]; });
 
-window.INVENTORY = [...ELECTRIC, ...TRANE_ELECTRIC, ...GAS, ...TRANE_GAS, ...GOODMAN_GAS, ...HEAT_PUMPS, ...GOODMAN, ...GOODMAN_HEAT_PUMPS, ...PART_ITEMS, ...COMMERCIAL];
+// ------------------------------------------------------------
+// PAYNE split systems (sourced through Sibi Pro, Robert Madden Industries McKinney).
+// Site price = Sibi cost of every component + PAYNE_SHIPPING (same freight + insurance built into the other
+// brands' systems, so DFW pickup takes it back off) + PAYNE_MARGIN. Costs pulled Sept 28, 2026
+// (full list, private: sibi/payne-sibi.json). Heat kits: the same KFFEH kits as the Carrier systems.
+// ------------------------------------------------------------
+const PAYNE_SHIPPING = 650;   // $600 freight + $50 cargo insurance (= SHIPPING.pickupDiscount)
+const PAYNE_MARGIN = 800;
+const PAYNE_IMG = "img/payne-system.svg";   // placeholder until Payne product photos are added
+const payneCondenser = (tons, model, cost, hp) => ({
+  role: hp ? "Heat Pump" : "Condenser", model, cost, image: PAYNE_IMG,
+  name: `Payne ${tons} Ton 14.3 SEER2 ${hp ? "Heat Pump" : "Air Conditioner"} Condensing Unit (R-454B)`,
+  highlights: ["14.3 SEER2 (rating depends on the matched indoor unit)", "R-454B refrigerant (low GWP)", "Not compatible with R-410A coils or air handlers", hp ? "Heats and cools" : "Cooling only"],
+  specs: { "Cooling capacity": `${tons} ton`, "SEER2": "14.3", "Refrigerant": "R-454B", "Voltage / Phase": "208/230V, 1-phase" },
+});
+const payneAirHandler = (tons, model, cost, width) => ({
+  role: "Air Handler", model, cost, image: PAYNE_IMG,
+  name: `Payne ${tons} Ton Multi-Position Air Handler, ${width}" Wide (R-454B)`,
+  highlights: ["Multi-position: upflow, downflow or horizontal", "R-454B refrigerant", `${width}" cabinet width`],
+  specs: { "Capacity": `${tons} ton`, "Width": `${width}"`, "Configuration": "Multi-position", "Refrigerant": "R-454B" },
+});
+const payneCoil = (tons, model, cost, width, kind) => ({
+  role: "Coil", model, cost, image: "img/coil-cvava.jpg",
+  name: `${tons} Ton Multi-Position Cased ${kind}-Coil, ${width}" Wide (R-454B)`,
+  highlights: ["Cased, multi-position", "R-454B refrigerant", `${width}" wide`], width,
+  specs: { "Capacity": `${tons} ton`, "Width": `${width}"`, "Type": `Cased ${kind}-coil`, "Refrigerant": "R-454B" },
+});
+const payneFurnace = (model, cost, kbtu, cfm, width) => ({
+  role: "Furnace", model, cost, kbtu, btuLabel: `${kbtu},000`, width, image: PAYNE_IMG,
+  name: `Payne 80% AFUE ${kbtu},000 BTU Single-Stage Gas Furnace, ${cfm} CFM, ${width}" Wide`,
+  highlights: ["80% AFUE", `${kbtu},000 BTU/h input`, `${cfm} CFM blower`, "Single-stage"],
+  specs: { "AFUE": "80%", "Heating input": `${kbtu},000 BTU/h`, "Airflow": `${cfm} CFM`, "Width": `${width}"`, "Stages": "Single" },
+});
+const KIT_COST = { KFFEH8601C10: 166, KFFEH2601C10: 157, KFFEH3101C15: 240 };
+const KFFEH8601C10 = { ...kffeh(10, { model: "KFFEH8601C10", elements: 2, amps: "", weight: "", fits: "1.5 ton" }) };
+const payneHeatOptions = (tons, hp) => {
+  const opts = tons <= 1.5 ? [{ model: "KFFEH8601C10", add: 0, part: KFFEH8601C10 }]
+    : (tons <= 2.5 ? HEAT_10_STANDARD : HEAT_15_STANDARD).map(o => ({ ...o, part: PARTS[o.model] }));
+  return opts.map(o => ({ ...o, label: `${o.part.kw} kW`, desc: `${o.part.kw} kW heat`, spec: `${o.part.kw} kW electric${hp ? " backup" : ""}` }));
+};
+const payneStdKitCost = tons => tons <= 1.5 ? KIT_COST.KFFEH8601C10 : tons <= 2.5 ? KIT_COST.KFFEH2601C10 : KIT_COST.KFFEH3101C15;
+const paynePrice = parts => parts.reduce((s, p) => s + p.cost, 0) + PAYNE_SHIPPING + PAYNE_MARGIN;
+const PAYNE_AH = {
+  1.5: payneAirHandler(1.5, "PF5MNXA18L00", 653, 14.5), 2: payneAirHandler(2, "PF5MNXB24L00", 653, 17.5), 2.5: payneAirHandler(2.5, "PF5MNXB30L00", 687, 17.5),
+  3: payneAirHandler(3, "PF5MNXB36L00", 714, 17.5), 3.5: payneAirHandler(3.5, "PF5MNXC42L00", 741, 21), 4: payneAirHandler(4, "PF5MNXC48L00", 809, 21), 5: payneAirHandler(5, "PF5MNXD60L00", 809, 24.5),
+};
+const PAYNE_AC = {
+  1.5: payneCondenser(1.5, "PA5SAN51800W", 952), 2: payneCondenser(2, "PA5SAN52400W", 952), 2.5: payneCondenser(2.5, "PA5SAN53000W", 975),
+  3: payneCondenser(3, "PA5SAN53602W", 1062), 3.5: payneCondenser(3.5, "PA5SAN54201W", 1336), 4: payneCondenser(4, "PA5SAN54801W", 1392), 5: payneCondenser(5, "PA5SAN56000W", 1606),
+};
+const PAYNE_HP = {
+  1.5: payneCondenser(1.5, "PH5SAN51800A", 1137, true), 2: payneCondenser(2, "PH5SAN52400A", 1174, true), 2.5: payneCondenser(2.5, "PH5SAN53000A", 1324, true),
+  3: payneCondenser(3, "PH5SAN53600A", 1533, true), 3.5: payneCondenser(3.5, "PH5SAN54200A", 1685, true), 4: payneCondenser(4, "PH5SAN54801A", 1687, true), 5: payneCondenser(5, "PH5SAN56000A", 2053, true),
+};
+const PAYNE_GAS_PARTS = {   // coil + furnace per size (in stock at Sibi McKinney, widths matched)
+  1.5: [payneCoil(1.5, "CAAMP1814AMA", 341, 14, "A"), payneFurnace("PG80MSAA36045A", 616, 45, 1200, 14.2)],
+  2:   [payneCoil(2, "CAAMP2414AMA", 387, 14, "A"),   payneFurnace("PG80MSAA36045A", 616, 45, 1200, 14.2)],
+  2.5: [payneCoil(2.5, "CAAMP3014AMA", 406, 14, "A"), payneFurnace("PG80MSAA36045A", 616, 45, 1200, 14.2)],
+  3:   [payneCoil(3, "CAAMP3617AMA", 437, 17.5, "A"), payneFurnace("PG80MSAA42045B", 622, 45, 1400, 17.5)],
+  3.5: [payneCoil(3.5, "CVAMA4221XMA", 386, 21, "V"), payneFurnace("PG80MSAA48070C", 652, 70, 1600, 21)],
+  4:   [payneCoil(4, "CAAMP4821AMA", 501, 21, "A"),   payneFurnace("PG80MSAA48090C", 636, 90, 1600, 21)],
+  5:   [payneCoil(5, "CVAMA6021XMA", 589, 21, "V"),   payneFurnace("PG80MSAA60090C", 644, 90, 2000, 21)],
+};
+const PAYNE_TONS = [1.5, 2, 2.5, 3, 3.5, 4, 5];
+const payneBase = (tons, type, kind) => ({
+  brand: "Payne", tons, type, seer2: 14.3, refrigerant: "R-454B", msrp: null, inStock: null, image: PAYNE_IMG,
+  id: `payne-${tons}t-${kind}`,
+});
+const PAYNE_ELECTRIC = PAYNE_TONS.map(t => ({
+  ...payneBase(t, "Electric AC System", "electric"),
+  name: `${t}-Ton Electric AC System`, voltage: "208/230V 1-ph",
+  price: paynePrice([PAYNE_AC[t], PAYNE_AH[t], { cost: payneStdKitCost(t) }]),
+  components: [PAYNE_AC[t], PAYNE_AH[t]],
+  optionTitle: "Electric heat kit", heatOptions: payneHeatOptions(t, false),
+}));
+const PAYNE_HEAT_PUMPS = PAYNE_TONS.map(t => ({
+  ...payneBase(t, "Heat Pump System", "heatpump"),
+  name: `${t}-Ton Heat Pump System`, voltage: "208/230V 1-ph",
+  price: paynePrice([PAYNE_HP[t], PAYNE_AH[t], { cost: payneStdKitCost(t) }]),
+  components: [PAYNE_HP[t], PAYNE_AH[t]],
+  optionTitle: "Backup (auxiliary) heat kit", heatOptions: payneHeatOptions(t, true),
+}));
+const PAYNE_GAS = PAYNE_TONS.map(t => {
+  const [coil, furnace] = PAYNE_GAS_PARTS[t];
+  return {
+    ...payneBase(t, "Gas AC System", "gas"),
+    name: `${t}-Ton Gas AC System`, afue: 80, voltage: "208/230V condenser · 115V furnace",
+    price: paynePrice([PAYNE_AC[t], coil, furnace]),
+    components: [PAYNE_AC[t], coil],
+    optionTitle: "Furnace size",
+    heatOptions: [{ model: furnace.model, add: 0, part: furnace, label: `${furnace.kbtu}k BTU`, desc: `${furnace.kbtu}k BTU furnace`, spec: `${furnace.btuLabel} BTU gas · 80% AFUE` }],
+  };
+});
+
+window.INVENTORY = [...ELECTRIC, ...TRANE_ELECTRIC, ...GAS, ...TRANE_GAS, ...GOODMAN_GAS, ...HEAT_PUMPS, ...GOODMAN, ...GOODMAN_HEAT_PUMPS, ...PAYNE_ELECTRIC, ...PAYNE_GAS, ...PAYNE_HEAT_PUMPS, ...PART_ITEMS, ...COMMERCIAL];
 
 
 // ============================================================

@@ -318,6 +318,7 @@
   .bb { display: inline-flex; align-items: center; font-weight: 800; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; line-height: 1.2; color: #fff; white-space: nowrap; }
   .bb-carrier { background: #0b4ea2; }
   .bb-goodman { background: #d52b1e; }
+  .bb-payne { background: #1d4f91; }
   .bb-bryant { background: #b8322a; }
   .bb-trane { background: #3a3f45; }
   .agree-line { font-size: 12.5px; color: var(--muted); text-align: center; margin: 6px 0 0; }
@@ -375,7 +376,7 @@
   .bt-trust { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; flex-wrap: wrap; }
   .bt-trust li { display: inline-flex; align-items: center; gap: 7px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 12.5px; font-weight: 500; color: var(--text); white-space: nowrap; }
   .bt-trust svg { width: 15px; height: 15px; color: var(--cta); fill: none; stroke: currentColor; stroke-width: 2; }
-  .bt-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .bt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; }
   .bt-tile { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; font: inherit; color: inherit; cursor: pointer; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 18px 16px 14px; overflow: hidden; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
   .bt-tile::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--bc); }
   .bt-tile:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(20,35,60,.12); border-color: #c9d1dc; }
@@ -1565,7 +1566,7 @@
   }).join("");
   const tonsList = [...new Set(INV.map(u => u.tons).filter(t => t != null))].sort((a, b) => a - b);
   $("#tonFacet").innerHTML = tonsList.map(t => `<label><input type="checkbox" value="${t}" data-f="tons">${t} Ton<span>${INV.filter(u => u.tons === t).length}</span></label>`).join("");
-  const BRAND_ORDER = ["Carrier", "Trane", "Goodman", "Bryant"];
+  const BRAND_ORDER = ["Carrier", "Trane", "Goodman", "Payne", "Bryant"];
   const brandList = [...new Set(INV.map(u => u.brand))].sort((a, b) => (BRAND_ORDER.indexOf(a) + 1 || 99) - (BRAND_ORDER.indexOf(b) + 1 || 99));
   $("#brandFacetWrap").hidden = brandList.length < 2;
   $("#brandFacet").innerHTML = brandList.map(b => `<label><input type="checkbox" value="${esc(b)}" data-f="brands">${badge(b)}<span>${INV.filter(u => u.brand === b).length}</span></label>`).join("");
@@ -1737,7 +1738,7 @@
     </button>`;
   }).join("");
   // Top-of-page brand buttons: what each brand covers and where it starts.
-  const BRAND_COLOR = { Carrier: "#10318f", Trane: "#e8491d", Goodman: "#e11b22", Bryant: "#c8202f" };
+  const BRAND_COLOR = { Carrier: "#10318f", Trane: "#e8491d", Goodman: "#e11b22", Payne: "#1d4f91", Bryant: "#c8202f" };
   $("#brandBar").innerHTML = brandList.map(b => {
     const mine = INV.filter(u => u.brand === b);
     const res = mine.filter(u => !u.commercial), com = mine.filter(u => u.commercial);
