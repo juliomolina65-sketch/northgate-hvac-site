@@ -21,7 +21,7 @@ function formEncode(obj, prefix = "", out = new URLSearchParams()) {
 const clip = (s, n = 490) => String(s || "").slice(0, n);
 
 export async function buildOrder(body, profile) {
-  const { inventory, shipping, Pricing } = loadCatalog();
+  const { inventory, shipping, install, Pricing } = loadCatalog();
   if (profile) Pricing.applyContractorPricing(inventory, profile);
 
   const entries = Object.entries(body?.items || {});
@@ -66,7 +66,39 @@ export async function buildOrder(body, profile) {
   if (need.length) throw Object.assign(new Error(`Please fill in your ${need.join(", ")}.`), { status: 400 });
   if (!/^\S+@\S+\.\S+$/.test(c.email)) throw Object.assign(new Error("Please enter a valid email."), { status: 400 });
   if (!c.warrantyAck) throw Object.assign(new Error("Please check the warranty box to continue."), { status: 400 });
-  return { lines, pickup, zip, liftgate, liftgatePrice: shipping.liftgatePrice, hasCommercial, comUnload: !pickup && hasCommercial && !!body?.delivery?.comUnload };
+  return { lines, pickup, zip, liftgate, liftgatePrice: shipping.liftgatePrice, hasCommercial, comUnload: !pickup && hasCommercial && !!body?.delivery?.comUnload,
+    installCharge: body?.install?.pay === "klarna" ? installCharge(body, lines, pickup, install, Pricing) : null };
+}
+
+// Installed package financed with Klarna: the whole package is one payment, so the installation is charged
+// here too. Priced from INSTALL in inventory.js (never from the browser): job price for the area + add-ons,
+// minus the free install heat kit (Goodman/Trane electric and heat pump systems, same as the quote).
+const KLARNA_MAX_CENTS = 1000000;   // Klarna financing in the US tops out at $10,000
+const NO_KLARNA_FINANCING = ["IA", "WV", "MA"];
+export function installCharge(body, lines, pickup, INSTALL, Pricing) {
+  const fail = m => { throw Object.assign(new Error(m), { status: 400 }); };
+  const inst = body.install || {}, state = String(body?.customer?.state || "").trim().toUpperCase();
+  if (!INSTALL) fail("Installation pricing isn't available. Please text or call us.");
+  if (pickup) fail("Installed packages ship to the job address; choose shipping instead of pickup.");
+  if (lines.length !== 1 || lines[0].qty !== 1) fail("An installed package is one system. Remove other items or change the quantity to 1.");
+  const { u, heat } = lines[0];
+  if (u.commercial) fail("Installation is for home systems only.");
+  const job = INSTALL.jobs.find(j => j.key === inst.jobKey && !j.custom);
+  if (!job) fail("This job needs a custom quote. Please text or call us.");
+  if (job.equip === "outdoor" ? !/Condenser/.test(u.type) : !/System/.test(u.type)) fail("That system doesn't match the installation job. Please start the quote again.");
+  if (NO_KLARNA_FINANCING.includes(state)) fail(`Klarna monthly financing isn't available in ${state}. Choose card or bank payments, or text us.`);
+  const tier = INSTALL.tiers.high.includes(state) ? "high" : INSTALL.tiers.mid.includes(state) ? "mid" : "standard";
+  const addons = INSTALL.addons.filter(a => (inst.addonKeys || []).includes(a.key));
+  const std = Pricing.heatOf(u);
+  const kitCredit = !/Gas/.test(u.type) && heat?.part && !std?.part ? Math.max(0, Pricing.priceOf(u, heat) - Pricing.priceOf(u, std)) : 0;
+  const dollars = job.price[tier] + addons.reduce((s, a) => s + a.price, 0) - kitCredit;
+  const cents = Math.round(dollars * 100);
+  if (lines[0].unit + cents > KLARNA_MAX_CENTS) fail("Klarna financing covers up to $10,000. Choose card or bank payments (2 payments), or text us.");
+  return {
+    cents, tier, addons: addons.map(a => a.label), kitCredit,
+    name: `Installation: ${job.label}`,
+    description: clip(["Labor, materials and 1-year labor warranty", addons.length && `add-ons: ${addons.map(a => a.label).join(", ")}`, kitCredit && "heat kit included free"].filter(Boolean).join(" · "), 500),
+  };
 }
 
 export default async (req) => {
@@ -97,6 +129,9 @@ export default async (req) => {
       description: clip(`${l.models ? "Models: " + l.models : ""}${order.pickup ? " · local pickup price" : l.near ? " · near-DFW delivery price" : " · free shipping"}`, 500) } },
   }));
   if (order.liftgate) line_items.push({ quantity: 1, price_data: { currency: "usd", unit_amount: Math.round(order.liftgatePrice * 100), product_data: { name: "Liftgate delivery" } } });
+  const ic = order.installCharge;
+  if (ic) line_items.push({ quantity: 1, price_data: { currency: "usd", unit_amount: ic.cents, product_data: { name: clip(ic.name, 250), description: ic.description } } });
+  const klarnaPackage = !!ic, cardPackage = !!body?.install && !ic;
 
   const summary = order.lines.map(l => `${l.qty}x ${l.name} (${l.models})`).join("; ");
   const metadata = {
@@ -113,7 +148,14 @@ export default async (req) => {
     rep: clip(profile?.rep_code || String(body?.repCode || "").toUpperCase().replace(/[^A-Z0-9-]/g, "").slice(0, 24), 30),
     spanish: body?.lang === "es" ? "yes" : "no",
     // Installation order: the system is paid now, the installation balance after the install (not charged here).
-    install: body?.install ? clip([
+    install: klarnaPackage ? clip([
+      `INSTALLED PACKAGE, PAID IN FULL (Klarna): ${body.install.job || ""}`,
+      body.install.address && `at ${body.install.address}`,
+      ic.addons.length && `add-ons: ${ic.addons.join(", ")}`,
+      ic.kitCredit && `heat kit included free`,
+      `installation charged in this payment: $${(ic.cents / 100).toFixed(0)} (${ic.tier} area)`,
+      body.install.notes && `notes: ${body.install.notes}`,
+    ].filter(Boolean).join(" · "), 500) : cardPackage ? clip([
       `INSTALLED PACKAGE (payment 1 of 2): ${body.install.job || ""}`,
       body.install.address && `at ${body.install.address}`,
       body.install.addons?.length && `add-ons: ${body.install.addons.join(", ")}`,
@@ -137,7 +179,9 @@ export default async (req) => {
     customer_creation: "always",
     metadata,
     payment_intent_data: { metadata, description: clip(`Northgate order: ${summary}`, 1000) },
-    custom_text: { submit: { message: body?.install
+    custom_text: { submit: { message: klarnaPackage
+      ? "This pays for your whole installed package with Klarna monthly payments. We'll email your installation agreement, ship your system (arrives in 1–3 business days) and install it 1–2 days after it arrives. Nothing more is due to us after the install."
+      : cardPackage
       ? "This is payment 1 of 2 for your installed package. We'll email your installation agreement, ship your system (arrives in 1–3 business days) and install it 1–2 days after it arrives. Payment 2 is made online once the installation is finished."
       : order.pickup
       ? "We'll call or text to set your pickup time in DFW."
@@ -147,6 +191,9 @@ export default async (req) => {
   params.customer_email = user?.email || String(body.customer.email).trim();
   if (process.env.STRIPE_AUTOMATIC_TAX === "true") params.automatic_tax = { enabled: true };
   if (process.env.STRIPE_PAYMENT_METHOD_CONFIGURATION) params.payment_method_configuration = process.env.STRIPE_PAYMENT_METHOD_CONFIGURATION;
+  // Installed packages: Klarna finances the whole package in one payment; card/bank buyers pay in 2 payments, so no Klarna there.
+  if (klarnaPackage) params.allowed_payment_method_types = ["klarna"];
+  else if (cardPackage) params.excluded_payment_method_types = ["klarna"];
 
   const r = await fetch("https://api.stripe.com/v1/checkout/sessions", {
     method: "POST",

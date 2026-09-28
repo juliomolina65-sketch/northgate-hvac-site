@@ -26,7 +26,7 @@ export function loadCatalog() {
   vm.createContext(sandbox);
   for (const [name, code] of sources) vm.runInContext(code, sandbox, { filename: name });
   const w = sandbox.window;
-  return { inventory: w.INVENTORY, shipping: w.SHIPPING, business: w.BUSINESS, Pricing: w.Pricing };
+  return { inventory: w.INVENTORY, shipping: w.SHIPPING, business: w.BUSINESS, install: w.INSTALL, Pricing: w.Pricing };
 }
 
 // Same rules as the website's ZIP check.
