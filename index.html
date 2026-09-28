@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Northgate | HVAC Equipment</title>
-<meta name="description" content="Carrier, Trane, Goodman and Bryant HVAC equipment: home systems, parts and commercial rooftop units. Free nationwide shipping, monthly payments, or save with local pickup in DFW.">
+<meta name="description" content="Carrier, Trane, Goodman, Payne and Bryant HVAC equipment: home systems, parts and commercial rooftop units. Free nationwide shipping, monthly payments, or save with local pickup in DFW.">
 <link rel="icon" type="image/png" href="img/brand/favicon-64.png">
 <link rel="apple-touch-icon" href="img/brand/apple-touch-icon.png">
 <meta property="og:title" content="Northgate | HVAC Equipment">
@@ -885,7 +885,7 @@
         <div class="benefit"><span class="ic"><svg class="icon"><use href="#i-truck"/></svg></span><div><b class="r-only">Free nationwide shipping</b><b class="c-only">Free freight to your job site</b><small class="r-only">Built into every price. Curbside LTL.</small><small class="c-only">Have a forklift on site to unload. Unloading help is extra.</small></div></div>
         <div class="benefit r-only"><span class="ic"><svg class="icon"><use href="#i-tag"/></svg></span><div><b>Save $<span data-ship="pickupDiscount"></span> per system</b><small>With local pickup in <span data-biz="pickupArea"></span></small></div></div>
         <div class="benefit c-only"><span class="ic"><svg class="icon"><use href="#i-tag"/></svg></span><div><b>Pick up and skip the freight</b><small>Freight comes off with local pickup in <span data-biz="pickupArea"></span></small></div></div>
-        <div class="benefit r-only"><span class="ic"><svg class="icon"><use href="#i-shield"/></svg></span><div><b>New R-454B &amp; R-32 equipment</b><small>Carrier, Trane, Goodman &amp; Bryant · full specs on every product</small></div></div>
+        <div class="benefit r-only"><span class="ic"><svg class="icon"><use href="#i-shield"/></svg></span><div><b>New R-454B &amp; R-32 equipment</b><small>Carrier, Trane, Goodman, Payne &amp; Bryant · full specs on every product</small></div></div>
         <div class="benefit c-only"><span class="ic"><svg class="icon"><use href="#i-shield"/></svg></span><div><b>Gas/electric, heat pump &amp; straight cool</b><small>208/230V and 460V · full specs on every unit</small></div></div>
       </div>
     </div>
@@ -916,7 +916,7 @@
           <div class="com-copy">
             <span class="pill">HOME SYSTEMS · FREE SHIPPING</span>
             <h2>Complete home AC &amp; heating systems, 1.5 to 5 tons</h2>
-            <p>Matched Carrier, Trane and Goodman systems: electric, gas furnace and heat pump. Free shipping nationwide is built into every price, or pick up in DFW and save.</p>
+            <p>Matched Carrier, Trane, Goodman and Payne systems: electric, gas furnace and heat pump. Free shipping nationwide is built into every price, or pick up in DFW and save.</p>
             <div class="com-stats" id="resStats"></div>
             <div class="ctas">
               <button class="btn btn-cta" type="button" data-cat="all" data-scroll>Shop home systems →</button>
@@ -958,7 +958,7 @@
       <div class="showcase">
         <div class="show-hero">
           <span class="pill">TOP BRANDS · NEW EQUIPMENT</span>
-          <h2>Carrier, Trane &amp; Goodman systems, shipped free nationwide</h2>
+          <h2>Carrier, Trane, Goodman &amp; Payne systems, shipped free nationwide</h2>
           <p>Complete electric, gas and heat pump systems from 1.5 to 5 ton, plus individual parts. Full specs on every unit, priced below supply houses.</p>
           <div class="brands-line"><span class="logo-chip"><img src="img/brand/logo-carrier.png" alt="Carrier"></span><span class="logo-chip"><img src="img/brand/logo-trane.png" alt="Trane"></span><span class="logo-chip"><img src="img/brand/logo-goodman.png" alt="Goodman"></span></div>
           <div class="ctas">
@@ -1478,7 +1478,7 @@
   const money = n => "$" + Math.round(n).toLocaleString("en-US");
   const badge = (b, extra = "") => `<span class="bb bb-${String(b).toLowerCase()} ${extra}">${b}</span>`;
   // Real brand logos for the landing page (small product-card badges stay as text).
-  const BRAND_LOGOS = { Carrier: "img/brand/logo-carrier.png", Trane: "img/brand/logo-trane.png", Goodman: "img/brand/logo-goodman.png", Bryant: "img/brand/logo-bryant.png" };
+  const BRAND_LOGOS = { Carrier: "img/brand/logo-carrier.png", Trane: "img/brand/logo-trane.png", Goodman: "img/brand/logo-goodman.png", Payne: "img/brand/logo-payne.svg", Bryant: "img/brand/logo-bryant.png" };
   const brandLogo = b => BRAND_LOGOS[b] ? `<img class="brand-logo" src="${BRAND_LOGOS[b]}" alt="${esc(b)}">` : badge(b, "lg");
   const TYPE_BRAND = { "Split AC System": "Goodman" };   // type pills that belong to one brand get its badge
   const esc = v => String(v).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));

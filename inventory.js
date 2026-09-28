@@ -5,7 +5,7 @@
 
 window.BUSINESS = {
   name: "Northgate",                      // <- your business name (domain ideas: northgateair.com, northgatehvac.com)
-  tagline: "Carrier, Trane, Goodman and Bryant equipment with free nationwide shipping, or pick up in DFW and save $650 per system.",
+  tagline: "Carrier, Trane, Goodman, Payne and Bryant equipment with free nationwide shipping, or pick up in DFW and save $650 per system.",
   phone: "(945) 244-6670",                // <- main phone (shown on the site; calls and texts)
   sms: "+19452446670",                    // <- same number, digits only with +1
   phone2: "(945) 391-3427",               // <- second phone (shown in Contact and the footer)
@@ -1398,15 +1398,15 @@ const FINAL_PRICES = {
 // (owner decision Sept 28, 2026). DFW pickup takes only this amount off (pickupDiscount below).
 const PAYNE_SHIPPING = 150;
 const PAYNE_MARGIN = 800;
-const PAYNE_IMG = "img/payne-system.svg";   // placeholder until Payne product photos are added
+const PAYNE_IMG = { electric: "img/bundle-payne-electric.jpg", heatpump: "img/bundle-payne-heatpump.jpg", gas: "img/bundle-payne-gas.jpg" };   // photos: Sibi / Payne (permission Sept 28, 2026)
 const payneCondenser = (tons, model, cost, hp) => ({
-  role: hp ? "Heat Pump" : "Condenser", model, cost, image: PAYNE_IMG,
+  role: hp ? "Heat Pump" : "Condenser", model, cost, image: hp ? "img/payne-hp.jpg" : "img/payne-ac.jpg",
   name: `Payne ${tons} Ton 14.3 SEER2 ${hp ? "Heat Pump" : "Air Conditioner"} Condensing Unit (R-454B)`,
   highlights: ["14.3 SEER2 (rating depends on the matched indoor unit)", "R-454B refrigerant (low GWP)", "Not compatible with R-410A coils or air handlers", hp ? "Heats and cools" : "Cooling only"],
   specs: { "Cooling capacity": `${tons} ton`, "SEER2": "14.3", "Refrigerant": "R-454B", "Voltage / Phase": "208/230V, 1-phase" },
 });
 const payneAirHandler = (tons, model, cost, width) => ({
-  role: "Air Handler", model, cost, image: PAYNE_IMG,
+  role: "Air Handler", model, cost, image: "img/payne-airhandler.jpg",
   name: `Payne ${tons} Ton Multi-Position Air Handler, ${width}" Wide (R-454B)`,
   highlights: ["Multi-position: upflow, downflow or horizontal", "R-454B refrigerant", `${width}" cabinet width`],
   specs: { "Capacity": `${tons} ton`, "Width": `${width}"`, "Configuration": "Multi-position", "Refrigerant": "R-454B" },
@@ -1418,7 +1418,7 @@ const payneCoil = (tons, model, cost, width, kind) => ({
   specs: { "Capacity": `${tons} ton`, "Width": `${width}"`, "Type": `Cased ${kind}-coil`, "Refrigerant": "R-454B" },
 });
 const payneFurnace = (model, cost, kbtu, cfm, width) => ({
-  role: "Furnace", model, cost, kbtu, btuLabel: `${kbtu},000`, width, image: PAYNE_IMG,
+  role: "Furnace", model, cost, kbtu, btuLabel: `${kbtu},000`, width, image: "img/payne-furnace.jpg",
   name: `Payne 80% AFUE ${kbtu},000 BTU Single-Stage Gas Furnace, ${cfm} CFM, ${width}" Wide`,
   highlights: ["80% AFUE", `${kbtu},000 BTU/h input`, `${cfm} CFM blower`, "Single-stage"],
   specs: { "AFUE": "80%", "Heating input": `${kbtu},000 BTU/h`, "Airflow": `${cfm} CFM`, "Width": `${width}"`, "Stages": "Single" },
@@ -1455,7 +1455,7 @@ const PAYNE_GAS_PARTS = {   // coil + furnace per size (in stock at Sibi McKinne
 };
 const PAYNE_TONS = [1.5, 2, 2.5, 3, 3.5, 4, 5];
 const payneBase = (tons, type, kind) => ({
-  brand: "Payne", tons, type, seer2: 14.3, refrigerant: "R-454B", msrp: null, inStock: null, image: PAYNE_IMG,
+  brand: "Payne", tons, type, seer2: 14.3, refrigerant: "R-454B", msrp: null, inStock: null, image: PAYNE_IMG[kind],
   pickupDiscount: PAYNE_SHIPPING,
   id: `payne-${tons}t-${kind}`,
 });

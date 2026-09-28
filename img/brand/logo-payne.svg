@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 340 120" role="img" aria-label="Payne">
+  <circle cx="60" cy="60" r="56" fill="#f7941d"/>
+  <circle cx="60" cy="60" r="45" fill="#fff"/>
+  <text x="60" y="69" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="23" fill="#f7941d" letter-spacing="-.3">PAYNE</text>
+  <text x="130" y="79" font-family="Arial, Helvetica, sans-serif" font-weight="900" font-size="50" fill="#f7941d" letter-spacing="1" textLength="196" lengthAdjust="spacingAndGlyphs">PAYNE</text>
+</svg>

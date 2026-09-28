@@ -36,19 +36,19 @@
     "Heat Kits": "Kits de calefacción",
     "Home /": "Inicio /",
     "Residential Equipment": "Equipo residencial",
-    "Carrier, Trane, Goodman and Bryant equipment with free nationwide shipping, or pick up in DFW and save $650 per system.":
-      "Equipo Carrier, Trane, Goodman y Bryant con envío gratis a todo el país, o recójalo en DFW y ahorre $650 por sistema.",
+    "Carrier, Trane, Goodman, Payne and Bryant equipment with free nationwide shipping, or pick up in DFW and save $650 per system.":
+      "Equipo Carrier, Trane, Goodman, Payne y Bryant con envío gratis a todo el país, o recójalo en DFW y ahorre $650 por sistema.",
     "Built into every price. Curbside LTL.": "Incluido en cada precio. Entrega en la acera (LTL).",
     "Save $": "Ahorre $",
     "per system": "por sistema",
     "With local pickup in": "Recogiendo en",
     "Dallas–Fort Worth": "Dallas–Fort Worth",
     "New R-454B & R-32 equipment": "Equipo nuevo R-454B y R-32",
-    "Carrier, Trane, Goodman & Bryant · full specs on every product": "Carrier, Trane, Goodman y Bryant · especificaciones completas",
+    "Carrier, Trane, Goodman, Payne & Bryant · full specs on every product": "Carrier, Trane, Goodman, Payne y Bryant · especificaciones completas",
 
     // ---- Home: showcase, offers, featured, categories, pro, brands
     "TOP BRANDS · NEW EQUIPMENT": "MARCAS LÍDERES · EQUIPO NUEVO",
-    "Carrier, Trane & Goodman systems, shipped free nationwide": "Sistemas Carrier, Trane y Goodman, con envío gratis a todo el país",
+    "Carrier, Trane, Goodman & Payne systems, shipped free nationwide": "Sistemas Carrier, Trane, Goodman y Payne, con envío gratis a todo el país",
     "Complete electric, gas and heat pump systems from 1.5 to 5 ton, plus individual parts. Full specs on every unit, priced below supply houses.":
       "Sistemas completos eléctricos, a gas y de bomba de calor de 1.5 a 5 toneladas, además de piezas individuales. Especificaciones completas y precios por debajo de las casas de suministro.",
     "Shop systems": "Ver sistemas",
@@ -499,8 +499,8 @@
     "Shop commercial units →": "Ver unidades comerciales →", "Get a project quote": "Pida una cotización de proyecto",
     "HOME SYSTEMS · FREE SHIPPING": "SISTEMAS RESIDENCIALES · ENVÍO GRATIS",
     "Complete home AC & heating systems, 1.5 to 5 tons": "Sistemas completos de A/C y calefacción para el hogar, de 1.5 a 5 toneladas",
-    "Matched Carrier, Trane and Goodman systems: electric, gas furnace and heat pump. Free shipping nationwide is built into every price, or pick up in DFW and save.":
-      "Sistemas combinados Carrier, Trane y Goodman: eléctricos, con horno de gas y bomba de calor. El envío gratis a todo el país está incluido en cada precio, o recójalos en DFW y ahorre.",
+    "Matched Carrier, Trane, Goodman and Payne systems: electric, gas furnace and heat pump. Free shipping nationwide is built into every price, or pick up in DFW and save.":
+      "Sistemas combinados Carrier, Trane, Goodman y Payne: eléctricos, con horno de gas y bomba de calor. El envío gratis a todo el país está incluido en cada precio, o recójalos en DFW y ahorre.",
     "Ships in 3–5 business days by freight truck to your curb. Monthly payments available with Klarna.":
       "Se envían en 3 a 5 días hábiles en camión de carga hasta su banqueta. Pagos mensuales disponibles con Klarna.",
     "Shop home systems →": "Ver sistemas residenciales →", "Save with DFW pickup": "Ahorre recogiendo en DFW",
