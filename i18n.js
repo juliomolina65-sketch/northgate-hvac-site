@@ -566,6 +566,12 @@
     "In the lower half of the typical price range in Texas": "En la mitad baja del rango de precio típico en Texas",
     "✓ Drain pan + flood sensor": "✓ Charola + sensor de inundación", "✓ New disconnect + whip": "✓ Desconexión + cable nuevos",
     "✓ Condenser pad": "✓ Base para condensadora", "✓ 1-yr labor warranty": "✓ Garantía de 1 año", "Try it with your address →": "Pruébelo con su dirección →",
+    "Checking your payment…": "Verificando su pago…", "One moment while we confirm it with our payment processor.": "Un momento mientras lo confirmamos con nuestro procesador de pagos.",
+    "We couldn't confirm your payment yet": "Aún no pudimos confirmar su pago",
+    "If you finished paying, you'll get a receipt by email shortly and we'll contact you. If you didn't, your order is still saved here; you can try again.":
+      "Si terminó de pagar, recibirá un recibo por correo pronto y nos comunicaremos con usted. Si no, su pedido sigue guardado aquí; puede intentarlo de nuevo.",
+    "No charge was made. Your order is still saved; you can pay again, choose another way to pay, or send it by text or email.":
+      "No se hizo ningún cargo. Su pedido sigue guardado; puede pagar de nuevo, elegir otra forma de pago o enviarlo por texto o correo.",
     "Check out": "Pagar", "Your installed package": "Su paquete instalado",
     "Equipment, installation, materials and 1-year labor warranty, paid in 2 payments": "Equipo, instalación, materiales y garantía de mano de obra de 1 año, en 2 pagos",
     "Payment 1 · today": "Pago 1 · hoy", "Payment 2 · after your install": "Pago 2 · después de la instalación",

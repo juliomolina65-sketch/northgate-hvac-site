@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import checkout from "./netlify/functions/checkout.mjs";
 import stripeWebhook from "./netlify/functions/stripe-webhook.mjs";
 import finalPayment from "./netlify/functions/final-payment.mjs";
+import checkoutStatus from "./netlify/functions/checkout-status.mjs";
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const PORT = +process.env.PORT || 8080;
@@ -17,6 +18,7 @@ const FUNCTIONS = {
   "/.netlify/functions/checkout": checkout,
   "/.netlify/functions/stripe-webhook": stripeWebhook,
   "/.netlify/functions/final-payment": finalPayment,
+  "/.netlify/functions/checkout-status": checkoutStatus,
 };
 
 // Working files that must never be served.

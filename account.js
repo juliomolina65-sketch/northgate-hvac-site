@@ -325,22 +325,36 @@
   }
 
   // Back from Stripe: ?paid=cs_... (success) or ?checkout=cancelled
-  function handleReturnFromStripe(NG) {
+  // Coming back from Stripe doesn't mean the customer paid: backing out of Klarna or a bank app also returns
+  // here. Ask the server what Stripe says before thanking anyone or clearing the order.
+  async function handleReturnFromStripe(NG) {
     const q = new URLSearchParams(location.search);
-    const paid = q.get("paid"), cancelled = q.get("checkout") === "cancelled";
-    if (!paid && !cancelled) return;
+    const sessionId = q.get("paid"), cancelled = q.get("checkout") === "cancelled";
+    if (!sessionId && !cancelled) return;
     history.replaceState(null, "", location.pathname + location.hash);
-    if (paid) NG.clearOrder();
+    const install = NG.installInfo?.();
     const box = document.createElement("div");
     box.className = "notice-bg";
-    box.innerHTML = `<div class="notice" role="dialog" aria-modal="true">
-      ${paid ? `<div style="font-size:40px">✓</div><h2>Thank you, your order is in!</h2>
-        <p>You'll get a receipt by email. We confirm stock and ${NG.method() === "pickup" ? "call or text you to set up pickup" : "ship in " + NG.S.shipsIn + ", with tracking by text or email"}.</p>
-        <p><small>Paid by bank transfer? It takes 3–5 business days to clear; we ship once it does.</small></p>`
-      : `<h2>Payment not finished</h2><p>No charge was made. Your order is still saved; you can pay again or send it by text or email.</p>`}
-      <button class="btn btn-cta" type="button" style="margin-top:8px">OK</button></div>`;
+    const show = html => {
+      box.innerHTML = `<div class="notice" role="dialog" aria-modal="true">${html}
+        <button class="btn btn-cta" type="button" style="margin-top:8px">OK</button></div>`;
+      box.querySelector("button").onclick = () => box.remove();
+    };
+    const notFinished = `<h2>Payment not finished</h2><p>No charge was made. Your order is still saved; you can pay again, choose another way to pay, or send it by text or email.</p>`;
     document.body.appendChild(box);
-    box.querySelector("button").onclick = () => box.remove();
+    if (cancelled) return show(notFinished);
+    show(`<h2>Checking your payment…</h2><p>One moment while we confirm it with our payment processor.</p>`);
+    let s = null;
+    try { const r = await fetch(`/.netlify/functions/checkout-status?session_id=${encodeURIComponent(sessionId)}`); if (r.ok) s = await r.json(); } catch (e) {}
+    if (!s) return show(`<h2>We couldn't confirm your payment yet</h2><p>If you finished paying, you'll get a receipt by email shortly and we'll contact you. If you didn't, your order is still saved here; you can try again.</p>`);
+    if (s.status !== "complete") return show(notFinished);
+    NG.clearOrder();
+    const clearing = s.payment_status !== "paid";   // bank transfer still clearing
+    show(`<div style="font-size:40px">✓</div><h2>Thank you, your order is in!</h2>
+      <p>You'll get a receipt by email. ${install
+        ? "We'll email your installation agreement, ship your system and call or text you to schedule the install 1–2 days after it arrives."
+        : `We confirm stock and ${NG.method() === "pickup" ? "call or text you to set up pickup" : "ship in " + NG.S.shipsIn + ", with tracking by text or email"}.`}</p>
+      ${clearing ? `<p><small>Paid by bank transfer? It takes 3–5 business days to clear; we ship once it does.</small></p>` : ""}`);
   }
 
   // ---------------------------------------------------------- Monthly payments message (Stripe's official Affirm/Klarna element)
