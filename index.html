@@ -97,14 +97,6 @@
   .in-body { grid-template-columns: minmax(0, 1fr); }
   .in-body input, .in-body select { width: 100%; min-width: 0; }
   .in-body .ws-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .in-find { position: relative; }
-  .in-sug { position: absolute; left: 0; right: 0; top: 100%; z-index: 5; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 10px 28px rgba(20,35,60,.16); margin-top: 4px; max-height: 280px; overflow: auto; }
-  .in-sug button { display: flex; gap: 10px; align-items: center; width: 100%; border: 0; border-bottom: 1px solid var(--line-2); background: #fff; padding: 8px 10px; font: inherit; text-align: left; cursor: pointer; }
-  .in-sug button:hover, .in-sug button:focus { background: #f4f7fb; }
-  .in-sug img { width: 54px; height: 40px; object-fit: contain; flex: none; }
-  .in-sug b { display: block; font-size: 13.5px; font-weight: 500; }
-  .in-sug small { color: var(--muted); font-size: 12px; }
-  .in-sug .p { margin-left: auto; color: var(--ok); font-weight: 700; font-size: 13px; white-space: nowrap; }
   .in-addons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .in-addons label { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: var(--radius); padding: 9px 11px; font-weight: 400; color: var(--text); cursor: pointer; }
   .in-addons label:has(input:checked) { border-color: var(--brand); background: #f4f7fb; }
@@ -118,8 +110,23 @@
   .in-card .t { font-weight: 500; font-size: 14.5px; color: var(--text); }
   .in-card .m { color: var(--muted); font-size: 12px; margin-top: 2px; }
   .in-card .tag { display: inline-block; background: #e7f4ea; color: var(--ok); font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 3px; margin-bottom: 4px; }
-  .in-lines { display: grid; gap: 2px; font-size: 12.5px; color: var(--text-2); margin-top: 8px; }
-  .in-lines div { display: flex; justify-content: space-between; gap: 12px; max-width: 320px; }
+  .in-addr { position: relative; }
+  .in-addr-sug { position: absolute; left: 0; right: 0; top: 100%; z-index: 5; margin-top: 4px; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 10px 28px rgba(20,35,60,.16); overflow: hidden; }
+  .in-addr-sug button { display: flex; gap: 10px; align-items: center; width: 100%; border: 0; border-bottom: 1px solid var(--line-2); background: #fff; padding: 9px 12px; font: inherit; font-size: 14px; text-align: left; cursor: pointer; }
+  .in-addr-sug button:last-child { border-bottom: 0; }
+  .in-addr-sug button:hover, .in-addr-sug button.on { background: #f4f7fb; }
+  .in-addr-sug svg { width: 16px; height: 16px; flex: none; color: var(--muted); fill: none; stroke: currentColor; }
+  .in-addr-sug small { display: block; color: var(--muted); font-size: 12.5px; }
+  .in-addr-sug .src { display: block; padding: 4px 12px 6px; font-size: 11px; color: var(--muted); text-align: right; }
+  .in-card .in-go { grid-column: 1 / -1; justify-self: end; }
+  .in-included { background: #f5fbf6; border: 1px solid #bfe0c6; border-radius: var(--radius); padding: 12px 14px; font-size: 13.5px; }
+  .in-included:empty { display: none; }
+  .in-included b { color: #16572a; }
+  .in-included ul { margin: 6px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; color: var(--text-2); }
+  .in-included li::before { content: "✓"; color: var(--cta); font-weight: 700; margin-right: 7px; }
+  #inBook:not([hidden]) { display: grid; gap: 12px; }
+  .in-chosen { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; background: #f4f7fb; border: 1px solid var(--line-2); border-radius: var(--radius); padding: 10px 12px; font-size: 14px; }
+  .in-chosen b { font-size: 18px; white-space: nowrap; }
   .in-total { text-align: right; }
   .in-total b { display: block; font-size: 22px; color: var(--text); line-height: 1.1; }
   .in-total small { color: var(--muted); font-size: 12px; }
@@ -139,7 +146,7 @@
     .in-body .ws-row, .in-body .send { grid-template-columns: minmax(0, 1fr); }
     .in-row3 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
     .in-row3 label:first-child { grid-column: 1 / -1; }
-    .in-addons { grid-template-columns: 1fr; }
+    .in-addons, .in-included ul { grid-template-columns: 1fr; }
     .in-card { grid-template-columns: 64px 1fr; gap: 10px; }
     .in-card img { width: 64px; height: 50px; }
     .in-total { grid-column: 1 / -1; text-align: left; display: flex; align-items: baseline; gap: 8px; }
@@ -1099,7 +1106,10 @@
     </div>
     <form class="ws-body in-body" id="inForm" autocomplete="on">
       <div class="in-step"><span class="in-num">1</span><b>Where's the job?</b></div>
-      <label>Street address<input id="inStreet" autocomplete="street-address" placeholder="e.g. 1234 Oak St"></label>
+      <div class="in-addr">
+        <label>Street address<input id="inStreet" autocomplete="off" placeholder="Start typing your address" aria-autocomplete="list" aria-controls="inAddrSug"></label>
+        <div class="in-addr-sug" id="inAddrSug" role="listbox" hidden></div>
+      </div>
       <div class="in-row3">
         <label>City<input id="inCity" autocomplete="address-level2" placeholder="e.g. Orlando"></label>
         <label>State<select id="inState" autocomplete="address-level1"></select></label>
@@ -1107,10 +1117,6 @@
       </div>
 
       <div class="in-step"><span class="in-num">2</span><b>What do you need?</b></div>
-      <div class="in-find">
-        <label>Type it or pick below<input id="inFind" placeholder='e.g. "3 ton gas" or "Goodman heat pump"' autocomplete="off"></label>
-        <div class="in-sug" id="inSug" hidden></div>
-      </div>
       <div class="in-row3">
         <label>System type
           <select id="inType">
@@ -1135,10 +1141,13 @@
       <label>Job type<select id="inJob"></select></label>
       <div class="in-addons" id="inAddons"></div>
 
-      <div class="in-step"><span class="in-num">4</span><b>Your estimate</b></div>
+      <div class="in-step"><span class="in-num">4</span><b>Your installed estimate</b></div>
+      <div class="in-included" id="inIncluded"></div>
       <div class="in-results" id="inResults"></div>
 
-      <div class="in-step"><span class="in-num">5</span><b>Book it or ask questions</b></div>
+      <div id="inBook" hidden>
+      <div class="in-step" id="inBookStep"><span class="in-num">5</span><b>Book it or ask questions</b></div>
+      <div class="in-chosen" id="inChosen"></div>
       <div class="ws-row">
         <label>Your name<input id="inName" autocomplete="name"></label>
         <label>Mobile phone<input id="inPhone" type="tel" autocomplete="tel"></label>
@@ -1150,6 +1159,7 @@
         <a class="btn btn-line" id="inEmailBtn">Email my install request</a>
       </div>
       <p class="fine">This is an estimate. We confirm the final price after a quick review of photos of your current system (or a site visit) before anything is scheduled. Permits and major duct or electrical work are quoted separately if needed.</p>
+      </div>
     </form>
   </div>
 </div>
@@ -2028,7 +2038,7 @@
   $("#closeCa").onclick = closeCa;
   $("#caBg").addEventListener("click", e => { if (e.target.id === "caBg") closeCa(); });
 
-  // ---------- Installation quote: equipment + job price (+ add-ons), per brand
+  // ---------- Installation quote: equipment + job price for the area (+ add-ons), per brand
   const IN = window.INSTALL;
   const US_STATES = "AL AK AZ AR CA CO CT DE DC FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY".split(" ");
   const IN_TYPES = { electric: ["Electric AC System", "Split AC System"], gas: ["Gas AC System"], heatpump: ["Heat Pump System"] };
@@ -2040,7 +2050,8 @@
   $("#inBrand").innerHTML += [...new Set(INV.filter(u => INSTALL_TYPE(u)).map(u => u.brand))].map(b => `<option>${esc(b)}</option>`).join("");
   $("#inJob").innerHTML = IN.jobs.map(j => `<option value="${j.key}">${esc(j.label)}</option>`).join("");
   $("#inAddons").innerHTML = IN.addons.map(a => `<label><input type="checkbox" value="${a.key}">${esc(a.label)}<span>+${money(a.price)}</span></label>`).join("");
-  let inPick = null;   // chosen result (unit id)
+  let inPick = null;        // selected result (unit id)
+  let inBooked = false;     // "Continue with this price" pressed
 
   const inVal = id => $("#" + id).value.trim();
   function inTons() {
@@ -2048,67 +2059,62 @@
     const sq = +inVal("inSqft");
     return IN.sizeBySqft.find(([max]) => sq < max)[1];
   }
-  const round10 = n => Math.round(n / 10) * 10;
+  const inTier = st => IN.tiers.high.includes(st) ? "high" : IN.tiers.mid.includes(st) ? "mid" : "standard";
   function inQuotes() {
     const type = inVal("inType"), tons = inTons(), brand = inVal("inBrand"), job = IN.jobs.find(j => j.key === inVal("inJob"));
-    const high = IN.highCostStates.includes(inVal("inState"));
     const addons = IN.addons.filter(a => $(`#inAddons input[value="${a.key}"]`).checked);
     const addonsTotal = addons.reduce((s, a) => s + a.price, 0);
+    const jobPrice = job.custom ? null : job.price[inTier(inVal("inState"))];
     const systems = INV.filter(u => IN_TYPES[type].includes(u.type) && u.tons === tons && u.price != null && (!brand || u.brand === brand));
     const quotes = systems.map(u => {
-      let equip = u, equipPrice = u.price, equipNote = "";
+      let equip = u, equipPrice = u.price;
       if (job.equip === "outdoor") {
-        equip = INV.find(x => x.brand === u.brand && x.tons === tons && x.type === (type === "heatpump" ? "Heat Pump Condenser" : "Condenser") && x.price != null);
+        equip = INV.find(x => x.brand === u.brand && x.tons === tons && x.type === (type === "heatpump" ? "Heat Pump Condenser" : "Condenser") && x.price != null) || null;
         equipPrice = equip?.price ?? null;
-        if (!equip) equipNote = "Outdoor unit priced on request";
       }
-      const base = job.custom ? null : (high ? job.high : job.low);
-      const labor = base == null ? null : round10(base * IN.split.labor), materials = base == null ? null : round10(base * IN.split.materials);
-      const warranty = base == null ? null : base - labor - materials;
-      const total = base == null || equipPrice == null ? null : equipPrice + base + addonsTotal;
-      return { u, equip, equipPrice, equipNote, labor, materials, warranty, addons, addonsTotal, total };
+      const total = jobPrice == null || equipPrice == null ? null : equipPrice + jobPrice + addonsTotal;
+      return { u, equip, total };
     }).sort((a, b) => (a.total ?? 1e9) - (b.total ?? 1e9));
-    return { type, tons, brand, job, high, quotes };
+    return { type, tons, brand, job, addons, quotes };
   }
+  const inName = q => title(q.equip && q.equip !== q.u ? q.equip : q.u);
   function inCardHTML(q, best) {
-    const { u } = q;
-    const line = (l, v) => `<div><span>${l}</span><span>${v == null ? "—" : money(v)}</span></div>`;
-    return `<label class="in-card"><input type="radio" name="inPick" value="${u.id}"${inPick === u.id ? " checked" : ""}>
-      <img src="${q.equip?.image || u.image || ""}" alt="">
-      <div>${best ? `<span class="tag">BEST VALUE</span><br>` : ""}<div class="t">${esc(title(q.equip && q.equip !== u ? q.equip : u))}</div>
-        <div class="m">${esc(q.equip ? models(q.equip) : "")}${q.equipNote ? esc(q.equipNote) : ""}</div>
-        <div class="in-lines">
-          ${line("Equipment", q.equipPrice)}
-          ${line("Installation labor", q.labor)}
-          ${line("Materials", q.materials)}
-          ${line(`Labor warranty (${IN.laborWarrantyYears} yr)`, q.warranty)}
-          ${q.addons.map(a => line(a.label, a.price)).join("")}
-        </div></div>
+    const picked = inPick === q.u.id;
+    return `<label class="in-card"><input type="radio" name="inPick" value="${q.u.id}"${picked ? " checked" : ""}>
+      <img src="${q.equip?.image || q.u.image || ""}" alt="">
+      <div>${best ? `<span class="tag">BEST VALUE</span><br>` : ""}<div class="t">${esc(inName(q))}</div>
+        <div class="m">${q.equip ? esc(models(q.equip)) : esc(`${q.u.brand} outdoor unit quoted on request`)}</div></div>
       <div class="in-total">${q.total == null ? `<b style="font-size:17px">Custom quote</b><small>we'll call you</small>` : `<b>${money(q.total)}</b><small>installed estimate</small>`}</div>
+      ${picked ? `<button class="btn btn-cta in-go" type="button" data-in-continue>${q.total == null ? "Continue with this system →" : "Continue with this price →"}</button>` : ""}
     </label>`;
   }
   function renderIn() {
     $("#inSqftWrap").hidden = inVal("inTons") !== "unsure";
     const r = inQuotes();
-    if (!r.quotes.some(q => q.u.id === inPick)) inPick = r.quotes[0]?.u.id || null;
+    if (!r.quotes.some(q => q.u.id === inPick)) { inPick = r.quotes[0]?.u.id || null; inBooked = false; }
+    const items = IN.included.filter(i => !i.gasOnly || r.type === "gas");
+    $("#inIncluded").innerHTML = r.job.custom ? "" : `<b>Every ${r.job.key === "outdoor" ? "outdoor unit swap" : "system change-out"} includes</b><ul>${items.map(i => `<li>${esc(i.text)}</li>`).join("")}</ul>`;
     const tonsNote = inVal("inTons") === "unsure" ? `<div class="in-note">For about ${esc($("#inSqft").selectedOptions[0].text)}, a <b>${r.tons}-ton</b> system is typical. We confirm the size before installing.</div>` : "";
-    const custom = r.job.custom ? `<div class="in-note"><b>New installs are quoted after a visit</b> because ductwork and electrical vary a lot. Equipment prices below; send your request and we'll set up the visit.</div>` : "";
+    const custom = r.job.custom ? `<div class="in-note"><b>New installs are quoted after a visit</b> because ductwork and electrical vary a lot. Pick a system and send your request; we'll set up the visit.</div>` : "";
     $("#inResults").innerHTML = tonsNote + custom + (r.quotes.length
       ? r.quotes.map((q, i) => inCardHTML(q, i === 0 && r.quotes.length > 1 && q.total != null)).join("")
-      : `<div class="in-note">We don't list a ${r.tons}-ton ${esc(IN_TYPE_NAMES[r.type].toLowerCase())} system${r.brand ? ` from ${esc(r.brand)}` : ""} yet. Try another brand or size, or send your request and we'll quote it.</div>`);
+      : `<div class="in-note">We don't list a ${r.tons}-ton ${esc(IN_TYPE_NAMES[r.type].toLowerCase())} system${r.brand ? ` from ${esc(r.brand)}` : ""} yet. Try another brand or size, or text us and we'll quote it.</div>`);
+    const q = r.quotes.find(x => x.u.id === inPick);
+    $("#inBook").hidden = !(inBooked && q);
+    if (q) $("#inChosen").innerHTML = `<span>${esc(inName(q))}${r.addons.length ? ` · ${esc(r.addons.map(a => a.label).join(", "))}` : ""}</span><b>${q.total == null ? "Custom quote" : money(q.total)}</b>`;
     updateInSend(r);
   }
   function inText(r) {
     const q = r.quotes.find(x => x.u.id === inPick);
     const addr = [inVal("inStreet"), inVal("inCity"), [inVal("inState"), inVal("inZip")].filter(Boolean).join(" ")].filter(Boolean).join(", ");
     return [
-      "Hi, I'd like an INSTALLATION quote.",
+      "Hi, I'd like to book an INSTALLATION.",
       addr && `Address: ${addr}`,
       `Need: ${r.tons}-ton ${IN_TYPE_NAMES[r.type]}${inVal("inTons") === "unsure" ? ` (home ${$("#inSqft").selectedOptions[0].text})` : ""}`,
       `Job: ${r.job.label}`,
-      q && `System: ${title(q.equip && q.equip !== q.u ? q.equip : q.u)} (${q.equip ? models(q.equip) : q.u.id})`,
-      q?.addons.length && `Add-ons: ${q.addons.map(a => a.label).join(", ")}`,
-      q && (q.total != null ? `Estimate on the site: ${money(q.total)}` : "Estimate: custom quote"),
+      q && `System: ${inName(q)}${q.equip ? ` (${models(q.equip)})` : ""}`,
+      r.addons.length && `Add-ons: ${r.addons.map(a => a.label).join(", ")}`,
+      q && (q.total != null ? `Installed estimate on the site: ${money(q.total)}` : "Estimate: custom quote"),
       inVal("inName") && `Name: ${inVal("inName")}`,
       inVal("inPhone") && `Phone: ${inVal("inPhone")}`,
       inVal("inEmail") && `Email: ${inVal("inEmail")}`,
@@ -2119,37 +2125,70 @@
   function updateInSend(r) {
     const body = encodeURIComponent(inText(r));
     $("#inSms").href = `sms:${B.sms}?&body=${body}`;
-    $("#inEmailBtn").href = `mailto:${B.email}?subject=${encodeURIComponent("Installation quote request")}&body=${body}`;
+    $("#inEmailBtn").href = `mailto:${B.email}?subject=${encodeURIComponent("Installation request")}&body=${body}`;
   }
-  // Quick finder: "3 ton gas", "goodman heat pump", a model number...
-  function inSuggest() {
-    const q = inVal("inFind").toLowerCase(), box = $("#inSug");
-    if (q.length < 2) { box.hidden = true; return; }
-    const t = q.match(/(\d(?:\.\d)?)\s*-?\s*t(?:on)?/)?.[1];
-    const type = /heat ?pump|\bhp\b/.test(q) ? "heatpump" : /gas|furnace/.test(q) ? "gas" : /electric|\bac\b|a\/c|air/.test(q) ? "electric" : null;
-    const words = q.replace(/(\d(?:\.\d)?)\s*-?\s*t(?:on)?/, "").split(/\s+/).filter(w => w && !/^(heat|pump|hp|gas|furnace|electric|ac|a\/c|air|system|and|with|conditioner|conditioning)$/.test(w));
-    const hits = INV.filter(u => INSTALL_TYPE(u) && u.price != null
-      && (!t || u.tons === +t) && (!type || INSTALL_TYPE(u) === type)
-      && words.every(w => `${title(u)} ${models(u)}`.toLowerCase().includes(w))).slice(0, 8);
-    box.innerHTML = hits.length ? hits.map(u => `<button type="button" data-in-pick="${u.id}"><img src="${u.image || ""}" alt=""><span><b>${esc(title(u))}</b><small>${esc(models(u))}</small></span><span class="p">${money(u.price)}</span></button>`).join("")
-      : `<div class="in-note" style="margin:6px">No match. Try something like "3 ton gas".</div>`;
-    box.hidden = false;
+  // Address suggestions while typing (Photon / OpenStreetMap, free, no key). Picking one fills street, city, state, ZIP.
+  const STATE_ABBR = { Alabama: "AL", Alaska: "AK", Arizona: "AZ", Arkansas: "AR", California: "CA", Colorado: "CO", Connecticut: "CT", Delaware: "DE", "District of Columbia": "DC", Florida: "FL", Georgia: "GA", Hawaii: "HI", Idaho: "ID", Illinois: "IL", Indiana: "IN", Iowa: "IA", Kansas: "KS", Kentucky: "KY", Louisiana: "LA", Maine: "ME", Maryland: "MD", Massachusetts: "MA", Michigan: "MI", Minnesota: "MN", Mississippi: "MS", Missouri: "MO", Montana: "MT", Nebraska: "NE", Nevada: "NV", "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY", "North Carolina": "NC", "North Dakota": "ND", Ohio: "OH", Oklahoma: "OK", Oregon: "OR", Pennsylvania: "PA", "Rhode Island": "RI", "South Carolina": "SC", "South Dakota": "SD", Tennessee: "TN", Texas: "TX", Utah: "UT", Vermont: "VT", Virginia: "VA", Washington: "WA", "West Virginia": "WV", Wisconsin: "WI", Wyoming: "WY" };
+  let addrTimer = null, addrReq = 0, addrHits = [];
+  function addrOf(f) {
+    const p = f.properties || {};
+    const street = [p.housenumber, p.street || (p.type === "house" ? p.name : "")].filter(Boolean).join(" ") || p.name || "";
+    return { street, city: p.city || p.town || p.village || p.locality || p.district || "", state: STATE_ABBR[p.state] || "", zip: (p.postcode || "").slice(0, 5) };
   }
-  function inSelect(u) {
-    $("#inType").value = INSTALL_TYPE(u); $("#inTons").value = String(u.tons); $("#inBrand").value = u.brand;
-    inPick = u.id; $("#inFind").value = ""; $("#inSug").hidden = true; renderIn();
+  async function addrSuggest() {
+    const q = $("#inStreet").value.trim(), box = $("#inAddrSug"), my = ++addrReq;
+    if (q.length < 4) { box.hidden = true; return; }
+    try {
+      const r = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=8&lang=en&lat=32.8&lon=-96.8`);
+      const data = await r.json();
+      if (my !== addrReq) return;   // a newer keystroke already asked
+      addrHits = (data.features || []).filter(f => f.properties?.countrycode === "US").map(addrOf).filter(a => a.street && a.state)
+        .filter((a, i, all) => all.findIndex(b => `${b.street}|${b.city}|${b.zip}` === `${a.street}|${a.city}|${a.zip}`) === i).slice(0, 5);
+    } catch { addrHits = []; }
+    const pin = `<svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>`;
+    box.innerHTML = addrHits.length
+      ? addrHits.map((a, i) => `<button type="button" role="option" data-addr="${i}">${pin}<span>${esc(a.street)}<small>${esc([a.city, [a.state, a.zip].filter(Boolean).join(" ")].filter(Boolean).join(", "))}</small></span></button>`).join("") + `<span class="src">Map data © OpenStreetMap</span>`
+      : "";
+    box.hidden = !addrHits.length;
   }
-  $("#inFind").addEventListener("input", inSuggest);
-  $("#inFind").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); $("#inSug button")?.click(); } });
-  $("#inSug").addEventListener("click", e => { const b = e.target.closest("[data-in-pick]"); if (b) inSelect(byId(b.dataset.inPick)); });
-  document.addEventListener("click", e => { if (!e.target.closest(".in-find")) $("#inSug").hidden = true; });
-  $("#inForm").addEventListener("change", e => { if (e.target.name === "inPick") inPick = e.target.value; e.target.id !== "inFind" && renderIn(); });
+  function addrPick(a) {
+    $("#inStreet").value = a.street; $("#inCity").value = a.city; $("#inZip").value = a.zip;
+    if (a.state) $("#inState").value = a.state;
+    $("#inAddrSug").hidden = true;
+    renderIn();
+  }
+  $("#inStreet").addEventListener("input", () => { clearTimeout(addrTimer); addrTimer = setTimeout(addrSuggest, 250); });
+  $("#inStreet").addEventListener("keydown", e => {
+    const box = $("#inAddrSug"); if (box.hidden) return;
+    const btns = [...box.querySelectorAll("button")], on = btns.findIndex(b => b.classList.contains("on"));
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      const n = (on + (e.key === "ArrowDown" ? 1 : -1) + btns.length) % btns.length;
+      btns.forEach((b, i) => b.classList.toggle("on", i === n));
+    } else if (e.key === "Enter" && on >= 0) { e.preventDefault(); addrPick(addrHits[on]); }
+    else if (e.key === "Escape") box.hidden = true;
+  });
+  $("#inAddrSug").addEventListener("click", e => { const b = e.target.closest("[data-addr]"); if (b) addrPick(addrHits[+b.dataset.addr]); });
+  document.addEventListener("click", e => { if (!e.target.closest?.(".in-addr")) $("#inAddrSug").hidden = true; });
+
+  $("#inForm").addEventListener("click", e => {
+    if (!e.target.closest("[data-in-continue]")) return;
+    e.preventDefault();
+    inBooked = true; renderIn();
+    $("#inBookStep").scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => $("#inName").focus({ preventScroll: true }), 400);
+  });
+  $("#inForm").addEventListener("change", e => {
+    if (e.target.name === "inPick") inPick = e.target.value;
+    else if (!["inName", "inPhone", "inEmail", "inNotes", "inStreet", "inCity", "inZip"].includes(e.target.id)) inBooked = false;
+    renderIn();
+  });
   $("#inForm").addEventListener("input", e => { if (["inName", "inPhone", "inEmail", "inNotes", "inStreet", "inCity", "inZip"].includes(e.target.id)) updateInSend(inQuotes()); });
   $("#inForm").addEventListener("submit", e => e.preventDefault());
   function openIn(u) {
     closeSpecs(); closeDrawer(); closeWs();
     if (u) { $("#inType").value = INSTALL_TYPE(u); $("#inTons").value = String(u.tons); $("#inBrand").value = u.brand; inPick = u.id; }
-    renderIn(); $("#inBg").classList.add("open");
+    inBooked = false; renderIn(); $("#inBg").classList.add("open");
   }
   function closeIn() { $("#inBg").classList.remove("open"); }
   document.addEventListener("click", e => { if (e.target.closest?.("[data-install]")) { e.preventDefault(); openIn(); } });
