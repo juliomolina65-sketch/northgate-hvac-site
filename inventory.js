@@ -1394,7 +1394,9 @@ const FINAL_PRICES = {
 // brands' systems, so DFW pickup takes it back off) + PAYNE_MARGIN. Costs pulled Sept 28, 2026
 // (full list, private: sibi/payne-sibi.json). Heat kits: the same KFFEH kits as the Carrier systems.
 // ------------------------------------------------------------
-const PAYNE_SHIPPING = 650;   // $600 freight + $50 cargo insurance (= SHIPPING.pickupDiscount)
+// Sibi handles the shipping on Payne, so Payne carries $500 less built-in freight than the other brands
+// (owner decision Sept 28, 2026). DFW pickup takes only this amount off (pickupDiscount below).
+const PAYNE_SHIPPING = 150;
 const PAYNE_MARGIN = 800;
 const PAYNE_IMG = "img/payne-system.svg";   // placeholder until Payne product photos are added
 const payneCondenser = (tons, model, cost, hp) => ({
@@ -1454,6 +1456,7 @@ const PAYNE_GAS_PARTS = {   // coil + furnace per size (in stock at Sibi McKinne
 const PAYNE_TONS = [1.5, 2, 2.5, 3, 3.5, 4, 5];
 const payneBase = (tons, type, kind) => ({
   brand: "Payne", tons, type, seer2: 14.3, refrigerant: "R-454B", msrp: null, inStock: null, image: PAYNE_IMG,
+  pickupDiscount: PAYNE_SHIPPING,
   id: `payne-${tons}t-${kind}`,
 });
 const PAYNE_ELECTRIC = PAYNE_TONS.map(t => ({
