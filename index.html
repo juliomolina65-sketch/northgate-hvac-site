@@ -743,6 +743,11 @@
   .pay-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
   .pay-choice label { display: flex; gap: 8px; align-items: flex-start; border: 1px solid var(--line); border-radius: var(--radius); padding: 9px 10px; cursor: pointer; font-size: 13.5px; }
   .pay-choice label:has(input:checked) { border: 2px solid var(--brand); padding: 8px 9px; background: #f4f7fb; }
+  .pod-date { margin-top: 10px; border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 12px; background: #fbfcfe; }
+  .pod-date label { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-weight: 700; font-size: 14px; }
+  .pod-date input { font: inherit; font-weight: 400; padding: 7px 8px; border: 1px solid var(--line); border-radius: 6px; }
+  .pod-date small { display: block; margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height: 1.4; }
+  .ready-note { color: var(--ok); font-weight: 700; }
   .pay-choice input { accent-color: var(--brand); margin-top: 2px; }
   .pay-choice b { display: block; font-weight: 500; }
   .pay-choice small { color: var(--muted); font-size: 12px; }
@@ -1441,7 +1446,7 @@
     </label>
     <label class="option">
       <input type="radio" name="ship" value="pickup">
-      <div><b>Local pickup in <span data-biz="pickupArea"></span></b><small>Save $<span data-ship="pickupDiscount"></span> per system or major part · pay cash at pickup if you like</small></div>
+      <div><b>Local pickup in <span data-biz="pickupArea"></span></b><small><span class="ready-note">Ready within <span data-ship="pickupReadyHours"></span> hours</span> · save $<span data-ship="pickupDiscount"></span> per system or major part · pay cash at pickup if you like</small></div>
       <span class="tag free" id="pickupTag"></span>
     </label>
     <div id="payWrap" hidden>
@@ -1458,6 +1463,16 @@
       <div id="comUnloadWrap" hidden style="margin-top:10px">
         <div class="com-deliver" style="margin-bottom:8px"><b>Commercial units:</b> ship them to the job site. The driver does not unload, so have a forklift and operator there (or a crane for the roof).</div>
         <label class="check"><span><input type="checkbox" id="comUnload">I need unloading help (forklift or crane)</span><b>Quoted extra</b></label>
+      </div>
+      <div id="podWrap" hidden>
+        <div class="pay-choice">
+          <label><input type="radio" name="shipPay" value="online" checked><span><b>Pay online now</b><small>Card, bank or Klarna · we ship it</small></span></label>
+          <label><input type="radio" name="shipPay" value="pod"><span><b>Pay on delivery</b><small>Cash or Zelle when it arrives</small></span></label>
+        </div>
+        <div class="pod-date" id="podDateWrap" hidden>
+          <label for="podDate">Delivery date <input type="date" id="podDate"></label>
+          <small>We deliver it ourselves within about 3 hours of DFW. Earliest is tomorrow (no same-day delivery); we'll call to confirm a time window. Pay the driver in cash or by Zelle.</small>
+        </div>
       </div>
     </div>
 
@@ -2012,6 +2027,13 @@
     return u.seer2 < min;
   }
 
+  // Pay on delivery (local delivery area only). Dates are Dallas time: tomorrow up to localDeliveryMaxDays out.
+  const dallasToday = () => new Intl.DateTimeFormat("en-CA", { timeZone: "America/Chicago" }).format(new Date());
+  const ymdPlus = (ymd, n) => new Date(Date.parse(ymd + "T12:00:00Z") + n * 864e5).toISOString().slice(0, 10);
+  const podFirst = () => ymdPlus(dallasToday(), 1), podLast = () => ymdPlus(dallasToday(), S.localDeliveryMaxDays || 30);
+  const isPod = () => !$("#podWrap").hidden && $('input[name="shipPay"]:checked')?.value === "pod";
+  const podDateText = () => { const v = $("#podDate").value; return v ? new Date(v + "T12:00:00").toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }) : "(date not picked)"; };
+
   function updateOrder() {
     renderInstallNote();
     const n = units(), eq = equipment(), shipping = method() === "freight";
@@ -2027,14 +2049,23 @@
     const z = zipInfo();
     const hasCom = Object.keys(order).some(k => parseKey(k)?.u.commercial);
     const onlyCom = hasCom && Object.keys(order).every(k => parseKey(k)?.u.commercial);
-    $("#liftgateRow").hidden = !shipping || onlyCom;   // a liftgate can't handle a rooftop unit
+    // Local delivery area (about 3 hours of DFW): pay online, or pay on delivery (cash/Zelle) on a date from tomorrow.
+    const local = shipping && z.ok && Pricing.localDelivery(z.zip, S) && !hasCom && !(installCtx && order[installCtx.key]);
+    $("#podWrap").hidden = !local;
+    const pod = isPod();
+    $("#podDateWrap").hidden = !pod;
+    if (pod) { const d = $("#podDate"); d.min = podFirst(); d.max = podLast(); if (!d.value || d.value < d.min || d.value > d.max) d.value = d.min; }
+    $("#payOnline").innerHTML = pod ? "Place order · pay on delivery" : '<svg class="icon"><use href="#i-lock"/></svg>Pay online';
+    $("#barPay").innerHTML = pod ? "Place order" : '<svg class="icon"><use href="#i-lock"/></svg>Pay online';
+    $("#payMethods").innerHTML = pod ? "Nothing is charged now. <b>Pay the driver in cash or by Zelle</b> when your order arrives." : "Card, bank transfer (ACH), Apple Pay / Google Pay, or <b>monthly payments</b> with Klarna.";
+    $("#liftgateRow").hidden = !shipping || onlyCom || pod;   // a liftgate can't handle a rooftop unit; local delivery is by our own truck
     $("#comUnloadWrap").hidden = !shipping || !hasCom;
     $("#payWrap").hidden = shipping;
     $("#zip").placeholder = shipping ? "ZIP code where it's going" : "ZIP code where it'll be installed";
-    const lift = shipping && !onlyCom && $("#liftgate").checked ? S.liftgatePrice : 0;
+    const lift = shipping && !onlyCom && !isPod() && $("#liftgate").checked ? S.liftgatePrice : 0;
     const status = $("#zipStatus");
     status.className = "zip-status" + (!z.ok && z.zip.length === 5 ? " err" : "");
-    status.textContent = z.ok ? (shipping ? (Pricing.nearDfw(z.zip, S) ? `Near DFW: lower delivery price to ${z.zip} · ships in ${S.shipsIn}` : `Free curbside shipping to ${z.zip} · ships in ${S.shipsIn}`) : `Installing in ${z.zip}`) : z.msg;
+    status.textContent = z.ok ? (shipping ? (isPod() ? `Local delivery to ${z.zip} on the date you pick` : Pricing.nearDfw(z.zip, S) ? `Near DFW: lower delivery price to ${z.zip} · ships in ${S.shipsIn}` : `Free curbside shipping to ${z.zip} · ships in ${S.shipsIn}`) + (local && !isPod() ? " · pay on delivery available" : "") : `Installing in ${z.zip}`) : z.msg;
 
     const bad = z.ok ? Object.keys(order).map(k => parseKey(k)?.u).filter(u => u && failsEfficiency(u, z.region)) : [];
     $("#effNote").hidden = !bad.length;
@@ -2046,7 +2077,7 @@
     $("#bZipShow").value = z.zip || "";
     $("#pickupTag").textContent = pickupSavings() ? "−" + money(pickupSavings()) : "FREE";
     $("#tEquip").textContent = money(eq);
-    $("#tShipLabel").textContent = shipping ? (lift ? "Shipping + liftgate" : "Shipping") : "Local pickup (DFW)";
+    $("#tShipLabel").textContent = shipping ? (isPod() ? "Local delivery" : lift ? "Shipping + liftgate" : "Shipping") : "Local pickup (DFW)";
     $("#tShip").textContent = shipping && z.offshore ? "Quote" : lift ? money(lift) : "FREE";
     $("#tDiscRow").hidden = !disc;
     $("#tDisc").textContent = "−" + money(disc);
@@ -2083,9 +2114,11 @@
     const near = shipping && z.ok && Pricing.nearDfw(z.zip, S);
     const disc = shipping ? (near ? nearSavings() : 0) : pickupSavings();
     const ship = shipping
-      ? (z.offshore ? `Delivery: SHIP${where} (Alaska/Hawaii, please quote freight)` : `Delivery: FREE SHIPPING${where}`) + (near ? ` (near DFW: −${money(disc)})` : "") + (lift ? `\nLiftgate: yes (+${money(lift)})` : "") +
+      ? (isPod() ? `Delivery: LOCAL DELIVERY${where} on ${podDateText()}` : z.offshore ? `Delivery: SHIP${where} (Alaska/Hawaii, please quote freight)` : `Delivery: FREE SHIPPING${where}`) + (near ? ` (near DFW: −${money(disc)})` : "") +
+        (isPod() ? `
+Payment: PAY ON DELIVERY (cash or Zelle)` : "") + (lift ? `\nLiftgate: yes (+${money(lift)})` : "") +
         (hasCom ? `\nCommercial unloading: ${$("#comUnload").checked ? "NEED HELP (forklift/crane), please quote" : "we will have a forklift on site"}` : "")
-      : `Delivery: LOCAL PICKUP in ${B.pickupArea}` + (disc ? ` (−${money(disc)} pickup discount)` : "") + (z.zip ? `, installing in ${z.zip}` : "") +
+      : `Delivery: LOCAL PICKUP in ${B.pickupArea} (ready within ${S.pickupReadyHours || 2} hours)` + (disc ? ` (−${money(disc)} pickup discount)` : "") + (z.zip ? `, installing in ${z.zip}` : "") +
         `\nPayment: ${$('input[name="pay"]:checked').value === "cash" ? "CASH at pickup" : "pay ahead (ACH/Zelle/card)"}`;
     const company = $("#company").value.trim(), lic = $("#license").value.trim();
     const bi = buyerInfo();
@@ -2645,7 +2678,9 @@
     clearOrder() { order = {}; save(); render(); updateOrder(); },
     refresh() { render(); updateOrder(); if (specsId && $("#specsBg").classList.contains("open")) { const u = byId(specsId); renderSpecsParts(u); renderSpecsPrice(u); } },
     openContractor: openCa, closeContractor: closeCa, closeDrawer,
-    deliveryInfo: () => ({ method: method(), zip: $("#zip").value.trim(), liftgate: $("#liftgate").checked, comUnload: $("#comUnload").checked }),
+    deliveryInfo: () => ({ method: method(), zip: $("#zip").value.trim(), liftgate: $("#liftgate").checked && !isPod(), comUnload: $("#comUnload").checked,
+      pod: isPod(), date: isPod() ? $("#podDate").value : null }),
+    orderMessage: () => ({ sms: $("#sendSms").href, email: $("#sendEmail").href }),
     customerInfo: () => buyerInfo(),
     installInfo: () => installCtx && order[installCtx.key] ? { ...installCtx } : null,
     checkBuyer,

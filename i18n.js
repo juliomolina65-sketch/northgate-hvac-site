@@ -59,6 +59,13 @@
     "Order online, pick up in": "Pida en línea, recoja en",
     ", pay cash if you like.": ", pague en efectivo si prefiere.",
     "PRO": "PRO",
+    "Pay online now": "Pagar en línea ahora", "Card, bank or Klarna · we ship it": "Tarjeta, banco o Klarna · lo enviamos",
+    "Pay on delivery": "Pagar al recibir", "Cash or Zelle when it arrives": "Efectivo o Zelle cuando llegue",
+    "Delivery date": "Fecha de entrega", "Place order · pay on delivery": "Hacer pedido · pagar al recibir", "Place order": "Hacer pedido",
+    "Local delivery": "Entrega local", "Ready within": "Listo en", "hours": "horas",
+    "We deliver it ourselves within about 3 hours of DFW. Earliest is tomorrow (no same-day delivery); we'll call to confirm a time window. Pay the driver in cash or by Zelle.":
+      "Nosotros lo entregamos a unas 3 horas de DFW. Lo más pronto es mañana (no hay entrega el mismo día); le llamaremos para confirmar el horario. Pague al chofer en efectivo o por Zelle.",
+    "Nothing is charged now.": "No se cobra nada ahora.", "Pay the driver in cash or by Zelle": "Pague al chofer en efectivo o por Zelle", "when your order arrives.": "cuando llegue su pedido.",
     "Contractors: trade accounts": "Contratistas: cuentas comerciales",
     "Open a trade account": "Abrir una cuenta comercial",
     "Trade accounts": "Cuentas comerciales",

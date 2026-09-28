@@ -251,6 +251,7 @@
       if (!NG.checkBuyer()) { btn.removeAttribute("aria-busy"); return; }
       const priced = Object.keys(items).every(k => NG.parseKey(k)?.u.price != null);
       if (!priced) return fail("Something in your order needs a price quote. Please text or email your order.");
+      if (d.pod) return placePayOnDelivery(NG, items, d, btn, fail);
       btn.setAttribute("aria-busy", "true");
       try {
         const headers = { "Content-Type": "application/json" };
@@ -268,6 +269,43 @@
         fail("Couldn't reach the payment page. Check your connection, or text/email your order.");
       }
     };
+  }
+
+  // ---------------------------------------------------------- Pay on delivery (local delivery area, cash or Zelle)
+  // Saves the order on the server (prices rebuilt there), then asks the customer to send it to us by text/email too.
+  async function placePayOnDelivery(NG, items, d, btn, fail) {
+    if (!d.date) return fail("Pick a delivery date (tomorrow or later).");
+    const msg = NG.orderMessage();   // grab the text/email links before the order is cleared
+    btn.setAttribute("aria-busy", "true");
+    try {
+      const headers = { "Content-Type": "application/json" };
+      if (session?.access_token) headers.Authorization = `Bearer ${session.access_token}`;
+      const r = await fetch("/.netlify/functions/pod-order", { method: "POST", headers,
+        body: JSON.stringify({ items, delivery: d, customer: NG.customerInfo(), repCode: window.NGRep.code(), lang: document.documentElement.lang }) });
+      const out = await r.json().catch(() => ({}));
+      btn.removeAttribute("aria-busy");
+      if (!r.ok || !out.ok) return fail(out.message || "Couldn't place the order. Please text or email it instead.");
+      NG.clearOrder(); NG.closeDrawer();
+      const day = new Date(out.date + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+      const add = s => s + (s.includes("body=") ? encodeURIComponent(`
+Order #: ${out.orderNo}`) : "");
+      const box = document.createElement("div");
+      box.className = "notice-bg";
+      box.innerHTML = `<div class="notice" role="dialog" aria-modal="true">
+        <div style="font-size:40px">✓</div><h2>Order placed: #${out.orderNo}</h2>
+        <p>Delivery on <b>${day}</b>. We'll call you to confirm a time window.<br>Pay the driver <b>${NG.money(out.totalCents / 100)}</b> in cash or by Zelle when it arrives.</p>
+        <p><small>Please also send us the order so we can confirm it right away:</small></p>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          <a class="btn btn-cta" href="${add(msg.sms)}">Text us the order</a>
+          <a class="btn btn-line" href="${add(msg.email)}">Email instead</a>
+        </div>
+        <button class="btn btn-line" type="button" style="margin-top:10px">Close</button></div>`;
+      document.body.appendChild(box);
+      box.querySelector("button").onclick = () => box.remove();
+    } catch (e) {
+      btn.removeAttribute("aria-busy");
+      fail("Couldn't reach our server. Check your connection, or text/email your order.");
+    }
   }
 
   // ---------------------------------------------------------- Payment form on our own page (Stripe embedded Checkout)

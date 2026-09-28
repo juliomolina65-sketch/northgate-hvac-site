@@ -12,6 +12,8 @@
 
   // Near-DFW delivery: ZIP within ~2 hours of DFW gets a smaller delivery charge (per unit shipped).
   // Only items that carry built-in freight (anything with a pickup discount) qualify; never more than pickup saves.
+  // Local delivery by Northgate (pay-on-delivery area, about 3 hours of DFW): the near-DFW ZIPs plus localDeliveryZip3.
+  const localDelivery = (zip, shipping) => nearDfw(zip, shipping) || (/^\d{5}$/.test(String(zip || "")) && (shipping.localDeliveryZip3 || []).includes(+String(zip).slice(0, 3)));
   const nearDfw = (zip, shipping) => /^\d{5}$/.test(String(zip || "")) && (shipping.nearDfwZip3 || []).includes(+String(zip).slice(0, 3));
   const nearDfwOff = (u, shipping) => {
     const d = shipping.nearDfwDiscount || {};
@@ -51,5 +53,5 @@
     return u ? { u, heat: heatOf(u, hm) } : null;
   }
 
-  root.Pricing = { heatOf, priceOf, pickupOff, nearDfw, nearDfwOff, kindOf, contractorPrice, applyContractorPricing, parseKey };
+  root.Pricing = { heatOf, priceOf, pickupOff, nearDfw, localDelivery, nearDfwOff, kindOf, contractorPrice, applyContractorPricing, parseKey };
 })(typeof window !== "undefined" ? window : globalThis);

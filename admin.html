@@ -255,7 +255,7 @@
   async function loadOrders() {
     const { data, error } = await sb.from("orders").select("*").order("created_at", { ascending: false }).limit(200);
     if (error) { $("#orders").innerHTML = `<div class="msg err">${esc(error.message)}</div>`; return; }
-    const statuses = ["pending", "processing", "paid", "shipped", "picked_up", "failed", "abandoned"];
+    const statuses = ["pending", "processing", "paid", "pay_on_delivery", "delivered", "shipped", "picked_up", "failed", "abandoned"];
     const unpaid = o => o.status === "pending" || o.status === "abandoned";
     const rows = showAllOrders ? data : data.filter(o => !unpaid(o));
     const hidden = data.length - rows.length;
@@ -266,7 +266,7 @@
         <span class="muted">${rows.length} order${rows.length === 1 ? "" : "s"}${hidden ? ` · ${hidden} unpaid checkout${hidden === 1 ? "" : "s"} hidden` : ""}</span>
         <label class="muted" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="showAllOrders" ${showAllOrders ? "checked" : ""}> Show unpaid / abandoned checkouts</label></div>
       <div class="card"><table><thead><tr><th>Date</th><th>Customer</th><th>Items</th><th>Delivery</th><th>Total</th><th>Rep</th><th>Status</th></tr></thead><tbody>` +
-      (rows.length ? rows.map(o => { const c = who(o); return `<tr data-order="${o.id}"><td>${new Date(o.created_at).toLocaleString()}</td>
+      (rows.length ? rows.map(o => { const c = who(o); return `<tr data-order="${o.id}"><td>${new Date(o.created_at).toLocaleString()}${o.meta?.order_no ? `<br><b>#${esc(o.meta.order_no)}</b>` : ""}${o.status === "pay_on_delivery" ? `<br><span class="muted">Collect cash/Zelle on delivery</span>` : ""}</td>
         <td>${esc(c.name)}<br><span class="muted">${esc(c.email)}<br>${esc(c.phone)}${o.meta?.company ? "<br>" + esc(o.meta.company) : ""}${o.meta?.contractor ? "<br>Contractor: " + esc(o.meta.contractor) : ""}</span></td>
         <td>${(o.items || []).map(i => `${i.qty}× ${esc(i.name)}<br><span class="muted">${esc(i.models)}</span>`).join("<br>")}${o.meta?.install ? `<div class="inst"><b>Installation:</b> ${esc(o.meta.install)}</div>` : ""}</td>
         <td>${esc(o.delivery || "")}${o.meta?.liftgate === "yes" ? "<br>+ liftgate" : ""}${o.meta?.commercial_unloading && o.meta.commercial_unloading !== "n/a" ? "<br><b>Unloading:</b> " + esc(o.meta.commercial_unloading) : ""}${addr(o) ? `<br><span class="muted">${esc(addr(o))}</span>` : ""}</td>

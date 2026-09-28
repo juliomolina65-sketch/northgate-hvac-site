@@ -34,6 +34,13 @@ window.SHIPPING = {
   // ZIP3 areas: 750-753 DFW/Dallas, 754 Greenville, 756 Longview, 757 Tyler, 758 Palestine, 760-761 Fort Worth/Arlington,
   // 762 Denton/Gainesville, 763 Wichita Falls, 764 Stephenville, 765 Temple, 766-767 Waco; OK: 734 Ardmore, 747 Durant.
   nearDfwZip3: [750, 751, 752, 753, 754, 756, 757, 758, 760, 761, 762, 763, 764, 765, 766, 767, 734, 747],
+  // Local delivery by Northgate (about 3 hours of DFW): the customer can pay on delivery (cash or Zelle) and
+  // picks a delivery date, tomorrow at the earliest. Everything in nearDfwZip3 plus: Texarkana (755), Lufkin (759),
+  // Brownwood (768), College Station (778), Austin (786-787), Abilene (795-796), Oklahoma City (730-731),
+  // Lawton (735), McAlester (745), Shreveport (710-711).
+  localDeliveryZip3: [755, 759, 768, 778, 786, 787, 795, 796, 730, 731, 735, 745, 710, 711],
+  localDeliveryMaxDays: 30,   // how far ahead a delivery date can be picked
+  pickupReadyHours: 2,        // local pickup orders are ready this many hours after the order
   nearDfwDiscount: { system: 250, part: 150, commercial: 300 },   // $ off each unit shipped to those ZIPs                     // home delivery with liftgate (no dock / no forklift): ~$94 residential + ~$74 liftgate
   shortageHours: 24,                      // report missing items within this many hours
   damageDays: 3,                          // report damage within this many business days
