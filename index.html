@@ -88,6 +88,64 @@
   .ws-freight small { color: var(--muted); font-size: 12.5px; }
   @media (max-width: 520px) { .ws-row { grid-template-columns: 1fr; } .announce .wrap { gap: 8px; } }
 
+  /* Installation quote */
+  .in-modal { width: min(720px, 100%); }
+  .in-step { display: flex; align-items: center; gap: 10px; margin-top: 8px; padding-top: 12px; border-top: 1px solid var(--line-2); font-size: 16px; color: var(--brand); }
+  .in-step:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+  .in-num { width: 26px; height: 26px; border-radius: 50%; background: var(--brand); color: #fff; display: grid; place-items: center; font-size: 13px; font-weight: 700; flex: none; }
+  .in-row3 { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+  .in-body { grid-template-columns: minmax(0, 1fr); }
+  .in-body input, .in-body select { width: 100%; min-width: 0; }
+  .in-body .ws-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .in-find { position: relative; }
+  .in-sug { position: absolute; left: 0; right: 0; top: 100%; z-index: 5; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 10px 28px rgba(20,35,60,.16); margin-top: 4px; max-height: 280px; overflow: auto; }
+  .in-sug button { display: flex; gap: 10px; align-items: center; width: 100%; border: 0; border-bottom: 1px solid var(--line-2); background: #fff; padding: 8px 10px; font: inherit; text-align: left; cursor: pointer; }
+  .in-sug button:hover, .in-sug button:focus { background: #f4f7fb; }
+  .in-sug img { width: 54px; height: 40px; object-fit: contain; flex: none; }
+  .in-sug b { display: block; font-size: 13.5px; font-weight: 500; }
+  .in-sug small { color: var(--muted); font-size: 12px; }
+  .in-sug .p { margin-left: auto; color: var(--ok); font-weight: 700; font-size: 13px; white-space: nowrap; }
+  .in-addons { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .in-addons label { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: var(--radius); padding: 9px 11px; font-weight: 400; color: var(--text); cursor: pointer; }
+  .in-addons label:has(input:checked) { border-color: var(--brand); background: #f4f7fb; }
+  .in-addons input { accent-color: var(--brand); width: 16px; height: 16px; }
+  .in-addons span { margin-left: auto; color: var(--text-2); font-size: 13px; white-space: nowrap; }
+  .in-results { display: grid; gap: 10px; }
+  .in-card { position: relative; display: grid; grid-template-columns: 92px 1fr auto; gap: 14px; align-items: start; border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; cursor: pointer; background: #fff; }
+  .in-card:has(input:checked) { border: 2px solid var(--cta); padding: 11px 13px; background: #f5fbf6; }
+  .in-card input { position: absolute; opacity: 0; pointer-events: none; }
+  .in-card img { width: 92px; height: 70px; object-fit: contain; }
+  .in-card .t { font-weight: 500; font-size: 14.5px; color: var(--text); }
+  .in-card .m { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  .in-card .tag { display: inline-block; background: #e7f4ea; color: var(--ok); font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 3px; margin-bottom: 4px; }
+  .in-lines { display: grid; gap: 2px; font-size: 12.5px; color: var(--text-2); margin-top: 8px; }
+  .in-lines div { display: flex; justify-content: space-between; gap: 12px; max-width: 320px; }
+  .in-total { text-align: right; }
+  .in-total b { display: block; font-size: 22px; color: var(--text); line-height: 1.1; }
+  .in-total small { color: var(--muted); font-size: 12px; }
+  .in-note { font-size: 13px; color: var(--text-2); background: #f4f7fb; border: 1px solid var(--line-2); border-radius: var(--radius); padding: 10px 12px; }
+  .in-note b { color: var(--text); }
+  .in-strip { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 14px 0 0; background: #eaf5ec; border: 1px solid #bfe0c6; border-radius: 6px; padding: 12px 16px; }
+  .in-strip .ic { width: 40px; height: 40px; border-radius: 50%; background: var(--cta); color: #fff; display: grid; place-items: center; flex: none; }
+  .in-strip .ic svg { width: 20px; height: 20px; }
+  .in-strip b { display: block; font-size: 16px; color: #16572a; }
+  .in-strip small { color: #2f5d3a; font-size: 13.5px; }
+  .in-strip .btn { margin-left: auto; }
+  .pd-install { font-size: 13px; margin-top: 8px; }
+  .pd-install button { background: none; border: 0; padding: 0; color: var(--link); font: inherit; font-weight: 500; cursor: pointer; }
+  .pd-install button:hover { text-decoration: underline; }
+  @media (max-width: 600px) {
+    .in-body { padding: 16px 14px 20px; }
+    .in-body .ws-row, .in-body .send { grid-template-columns: minmax(0, 1fr); }
+    .in-row3 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .in-row3 label:first-child { grid-column: 1 / -1; }
+    .in-addons { grid-template-columns: 1fr; }
+    .in-card { grid-template-columns: 64px 1fr; gap: 10px; }
+    .in-card img { width: 64px; height: 50px; }
+    .in-total { grid-column: 1 / -1; text-align: left; display: flex; align-items: baseline; gap: 8px; }
+    .in-strip .btn { margin-left: 0; width: 100%; }
+  }
+
   /* ---------- Top bars ---------- */
   .sample-banner { background: var(--warn-bg); color: var(--warn-ink); font-size: 13px; text-align: center; padding: 6px 16px; border-bottom: 1px solid #efdc9f; }
   .utility { background: #fff; border-bottom: 1px solid var(--line-2); font-size: 13px; color: var(--text-2); }
@@ -630,11 +688,11 @@
   <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.5V19l4 2v-8.5z"/></symbol>
 </svg>
 
-<div class="announce" role="region" aria-label="Wholesale announcement">
+<div class="announce" role="region" aria-label="Installation announcement">
   <div class="wrap">
-    <span class="pill">WHOLESALE</span>
-    <span><b>Buying in volume or using your own freight carrier?</b> <span class="msg">Get wholesale pricing, well below our listed prices.</span></span>
-    <button type="button" data-wholesale>Get wholesale pricing →</button>
+    <span class="pill">NEW · INSTALLATION</span>
+    <span><b>Need it installed?</b> <span class="msg">Get an installed price for your home in about a minute.</span></span>
+    <button type="button" data-install>Get my installed price →</button>
   </div>
 </div>
 
@@ -721,6 +779,11 @@
           </div>
         </div>
         <div class="com-types" id="resTypes"></div>
+      </div>
+      <div class="in-strip">
+        <span class="ic"><svg class="icon"><use href="#i-shield"/></svg></span>
+        <span><b>New: we install, too</b><small>Equipment, installation, materials and labor warranty in one price. Enter your address and get an estimate in about a minute.</small></span>
+        <button class="btn btn-cta" type="button" data-install>Get my installed price →</button>
       </div>
       <div class="showcase">
         <div class="show-hero">
@@ -957,6 +1020,7 @@
           <a class="btn btn-cta" id="specsAsk" hidden>Text us for price</a>
         </div>
         <div class="pd-help">Questions about this <span id="helpNoun">system</span>? <a data-href="sms">Text us</a> or <a data-href="tel">call</a>.</div>
+        <div class="pd-install" id="pdInstall" hidden>Want it installed? <button type="button" id="pdInstallBtn">Get an installed price for this system →</button></div>
       </div>
     </div>
     <div class="pd-tabs">
@@ -1021,6 +1085,71 @@
       </div>
       <p class="fine">We'll contact you to activate your account. Approved accounts sign in here to see their pricing.</p>
       <p class="fine">Homeowner? You don't need an account; just order online. Near DFW and want a quote? <a data-href="sms">Text us</a> or <a data-href="tel">call us</a>.</p>
+    </form>
+  </div>
+</div>
+
+<div class="modal-bg" id="inBg">
+  <div class="modal ws-modal in-modal" role="dialog" aria-modal="true" aria-labelledby="inTitle">
+    <button class="x" id="closeIn" aria-label="Close" style="background:rgba(255,255,255,.15);color:#fff">×</button>
+    <div class="ws-head">
+      <span class="pill">NEW · INSTALLATION</span>
+      <h2 id="inTitle">Get an installed price</h2>
+      <p>Equipment, installation, materials and labor warranty in one price. Tell us where the job is and what you need; your estimate updates as you go.</p>
+    </div>
+    <form class="ws-body in-body" id="inForm" autocomplete="on">
+      <div class="in-step"><span class="in-num">1</span><b>Where's the job?</b></div>
+      <label>Street address<input id="inStreet" autocomplete="street-address" placeholder="e.g. 1234 Oak St"></label>
+      <div class="in-row3">
+        <label>City<input id="inCity" autocomplete="address-level2" placeholder="e.g. Orlando"></label>
+        <label>State<select id="inState" autocomplete="address-level1"></select></label>
+        <label>ZIP<input id="inZip" inputmode="numeric" maxlength="5" autocomplete="postal-code" placeholder="e.g. 32801"></label>
+      </div>
+
+      <div class="in-step"><span class="in-num">2</span><b>What do you need?</b></div>
+      <div class="in-find">
+        <label>Type it or pick below<input id="inFind" placeholder='e.g. "3 ton gas" or "Goodman heat pump"' autocomplete="off"></label>
+        <div class="in-sug" id="inSug" hidden></div>
+      </div>
+      <div class="in-row3">
+        <label>System type
+          <select id="inType">
+            <option value="gas">Gas furnace + AC</option>
+            <option value="electric">Electric AC + air handler</option>
+            <option value="heatpump">Heat pump</option>
+          </select>
+        </label>
+        <label>Size<select id="inTons"></select></label>
+        <label>Brand
+          <select id="inBrand"><option value="">Compare all brands</option></select>
+        </label>
+      </div>
+      <label id="inSqftWrap" hidden>Home size (square feet)
+        <select id="inSqft">
+          <option value="900">Under 1,000 sq ft</option><option value="1200">1,000 – 1,300 sq ft</option><option value="1500">1,300 – 1,600 sq ft</option>
+          <option value="1800" selected>1,600 – 1,900 sq ft</option><option value="2100">1,900 – 2,200 sq ft</option><option value="2400">2,200 – 2,600 sq ft</option><option value="2800">Over 2,600 sq ft</option>
+        </select>
+      </label>
+
+      <div class="in-step"><span class="in-num">3</span><b>The job</b></div>
+      <label>Job type<select id="inJob"></select></label>
+      <div class="in-addons" id="inAddons"></div>
+
+      <div class="in-step"><span class="in-num">4</span><b>Your estimate</b></div>
+      <div class="in-results" id="inResults"></div>
+
+      <div class="in-step"><span class="in-num">5</span><b>Book it or ask questions</b></div>
+      <div class="ws-row">
+        <label>Your name<input id="inName" autocomplete="name"></label>
+        <label>Mobile phone<input id="inPhone" type="tel" autocomplete="tel"></label>
+      </div>
+      <label>Email<input id="inEmail" type="email" autocomplete="email"></label>
+      <label>Anything we should know? (optional)<textarea id="inNotes" placeholder="e.g. unit is in the attic, 2-story house, current system is 15 years old"></textarea></label>
+      <div class="send">
+        <a class="btn btn-cta" id="inSms">Text my install request</a>
+        <a class="btn btn-line" id="inEmailBtn">Email my install request</a>
+      </div>
+      <p class="fine">This is an estimate. We confirm the final price after a quick review of photos of your current system (or a site visit) before anything is scheduled. Permits and major duct or electrical work are quoted separately if needed.</p>
     </form>
   </div>
 </div>
@@ -1241,6 +1370,7 @@
 
   const MENU_CATS = CATS.filter(c => c.key !== "home");
   $("#catNav").innerHTML = MENU_CATS.map(c => `<button type="button" data-cat="${c.key}"${c.hot ? ' class="hot"' : ""}>${c.label}</button>`).join("");
+  $("#catNav").children[0].insertAdjacentHTML("afterend", '<button type="button" class="hot" data-install>Installation</button>');
   $("#footCats").innerHTML = MENU_CATS.slice(1).map(c => `<button class="link" type="button" data-cat="${c.key}">${c.label}</button>`).join("");
   $("#catFacet").innerHTML = MENU_CATS.map(c => {
     const n = INV.filter(c.test).length;
@@ -1745,6 +1875,7 @@
   function openSpecs(id) {
     const u = byId(id); if (!u) return;
     specsId = id;
+    $("#pdInstall").hidden = !(INSTALL_TYPE(u) && u.price != null);
     specsHeat = heatOf(u)?.model || null;
     $("#specsCat").innerHTML = `${badge(u.brand)} &nbsp;${u.unit === "each" ? "Individual part · " : ""}${esc(u.type)}`;
     $("#comDeliver").hidden = !u.commercial;
@@ -1896,6 +2027,136 @@
   $("#caForm").addEventListener("submit", e => e.preventDefault());
   $("#closeCa").onclick = closeCa;
   $("#caBg").addEventListener("click", e => { if (e.target.id === "caBg") closeCa(); });
+
+  // ---------- Installation quote: equipment + job price (+ add-ons), per brand
+  const IN = window.INSTALL;
+  const US_STATES = "AL AK AZ AR CA CO CT DE DC FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY".split(" ");
+  const IN_TYPES = { electric: ["Electric AC System", "Split AC System"], gas: ["Gas AC System"], heatpump: ["Heat Pump System"] };
+  const IN_TYPE_NAMES = { electric: "Electric AC + air handler", gas: "Gas furnace + AC", heatpump: "Heat pump" };
+  function INSTALL_TYPE(u) { return !u.commercial && Object.keys(IN_TYPES).find(k => IN_TYPES[k].includes(u.type)); }
+  const IN_TONS = [...new Set(INV.filter(u => INSTALL_TYPE(u)).map(u => u.tons))].sort((a, b) => a - b);
+  $("#inState").innerHTML = `<option value="">State</option>` + US_STATES.map(s => `<option>${s}</option>`).join("");
+  $("#inTons").innerHTML = IN_TONS.map(t => `<option value="${t}"${t === 3 ? " selected" : ""}>${t} ton</option>`).join("") + `<option value="unsure">Not sure</option>`;
+  $("#inBrand").innerHTML += [...new Set(INV.filter(u => INSTALL_TYPE(u)).map(u => u.brand))].map(b => `<option>${esc(b)}</option>`).join("");
+  $("#inJob").innerHTML = IN.jobs.map(j => `<option value="${j.key}">${esc(j.label)}</option>`).join("");
+  $("#inAddons").innerHTML = IN.addons.map(a => `<label><input type="checkbox" value="${a.key}">${esc(a.label)}<span>+${money(a.price)}</span></label>`).join("");
+  let inPick = null;   // chosen result (unit id)
+
+  const inVal = id => $("#" + id).value.trim();
+  function inTons() {
+    if (inVal("inTons") !== "unsure") return +inVal("inTons");
+    const sq = +inVal("inSqft");
+    return IN.sizeBySqft.find(([max]) => sq < max)[1];
+  }
+  const round10 = n => Math.round(n / 10) * 10;
+  function inQuotes() {
+    const type = inVal("inType"), tons = inTons(), brand = inVal("inBrand"), job = IN.jobs.find(j => j.key === inVal("inJob"));
+    const high = IN.highCostStates.includes(inVal("inState"));
+    const addons = IN.addons.filter(a => $(`#inAddons input[value="${a.key}"]`).checked);
+    const addonsTotal = addons.reduce((s, a) => s + a.price, 0);
+    const systems = INV.filter(u => IN_TYPES[type].includes(u.type) && u.tons === tons && u.price != null && (!brand || u.brand === brand));
+    const quotes = systems.map(u => {
+      let equip = u, equipPrice = u.price, equipNote = "";
+      if (job.equip === "outdoor") {
+        equip = INV.find(x => x.brand === u.brand && x.tons === tons && x.type === (type === "heatpump" ? "Heat Pump Condenser" : "Condenser") && x.price != null);
+        equipPrice = equip?.price ?? null;
+        if (!equip) equipNote = "Outdoor unit priced on request";
+      }
+      const base = job.custom ? null : (high ? job.high : job.low);
+      const labor = base == null ? null : round10(base * IN.split.labor), materials = base == null ? null : round10(base * IN.split.materials);
+      const warranty = base == null ? null : base - labor - materials;
+      const total = base == null || equipPrice == null ? null : equipPrice + base + addonsTotal;
+      return { u, equip, equipPrice, equipNote, labor, materials, warranty, addons, addonsTotal, total };
+    }).sort((a, b) => (a.total ?? 1e9) - (b.total ?? 1e9));
+    return { type, tons, brand, job, high, quotes };
+  }
+  function inCardHTML(q, best) {
+    const { u } = q;
+    const line = (l, v) => `<div><span>${l}</span><span>${v == null ? "—" : money(v)}</span></div>`;
+    return `<label class="in-card"><input type="radio" name="inPick" value="${u.id}"${inPick === u.id ? " checked" : ""}>
+      <img src="${q.equip?.image || u.image || ""}" alt="">
+      <div>${best ? `<span class="tag">BEST VALUE</span><br>` : ""}<div class="t">${esc(title(q.equip && q.equip !== u ? q.equip : u))}</div>
+        <div class="m">${esc(q.equip ? models(q.equip) : "")}${q.equipNote ? esc(q.equipNote) : ""}</div>
+        <div class="in-lines">
+          ${line("Equipment", q.equipPrice)}
+          ${line("Installation labor", q.labor)}
+          ${line("Materials", q.materials)}
+          ${line(`Labor warranty (${IN.laborWarrantyYears} yr)`, q.warranty)}
+          ${q.addons.map(a => line(a.label, a.price)).join("")}
+        </div></div>
+      <div class="in-total">${q.total == null ? `<b style="font-size:17px">Custom quote</b><small>we'll call you</small>` : `<b>${money(q.total)}</b><small>installed estimate</small>`}</div>
+    </label>`;
+  }
+  function renderIn() {
+    $("#inSqftWrap").hidden = inVal("inTons") !== "unsure";
+    const r = inQuotes();
+    if (!r.quotes.some(q => q.u.id === inPick)) inPick = r.quotes[0]?.u.id || null;
+    const tonsNote = inVal("inTons") === "unsure" ? `<div class="in-note">For about ${esc($("#inSqft").selectedOptions[0].text)}, a <b>${r.tons}-ton</b> system is typical. We confirm the size before installing.</div>` : "";
+    const custom = r.job.custom ? `<div class="in-note"><b>New installs are quoted after a visit</b> because ductwork and electrical vary a lot. Equipment prices below; send your request and we'll set up the visit.</div>` : "";
+    $("#inResults").innerHTML = tonsNote + custom + (r.quotes.length
+      ? r.quotes.map((q, i) => inCardHTML(q, i === 0 && r.quotes.length > 1 && q.total != null)).join("")
+      : `<div class="in-note">We don't list a ${r.tons}-ton ${esc(IN_TYPE_NAMES[r.type].toLowerCase())} system${r.brand ? ` from ${esc(r.brand)}` : ""} yet. Try another brand or size, or send your request and we'll quote it.</div>`);
+    updateInSend(r);
+  }
+  function inText(r) {
+    const q = r.quotes.find(x => x.u.id === inPick);
+    const addr = [inVal("inStreet"), inVal("inCity"), [inVal("inState"), inVal("inZip")].filter(Boolean).join(" ")].filter(Boolean).join(", ");
+    return [
+      "Hi, I'd like an INSTALLATION quote.",
+      addr && `Address: ${addr}`,
+      `Need: ${r.tons}-ton ${IN_TYPE_NAMES[r.type]}${inVal("inTons") === "unsure" ? ` (home ${$("#inSqft").selectedOptions[0].text})` : ""}`,
+      `Job: ${r.job.label}`,
+      q && `System: ${title(q.equip && q.equip !== q.u ? q.equip : q.u)} (${q.equip ? models(q.equip) : q.u.id})`,
+      q?.addons.length && `Add-ons: ${q.addons.map(a => a.label).join(", ")}`,
+      q && (q.total != null ? `Estimate on the site: ${money(q.total)}` : "Estimate: custom quote"),
+      inVal("inName") && `Name: ${inVal("inName")}`,
+      inVal("inPhone") && `Phone: ${inVal("inPhone")}`,
+      inVal("inEmail") && `Email: ${inVal("inEmail")}`,
+      inVal("inNotes") && `Notes: ${inVal("inNotes")}`,
+      window.NGRep?.code() && `Referred by rep: ${window.NGRep.code()}`,
+    ].filter(Boolean).join("\n");
+  }
+  function updateInSend(r) {
+    const body = encodeURIComponent(inText(r));
+    $("#inSms").href = `sms:${B.sms}?&body=${body}`;
+    $("#inEmailBtn").href = `mailto:${B.email}?subject=${encodeURIComponent("Installation quote request")}&body=${body}`;
+  }
+  // Quick finder: "3 ton gas", "goodman heat pump", a model number...
+  function inSuggest() {
+    const q = inVal("inFind").toLowerCase(), box = $("#inSug");
+    if (q.length < 2) { box.hidden = true; return; }
+    const t = q.match(/(\d(?:\.\d)?)\s*-?\s*t(?:on)?/)?.[1];
+    const type = /heat ?pump|\bhp\b/.test(q) ? "heatpump" : /gas|furnace/.test(q) ? "gas" : /electric|\bac\b|a\/c|air/.test(q) ? "electric" : null;
+    const words = q.replace(/(\d(?:\.\d)?)\s*-?\s*t(?:on)?/, "").split(/\s+/).filter(w => w && !/^(heat|pump|hp|gas|furnace|electric|ac|a\/c|air|system|and|with|conditioner|conditioning)$/.test(w));
+    const hits = INV.filter(u => INSTALL_TYPE(u) && u.price != null
+      && (!t || u.tons === +t) && (!type || INSTALL_TYPE(u) === type)
+      && words.every(w => `${title(u)} ${models(u)}`.toLowerCase().includes(w))).slice(0, 8);
+    box.innerHTML = hits.length ? hits.map(u => `<button type="button" data-in-pick="${u.id}"><img src="${u.image || ""}" alt=""><span><b>${esc(title(u))}</b><small>${esc(models(u))}</small></span><span class="p">${money(u.price)}</span></button>`).join("")
+      : `<div class="in-note" style="margin:6px">No match. Try something like "3 ton gas".</div>`;
+    box.hidden = false;
+  }
+  function inSelect(u) {
+    $("#inType").value = INSTALL_TYPE(u); $("#inTons").value = String(u.tons); $("#inBrand").value = u.brand;
+    inPick = u.id; $("#inFind").value = ""; $("#inSug").hidden = true; renderIn();
+  }
+  $("#inFind").addEventListener("input", inSuggest);
+  $("#inFind").addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); $("#inSug button")?.click(); } });
+  $("#inSug").addEventListener("click", e => { const b = e.target.closest("[data-in-pick]"); if (b) inSelect(byId(b.dataset.inPick)); });
+  document.addEventListener("click", e => { if (!e.target.closest(".in-find")) $("#inSug").hidden = true; });
+  $("#inForm").addEventListener("change", e => { if (e.target.name === "inPick") inPick = e.target.value; e.target.id !== "inFind" && renderIn(); });
+  $("#inForm").addEventListener("input", e => { if (["inName", "inPhone", "inEmail", "inNotes", "inStreet", "inCity", "inZip"].includes(e.target.id)) updateInSend(inQuotes()); });
+  $("#inForm").addEventListener("submit", e => e.preventDefault());
+  function openIn(u) {
+    closeSpecs(); closeDrawer(); closeWs();
+    if (u) { $("#inType").value = INSTALL_TYPE(u); $("#inTons").value = String(u.tons); $("#inBrand").value = u.brand; inPick = u.id; }
+    renderIn(); $("#inBg").classList.add("open");
+  }
+  function closeIn() { $("#inBg").classList.remove("open"); }
+  document.addEventListener("click", e => { if (e.target.closest?.("[data-install]")) { e.preventDefault(); openIn(); } });
+  $("#pdInstallBtn").onclick = () => openIn(byId(specsId));
+  $("#closeIn").onclick = closeIn;
+  $("#inBg").addEventListener("click", e => { if (e.target.id === "inBg") closeIn(); });
+  if (/[?&]install\b/.test(location.search) || location.hash === "#install") openIn();
 
   function openWs() { closeSpecs(); closeDrawer(); updateWs(); $("#wsBg").classList.add("open"); }
   function closeWs() { $("#wsBg").classList.remove("open"); }

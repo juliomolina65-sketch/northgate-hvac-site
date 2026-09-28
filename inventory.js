@@ -1390,3 +1390,28 @@ const FINAL_PRICES = {
 
 window.INVENTORY = [...ELECTRIC, ...TRANE_ELECTRIC, ...GAS, ...TRANE_GAS, ...GOODMAN_GAS, ...HEAT_PUMPS, ...GOODMAN, ...GOODMAN_HEAT_PUMPS, ...PART_ITEMS, ...COMMERCIAL];
 
+
+// ============================================================
+//  INSTALLATION QUOTES (the "Get an installed price" tool)
+//  Estimate = equipment price + job price (+ add-ons). Job price is split into
+//  labor / materials / labor warranty just for the breakdown the customer sees.
+//  Standard states use "low", high-cost states use "high".
+// ============================================================
+window.INSTALL = {
+  jobs: [
+    { key: "changeout", label: "Full system change-out (indoor + outdoor)", equip: "system", low: 3500, high: 4000 },
+    { key: "outdoor",   label: "Outdoor unit swap only (AC or heat pump)",  equip: "outdoor", low: 1800, high: 2200 },
+    { key: "new",       label: "New install (no existing system or ductwork)", equip: "system", custom: true },
+  ],
+  split: { labor: 0.60, materials: 0.27, warranty: 0.13 },
+  laborWarrantyYears: 2,
+  addons: [
+    { key: "plenums",    label: "New supply & return plenums", price: 650 },
+    { key: "lineset",    label: "New refrigerant line set",    price: 450 },
+    { key: "thermostat", label: "New smart thermostat",        price: 250 },
+    { key: "pad",        label: "New outdoor equipment pad",   price: 150 },
+  ],
+  highCostStates: ["AK", "CA", "CO", "CT", "DC", "HI", "IL", "MA", "MD", "NH", "NJ", "NY", "OR", "RI", "VT", "WA"],
+  // "Not sure what size?" helper: home square footage -> tons (rule of thumb, confirmed on the site visit)
+  sizeBySqft: [[1000, 1.5], [1300, 2], [1600, 2.5], [1900, 3], [2200, 3.5], [2600, 4], [Infinity, 5]],
+};
