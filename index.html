@@ -186,6 +186,58 @@
   .in-strip b { display: block; font-size: 16px; color: #16572a; }
   .in-strip small { color: #2f5d3a; font-size: 13.5px; }
   .in-strip .btn { margin-left: auto; }
+  /* Installation feature banner (landing page) */
+  .inst-hero { position: relative; overflow: hidden; display: grid; grid-template-columns: 1.15fr 1fr; gap: 28px; align-items: center; margin: 16px 0 14px; padding: 30px 30px 30px 32px; border-radius: 8px; color: #fff;
+    background: radial-gradient(circle at 88% 18%, rgba(242,179,61,.18), transparent 38%), radial-gradient(circle at 10% 110%, rgba(46,160,80,.22), transparent 45%), linear-gradient(135deg, #0a1d37 0%, #0f2c52 55%, #16406f 100%); box-shadow: 0 10px 30px rgba(12,34,64,.18); }
+  .inst-hero::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 28px 28px; pointer-events: none; }
+  .inst-hero > * { position: relative; }
+  .inst-pill { display: inline-flex; align-items: center; gap: 8px; background: rgba(242,179,61,.14); border: 1px solid rgba(242,179,61,.55); color: #f6c45f; font-size: 11.5px; font-weight: 800; letter-spacing: .12em; padding: 5px 11px; border-radius: 999px; }
+  .inst-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: #3ddc6b; box-shadow: 0 0 0 3px rgba(61,220,107,.25); }
+  .inst-hero h2 { font-size: 34px; line-height: 1.12; margin: 14px 0 10px; letter-spacing: -.01em; }
+  .inst-hero h2 span { color: #f6c45f; }
+  .inst-copy > p { margin: 0 0 18px; color: #d3def0; font-size: 15.5px; max-width: 560px; }
+  .inst-points { list-style: none; margin: 0 0 22px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 18px; }
+  .inst-points li { display: flex; gap: 10px; align-items: flex-start; }
+  .inst-points svg { width: 34px; height: 34px; flex: none; padding: 8px; border-radius: 8px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); fill: none; stroke: #7fe39c; stroke-width: 2; }
+  .inst-points b { display: block; font-size: 14.5px; }
+  .inst-points span { font-size: 13px; color: #b9c9e0; line-height: 1.35; }
+  .inst-cta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .inst-btn { background: #2ea050; color: #fff; font-size: 16.5px; font-weight: 700; padding: 14px 24px; border-radius: 6px; box-shadow: 0 6px 18px rgba(46,160,80,.35); }
+  .inst-btn:hover { background: #268a44; }
+  .inst-from { font-size: 13.5px; color: #d3def0; line-height: 1.25; }
+  .inst-from b { display: block; font-size: 26px; color: #fff; }
+  .inst-from small { color: #9fb2cf; font-size: 11.5px; }
+  .inst-preview { display: grid; gap: 12px; text-align: left; font: inherit; color: var(--text); background: #fff; border: 0; border-radius: 10px; padding: 0 0 16px; cursor: pointer; overflow: hidden;
+    box-shadow: 0 24px 50px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.2); transform: rotate(1.2deg); transition: transform .2s ease; }
+  .inst-preview:hover { transform: rotate(0) translateY(-3px); }
+  .ip-head { display: flex; align-items: center; gap: 10px; background: #f1f4f8; border-bottom: 1px solid var(--line-2); padding: 10px 14px; font-size: 12.5px; font-weight: 700; color: var(--brand); }
+  .ip-dots { display: inline-flex; gap: 5px; } .ip-dots i { width: 9px; height: 9px; border-radius: 50%; background: #d6dce5; }
+  .ip-row { display: grid; grid-template-columns: 76px 1fr auto; gap: 12px; align-items: center; margin: 0 14px; padding: 10px 12px; border: 2px solid var(--cta); border-radius: 8px; background: #f5fbf6; }
+  .ip-img img { width: 76px; height: 58px; object-fit: contain; display: block; }
+  .ip-name b { display: block; font-size: 14px; font-weight: 600; }
+  .ip-name small { display: block; font-size: 11.5px; color: var(--muted); }
+  .ip-name .ip-tag { display: inline-block; background: #e7f4ea; color: var(--ok); font-weight: 800; font-size: 10px; padding: 1px 6px; border-radius: 3px; margin-bottom: 3px; }
+  .ip-price { text-align: right; } .ip-price b { display: block; font-size: 22px; } .ip-price small { font-size: 11px; color: var(--muted); }
+  .ip-cmp { margin: 0 14px; font-size: 12.5px; } .ip-cmp b { color: #16572a; }
+  .ip-bar { display: block; position: relative; height: 8px; margin: 7px 0 3px; }
+  .ip-bar span { position: absolute; inset: 2px 0; border-radius: 4px; background: linear-gradient(90deg, #cfe6d4, #f3d9b1 55%, #efb8ad); }
+  .ip-bar i { position: absolute; top: -3px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: var(--cta); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--cta); }
+  .ip-cmp small { color: var(--muted); font-size: 11px; }
+  .ip-inc { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 10px; margin: 0 14px; font-size: 12px; color: var(--text-2); }
+  .ip-go { margin: 0 14px; text-align: center; background: var(--brand); color: #fff; font-weight: 700; font-size: 14px; border-radius: 6px; padding: 10px; }
+  @media (max-width: 960px) {
+    .inst-hero { grid-template-columns: 1fr; padding: 24px 20px; }
+    .inst-preview { transform: none; }
+  }
+  @media (max-width: 600px) {
+    .inst-hero { margin-left: -4px; margin-right: -4px; padding: 22px 16px; gap: 22px; }
+    .inst-hero h2 { font-size: 26px; }
+    .inst-copy > p { font-size: 14.5px; }
+    .inst-points { grid-template-columns: 1fr; gap: 10px; }
+    .inst-btn { width: 100%; }
+    .ip-row { grid-template-columns: 56px 1fr auto; } .ip-img img { width: 56px; height: 44px; }
+    .ip-price b { font-size: 19px; }
+  }
   .pd-install { font-size: 13px; margin-top: 8px; }
   .pd-install button { background: none; border: 0; padding: 0; color: var(--link); font: inherit; font-weight: 500; cursor: pointer; }
   .pd-install button:hover { text-decoration: underline; }
@@ -838,11 +890,34 @@
         </div>
         <div class="com-types" id="resTypes"></div>
       </div>
-      <div class="in-strip">
-        <span class="ic"><svg class="icon"><use href="#i-shield"/></svg></span>
-        <span><b>New: we install, too</b><small>Equipment, installation, materials and labor warranty in one price. Enter your address and get an estimate in about a minute.</small></span>
-        <button class="btn btn-cta" type="button" data-install>Get my installed price →</button>
-      </div>
+      <section class="inst-hero" aria-label="Installation">
+        <div class="inst-copy">
+          <span class="inst-pill"><span class="dot"></span>NOW INSTALLING NATIONWIDE</span>
+          <h2>Your new system, installed.<br><span>One upfront price, anywhere in the U.S.</span></h2>
+          <p>We sell the equipment and we install it. Enter your address, pick your system, and see your full installed price in about a minute. No sales visit needed to get a number.</p>
+          <ul class="inst-points">
+            <li><svg><use href="#i-tag"/></svg><span><b>One upfront price</b>Equipment, labor, materials and warranty</span></li>
+            <li><svg><use href="#i-clock"/></svg><span><b>Installed fast</b>1–2 days after your system arrives</span></li>
+            <li><svg><use href="#i-shield"/></svg><span><b>1-year labor warranty</b>Plus the manufacturer's parts warranty</span></li>
+            <li><svg><use href="#i-lock"/></svg><span><b>Flexible payment</b>75% now, 25% after install, or monthly with Klarna</span></li>
+          </ul>
+          <div class="inst-cta">
+            <button class="btn inst-btn" type="button" data-install>Get my installed price →</button>
+            <span class="inst-from">Complete installed systems from <b id="instFrom"></b><small>1.5-ton system, most states</small></span>
+          </div>
+        </div>
+        <button class="inst-preview" type="button" data-install aria-label="Open the installed price tool">
+          <span class="ip-head"><span class="ip-dots"><i></i><i></i><i></i></span>Your installed estimate</span>
+          <span class="ip-row"><span class="ip-img"><img id="instPrevImg" alt="" loading="lazy"></span>
+            <span class="ip-name"><small class="ip-tag">BEST VALUE</small><b id="instPrevName"></b><small>Dallas, TX · full system change-out</small></span>
+            <span class="ip-price"><b id="instPrevPrice"></b><small>installed</small></span></span>
+          <span class="ip-cmp"><b>In the lower half of the typical price range in Texas</b>
+            <span class="ip-bar"><span></span><i id="instPrevDot"></i></span>
+            <small id="instPrevRange"></small></span>
+          <span class="ip-inc"><span>✓ Drain pan + flood sensor</span><span>✓ New disconnect + whip</span><span>✓ Condenser pad</span><span>✓ 1-yr labor warranty</span></span>
+          <span class="ip-go">Try it with your address →</span>
+        </button>
+      </section>
       <div class="showcase">
         <div class="show-hero">
           <span class="pill">TOP BRANDS · NEW EQUIPMENT</span>
@@ -2247,6 +2322,19 @@
       if (canPay && !klarnaBlock(q.total)) { inMonthly("#inCardMonthly", q.total); inMonthly("#inPayMonthly", q.total); }
     }
     updateInSend(r);
+  }
+  // Landing-page install banner: live "from" price and a sample estimate (Carrier 3-ton gas in Texas), same math as the tool.
+  {
+    const change = IN.jobs.find(j => j.key === "changeout"), std = change.price.standard;
+    const sys = INV.filter(u => INSTALL_TYPE(u) && u.price != null);
+    const cheapest = sys.reduce((m, u) => (u.price < m.price ? u : m), sys[0]);
+    $("#instFrom").textContent = money(cheapest.price + std);
+    $("#instFrom").nextElementSibling.textContent = `${cheapest.tons}-ton system, most states`;
+    const ex = sys.find(u => u.brand === "Carrier" && u.tons === 3 && u.type === "Gas AC System") || sys[0];
+    const total = ex.price + std, [lo, hi] = IN.compare.ranges.standard.map(n => Math.round(n * (1 + (ex.tons - 3) * IN.compare.perTon) / 100) * 100);
+    $("#instPrevImg").src = ex.image || ""; $("#instPrevName").textContent = title(ex); $("#instPrevPrice").textContent = money(total);
+    $("#instPrevDot").style.left = Math.max(0, Math.min(100, (total - lo) / (hi - lo) * 100)) + "%";
+    $("#instPrevRange").textContent = `Typical installed price in Texas: ${money(lo)} – ${money(hi)}`;
   }
   const IN_SHARE = IN.cardDeposit > 0 && IN.cardDeposit <= 1 ? IN.cardDeposit : 0.75, IN_PCT = Math.round(IN_SHARE * 100);
   const IN_STEPS_MID = [
