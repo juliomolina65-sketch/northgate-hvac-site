@@ -190,7 +190,7 @@
   .in-alt a { color: var(--link); cursor: pointer; }
   .install-note { background: #eaf5ec; border: 1px solid #bfe0c6; border-radius: var(--radius); padding: 10px 12px; margin: 8px 0 4px; font-size: 13px; color: #2f5d3a; }
   .install-note b { color: #16572a; }
-  .totals.pkg .eq-row { display: none; }
+  .totals.pkg .eq-row, .totals.pkg .discount { display: none; }   /* package price already includes any delivery discount */
   .install-note button { background: none; border: 0; padding: 0; color: var(--link); font: inherit; cursor: pointer; text-decoration: underline; }
   .in-total { text-align: right; }
   .in-total b { display: block; font-size: 22px; color: var(--text); line-height: 1.1; }
@@ -1754,6 +1754,10 @@
       i.disabled = !n && !i.checked;
       l.style.opacity = i.disabled ? .45 : 1;
     });
+    // A filter group with nothing to pick in this category (e.g. tonnage for furnaces) is hidden, not greyed out.
+    const usable = sel => $$(`${sel} input`).filter(i => !i.disabled).length;
+    $("#tonFacet").closest(".facet").hidden = !usable("#tonFacet");
+    $("#brandFacetWrap").hidden = usable("#brandFacet") < 2;   // one brand in this category: nothing to choose
   }
 
   // Landing showcase: one card per brand with what it offers and its lowest system price.
@@ -2051,7 +2055,7 @@
       $("#tLaterLabel").textContent = `Remaining ${100 - Math.round(share * 100)}% · after your install`;
       if (installCtx.pay !== "klarna") $("#tTotal").textContent = money(now);
     }
-    if (installCtx?.pay === "klarna") $("#tTotal").textContent = money(eq + lift - disc + installCtx.balance);   // Klarna: whole package at checkout
+    if (installCtx?.pay === "klarna") $("#tTotal").textContent = money(eq + lift - disc + (installCtx.installPart ?? installCtx.balance));   // Klarna: whole package at checkout
     $("#dbarLabel").textContent = $("#tTotalLabel").textContent; $("#dbarTotal").textContent = $("#tTotal").textContent;   // phone pay bar
 
     $("#orderBar").classList.toggle("show", n > 0);
@@ -2526,8 +2530,9 @@
     };
     try { localStorage.setItem("installCtx", JSON.stringify(installCtx)); } catch (e) {}
     if (!order[key]) change(key, 1);
-    // Carry the job address into the checkout form (it's where the system ships and gets installed).
-    const fill = (id, v) => { if (v && !$("#" + id).value.trim()) $("#" + id).value = v; };
+    // The job address IS the ship-to address (the system ships there and gets installed there), so it always
+    // replaces what's in the checkout form; otherwise an old ZIP could give the wrong delivery price.
+    const fill = (id, v) => { if (v) $("#" + id).value = v; };
     fill("bStreet", inVal("inStreet")); fill("bCity", inVal("inCity")); fill("bState", inVal("inState")); fill("zip", inVal("inZip"));
     $('input[name="ship"][value="freight"]').checked = true;
     $("#zip").dispatchEvent(new Event("input", { bubbles: true }));
@@ -2613,8 +2618,9 @@
     const z = zipInfo();
     need.forEach(([id]) => $("#" + id).classList.toggle("invalid", missing.some(m => m[0] === id) || (id === "bEmail" && badEmail)));
     $("#warrantyAckRow").classList.toggle("invalid", !$("#warrantyAck").checked);
-    const problems = [...missing.map(m => m[1]), ...(badEmail ? ["a valid email"] : []), ...(!z.ok && !z.offshore ? ["ZIP code"] : [])];
+    const problems = [...missing.map(m => m[1]), ...(!z.ok && !z.offshore ? ["ZIP code"] : [])];
     let msg = problems.length ? `Please fill in your ${problems.join(", ")}.` : "";
+    if (badEmail) msg += (msg ? " " : "") + "Please enter a valid email.";
     if (!$("#warrantyAck").checked) msg += (msg ? " " : "") + "Check the warranty box to continue.";
     $("#buyerError").hidden = !msg; $("#buyerError").textContent = msg;
     if (msg) (missing[0] ? $("#" + missing[0][0]) : !z.ok ? $("#zip") : $("#warrantyAck")).focus();

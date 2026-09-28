@@ -582,6 +582,14 @@
     "Payne is a Carrier product line: Carrier-built equipment under a different name, at a lower price.":
       "Payne es una línea de productos de Carrier: equipo fabricado por Carrier con otro nombre, a menor precio.",
     "NEW": "NUEVO", "We install nationwide · 1-min quote": "Instalamos en todo el país · cotización en 1 min", "Get price →": "Ver precio →",
+    "From": "Desde", "with DFW pickup": "recogiendo en DFW",
+    "Yes, for HVAC contractors and businesses. No license required. Apply online, we'll call you, and your account is set up with your salesperson.":
+      "Sí, para contratistas de HVAC y negocios. No se requiere licencia. Solicítela en línea, le llamamos y su cuenta queda lista con su vendedor.",
+    "Yes. Delivery within about 2 hours of DFW already comes off automatically at checkout, and picking up saves even more. For a quote on several units or a specific job,":
+      "Sí. La entrega a unas 2 horas de DFW ya se descuenta automáticamente al pagar, y recoger ahorra aún más. Para una cotización de varias unidades o un trabajo específico,",
+    "We recommend shipping them straight to the job site; freight is included in the price. The driver does not unload, so have a forklift and operator there (or a crane to set the unit on the roof). If you need us to arrange unloading or a crane, we can for an extra charge, quoted with your order. Picking up in":
+      "Recomendamos enviarlas directo a la obra; el flete está incluido en el precio. El chofer no descarga, así que tenga un montacargas y operador (o una grúa para subir la unidad al techo). Si necesita que coordinemos la descarga o una grúa, podemos hacerlo con un cargo extra, cotizado con su pedido. Recoger en",
+    "instead takes the whole freight charge off.": "le quita todo el cargo de flete.",
     "Check out": "Pagar", "Your installed package": "Su paquete instalado",
     "Equipment, installation, materials and 1-year labor warranty, paid in 2 payments": "Equipo, instalación, materiales y garantía de mano de obra de 1 año, en 2 pagos",
     "Payment 1 · today": "Pago 1 · hoy", "Payment 2 · after your install": "Pago 2 · después de la instalación",
@@ -706,7 +714,10 @@
     [/\bGoodman ([\d.]+)-Ton ([\d.]+) SEER2 Gas Furnace System/g, "Sistema de A/C con horno de gas Goodman de $1 toneladas, $2 SEER2"],
     [/^Goodman GR9S80 80% AFUE ([\d,]+) BTU Single-Stage Multi-Speed ECM Gas Furnace, ([\d.]+)" Wide \(Upflow\/Horizontal\)$/, "Horno de gas Goodman GR9S80 80% AFUE de $1 BTU, una etapa, ECM multivelocidad, $2\" de ancho (flujo ascendente/horizontal)"],
     [/^Goodman CAPTA ([\d.–]+) Ton R-32 Cased Evaporator Coil, ([\d.]+)" Wide \(Upflow\/Downflow\)$/, "Serpentín evaporador encapsulado Goodman CAPTA de $1 toneladas R-32, $2\" de ancho (flujo ascendente/descendente)"],
-    [/^Please fill in your (.+)\.( Check the warranty box to continue\.)?$/, (m, list, w) => `Por favor complete: ${list.replace("full name", "nombre completo").replace("phone", "teléfono").replace("a valid email", "un correo válido").replace("email", "correo").replace("street address", "dirección").replace("city", "ciudad").replace("state", "estado").replace("ZIP code", "código postal")}.${w ? " Marque la casilla de garantía para continuar." : ""}`],
+    [/^(Please fill in your .+?\.|Please enter a valid email\.)( Please enter a valid email\.)?( Check the warranty box to continue\.)?$/, (m) => m
+      .replace(/Please fill in your (.+?)\./, (x, list) => `Por favor complete: ${list.replace("full name", "nombre completo").replace("phone", "teléfono").replace("email", "correo").replace("street address", "dirección").replace("city", "ciudad").replace("state", "estado").replace("ZIP code", "código postal")}.`)
+      .replace("Please enter a valid email.", "Ingrese un correo válido.")
+      .replace("Check the warranty box to continue.", "Marque la casilla de garantía para continuar.")],
     [/^Near DFW: lower delivery price to (\d+) · ships in (.*)$/, (m, z, d) => `Cerca de DFW: precio de entrega más bajo a ${z} · se envía en ${d.replace("business days", "días hábiles")}`],
     [/^(\d+) items? · near-DFW delivery, (\$[\d,]+) off$/, "$1 artículo(s) · entrega cerca de DFW, $2 menos"],
     [/(\d+) kW heat kit\b/g, "kit de calefacción de $1 kW"],
@@ -756,6 +767,7 @@
     [/^Free curbside shipping to (\d+) · ships in (.*)$/, (m, z, d) => `Envío gratis a la acera a ${z} · se envía en ${d.replace("business days", "días hábiles")}`],
     [/^Installing in (\d+)$/, "Instalación en $1"],
     [/^Complete ([\d.]+)-ton system from$/, "Sistema completo de $1 toneladas desde"],
+    [/^(\d+) home systems$/, "$1 sistemas residenciales"],
     [/^(\d+) (.+) systems$/, (m, n, kinds) => `${n} sistemas de ${kinds.replace(/\bAC\b/g, "A/C").replace(/heat pump/g, "bomba de calor").replace(/, (?=[^,]*$)/, " y ").replace(/, /g, ", ")}`],
     [/^([\d.]+) to ([\d.]+) ton · (R-\w+)$/, "$1 a $2 toneladas · $3"],
     [/^([\d.]+) to ([\d.]+) ton · (R-[\w-]+) \/ (R-[\w-]+)$/, "$1 a $2 toneladas · $3 / $4"],
@@ -763,8 +775,8 @@
     [/^(\d+) units · ([\d.]+) to ([\d.]+) ton$/, "$1 unidades · $2 a $3 toneladas"],
     [/^(\d+) systems · ([\d.]+) to ([\d.]+) ton$/, "$1 sistemas · $2 a $3 toneladas"],
     [/^Show (\d+) more$/, "Ver $1 más"],
-    [/^(\d+) home systems$/, "$1 sistemas residenciales"], [/^(\d+) rooftop units$/, "$1 unidades de techo"],
-    [/^Save \$(\d+) with DFW pickup$/, "Ahorre $$$1 recogiendo en DFW"], [/^Shop (Carrier|Trane|Goodman|Bryant)$/, "Ver $1"],
+    [/^(\d+) rooftop units$/, "$1 unidades de techo"],
+    [/^Save \$(\d+) with DFW pickup$/, "Ahorre $$$1 recogiendo en DFW"], [/^Shop (Carrier|Trane|Goodman|Payne|Bryant)$/, "Ver $1"],
     [/^ · ([\d.]+)–([\d.]+) ton$/, " · $1–$2 toneladas"],
     [/^([\d.]+)-ton system, most states$/, "Sistema de $1 toneladas, la mayoría de los estados"],
     [/^Typical installed price in Texas: (\$[\d,]+) – (\$[\d,]+)$/, "Precio típico instalado en Texas: $1 – $2"],
