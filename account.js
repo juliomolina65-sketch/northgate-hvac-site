@@ -257,7 +257,7 @@
         if (session?.access_token) headers.Authorization = `Bearer ${session.access_token}`;
         const stripe = await getStripe();
         const r = await fetch("/.netlify/functions/checkout", { method: "POST", headers,
-          body: JSON.stringify({ items, delivery: d, customer: NG.customerInfo(), repCode: window.NGRep.code(), lang: document.documentElement.lang, embedded: !!stripe }) });
+          body: JSON.stringify({ items, delivery: d, customer: NG.customerInfo(), install: NG.installInfo?.() || null, repCode: window.NGRep.code(), lang: document.documentElement.lang, embedded: !!stripe }) });
         const out = await r.json().catch(() => ({}));
         if (r.ok && out.clientSecret && stripe) { btn.removeAttribute("aria-busy"); return openPayment(stripe, out.clientSecret); }
         if (r.ok && out.url) { location.href = out.url; return; }

@@ -135,6 +135,24 @@
   #inBook:not([hidden]) { display: grid; gap: 12px; }
   .in-chosen { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; background: #f4f7fb; border: 1px solid var(--line-2); border-radius: var(--radius); padding: 10px 12px; font-size: 14px; }
   .in-chosen b { font-size: 18px; white-space: nowrap; }
+  #inPayWrap { display: grid; gap: 12px; }
+  #inPayWrap[hidden] { display: none; }
+  .in-split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .in-split > div { border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; }
+  .in-split > div:first-child { border: 2px solid var(--cta); background: #f5fbf6; padding: 9px 11px; }
+  .in-split small { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .in-split b { display: block; font-size: 22px; margin: 2px 0 4px; }
+  .in-split span { font-size: 12.5px; color: var(--text-2); }
+  .in-how { background: #f4f7fb; border: 1px solid var(--line-2); border-radius: 6px; padding: 12px 14px; font-size: 13.5px; }
+  .in-how > b { color: var(--brand); }
+  .in-how ol { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 5px; color: var(--text-2); }
+  .in-how ol b { color: var(--text); font-weight: 500; }
+  .in-checkout { width: 100%; padding: 13px; font-size: 16px; }
+  .in-alt { margin: -4px 0 0; font-size: 13px; color: var(--text-2); text-align: center; }
+  .in-alt a { color: var(--link); cursor: pointer; }
+  .install-note { background: #eaf5ec; border: 1px solid #bfe0c6; border-radius: var(--radius); padding: 10px 12px; margin: 8px 0 4px; font-size: 13px; color: #2f5d3a; }
+  .install-note b { color: #16572a; }
+  .install-note button { background: none; border: 0; padding: 0; color: var(--link); font: inherit; cursor: pointer; text-decoration: underline; }
   .in-total { text-align: right; }
   .in-total b { display: block; font-size: 22px; color: var(--text); line-height: 1.1; }
   .in-total small { color: var(--muted); font-size: 12px; }
@@ -155,6 +173,7 @@
     .in-row3 { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
     .in-row3 label:first-child { grid-column: 1 / -1; }
     .in-addons, .in-included ul { grid-template-columns: 1fr; }
+    .in-split { grid-template-columns: 1fr; }
     .in-foot { flex-direction: column; align-items: stretch; }
     .in-foot .in-go { margin-left: 0; }
     .in-card { grid-template-columns: 64px 1fr; gap: 10px; }
@@ -1156,19 +1175,28 @@
       <div class="in-results" id="inResults"></div>
 
       <div id="inBook" hidden>
-      <div class="in-step" id="inBookStep"><span class="in-num">5</span><b>Book it or ask questions</b></div>
+      <div class="in-step" id="inBookStep"><span class="in-num">5</span><b>Check out</b></div>
       <div class="in-chosen" id="inChosen"></div>
-      <div class="ws-row">
-        <label>Your name<input id="inName" autocomplete="name"></label>
-        <label>Mobile phone<input id="inPhone" type="tel" autocomplete="tel"></label>
+      <div id="inPayWrap">
+        <div class="in-split">
+          <div><small>Pay today</small><b id="inDueNow"></b><span>Your equipment. Card, bank transfer, Apple Pay / Google Pay, or monthly payments with Klarna.</span></div>
+          <div><small>Pay after your install</small><b id="inDueLater"></b><span>Installation<span id="inDueLaterAddons"></span>, paid online once the job is done.</span></div>
+        </div>
+        <div class="in-how">
+          <b>How it works</b>
+          <ol>
+            <li><b>Check out and pay for your system.</b> Pay in full or choose monthly payments.</li>
+            <li><b>Sign your installation agreement.</b> We email it to you right after checkout.</li>
+            <li><b>We ship your system.</b> It arrives in 1–3 business days.</li>
+            <li><b>We install it 1–2 days after it arrives.</b> We call or text you to set the time.</li>
+            <li><b>Pay for the installation online</b> once the job is finished.</li>
+          </ol>
+        </div>
       </div>
-      <label>Email<input id="inEmail" type="email" autocomplete="email"></label>
-      <label>Anything we should know? (optional)<textarea id="inNotes" placeholder="e.g. unit is in the attic, 2-story house, current system is 15 years old"></textarea></label>
-      <div class="send">
-        <a class="btn btn-cta" id="inSms">Text my install request</a>
-        <a class="btn btn-line" id="inEmailBtn">Email my install request</a>
-      </div>
-      <p class="fine">This is an estimate. We confirm the final price after a quick review of photos of your current system (or a site visit) before anything is scheduled. Permits and major duct or electrical work are quoted separately if needed.</p>
+      <label>Anything we should know about the job? (optional)<textarea id="inNotes" placeholder="e.g. unit is in the attic, 2-story house, current system is 15 years old"></textarea></label>
+      <button class="btn btn-cta in-checkout" type="button" id="inCheckout"></button>
+      <p class="in-alt">Rather talk to someone first? <a id="inSms">Text us this quote</a> or <a id="inEmailBtn">email it</a>.</p>
+      <p class="fine">This is an estimate. We confirm the final installation price after a quick review of photos of your current system (or a site visit) before anything is scheduled. Permits and major duct or electrical work are quoted separately if needed.</p>
       </div>
     </form>
   </div>
@@ -1232,6 +1260,7 @@
   <div class="scroll">
     <h4>Items</h4>
     <div id="lines"></div>
+    <div class="install-note" id="installNote" hidden></div>
 
     <h4>Delivery</h4>
     <label class="option">
@@ -1492,6 +1521,8 @@
   // ---------- Order (kept in this browser only)
   let order = {};
   try { order = JSON.parse(localStorage.getItem("orderList") || "{}"); } catch (e) {}
+  var installCtx = null;   // set when a customer checks out from an installation quote
+  try { installCtx = JSON.parse(localStorage.getItem("installCtx") || "null"); } catch (e) {}
   const save = () => { try { localStorage.setItem("orderList", JSON.stringify(order)); } catch (e) {} };
 
   // Turn "three and a half ton" / "3.5 ton" / "3 1/2 ton" into a tonnage filter plus leftover words.
@@ -1792,6 +1823,7 @@
   }
 
   function updateOrder() {
+    renderInstallNote();
     const n = units(), eq = equipment(), shipping = method() === "freight";
     $("#lines").innerHTML = Object.entries(order).map(([k, q]) => {
       const it = parseKey(k); if (!it) return "";
@@ -1859,7 +1891,8 @@
     const company = $("#company").value.trim(), lic = $("#license").value.trim();
     const bi = buyerInfo();
     const buyer = `\nName: ${bi.name}\nPhone: ${bi.phone}\nEmail: ${bi.email}\nAddress: ${[bi.street, bi.apt, bi.city, bi.state, z.zip].filter(Boolean).join(", ")}` +
-      (bi.warrantyAck ? "\nWarranty: agreed, Northgate registers the warranty" : "");
+      (bi.warrantyAck ? "\nWarranty: agreed, Northgate registers the warranty" : "") +
+      (installCtx && order[installCtx.key] ? `\nINSTALLATION: ${installCtx.job}${installCtx.addons.length ? ` + ${installCtx.addons.join(", ")}` : ""} · install balance ${money(installCtx.balance)} after the job${installCtx.notes ? `\nJob notes: ${installCtx.notes}` : ""}` : "");
     return `Hi, I'd like to order:\n${lines.join("\n")}\n${ship}\nTotal: ${money(eq + lift - disc)}` + buyer +
       (company ? `\nCompany: ${company}` : "") + (lic ? `\nLicense #: ${lic}` : "") +
       (window.NGRep?.code() ? `\nRep: ${window.NGRep.code()}` : "") +
@@ -2083,7 +2116,7 @@
         equipPrice = equip?.price ?? null;
       }
       const total = jobPrice == null || equipPrice == null ? null : equipPrice + jobPrice + addonsTotal;
-      return { u, equip, total, cmp: job.key === "changeout" ? inCompare(total, tons) : null };
+      return { u, equip, equipPrice, jobPrice, addonsTotal, total, cmp: job.key === "changeout" ? inCompare(total, tons) : null };
     }).sort((a, b) => (a.total ?? 1e9) - (b.total ?? 1e9));
     return { type, tons, brand, job, addons, quotes };
   }
@@ -2131,7 +2164,18 @@
       : `<div class="in-note">We don't list a ${r.tons}-ton ${esc(IN_TYPE_NAMES[r.type].toLowerCase())} system${r.brand ? ` from ${esc(r.brand)}` : ""} yet. Try another brand or size, or text us and we'll quote it.</div>`);
     const q = r.quotes.find(x => x.u.id === inPick);
     $("#inBook").hidden = !(inBooked && q);
-    if (q) $("#inChosen").innerHTML = `<span>${esc(inName(q))}${r.addons.length ? ` · ${esc(r.addons.map(a => a.label).join(", "))}` : ""}</span><b>${q.total == null ? "Custom quote" : money(q.total)}</b>`;
+    if (q) {
+      $("#inChosen").innerHTML = `<span>${esc(inName(q))}${r.addons.length ? ` · ${esc(r.addons.map(a => a.label).join(", "))}` : ""}</span><b>${q.total == null ? "Custom quote" : money(q.total)}</b>`;
+      const canPay = q.total != null;
+      $("#inPayWrap").hidden = !canPay; $("#inCheckout").hidden = !canPay;
+      if (canPay) {
+        $("#inDueNow").textContent = money(q.equipPrice);
+        $("#inDueLater").textContent = money(q.jobPrice + q.addonsTotal);
+        $("#inDueLaterAddons").textContent = r.addons.length ? " and add-ons" : "";
+        $("#inCheckout").textContent = `Check out · pay ${money(q.equipPrice)} for your system →`;
+      }
+      $(".in-alt").firstChild.textContent = canPay ? "Rather talk to someone first? " : "We'll quote this one personally: ";
+    }
     updateInSend(r);
   }
   function inText(r) {
@@ -2145,9 +2189,6 @@
       q && `System: ${inName(q)}${q.equip ? ` (${models(q.equip)})` : ""}`,
       r.addons.length && `Add-ons: ${r.addons.map(a => a.label).join(", ")}`,
       q && (q.total != null ? `Installed estimate on the site: ${money(q.total)}` : "Estimate: custom quote"),
-      inVal("inName") && `Name: ${inVal("inName")}`,
-      inVal("inPhone") && `Phone: ${inVal("inPhone")}`,
-      inVal("inEmail") && `Email: ${inVal("inEmail")}`,
       inVal("inNotes") && `Notes: ${inVal("inNotes")}`,
       window.NGRep?.code() && `Referred by rep: ${window.NGRep.code()}`,
     ].filter(Boolean).join("\n");
@@ -2207,14 +2248,33 @@
     e.preventDefault();
     inBooked = true; renderIn();
     $("#inBookStep").scrollIntoView({ behavior: "smooth", block: "start" });
-    setTimeout(() => $("#inName").focus({ preventScroll: true }), 400);
+  });
+  // Check out: the system goes into the order (paid now); the installation balance is paid after the install.
+  $("#inCheckout").addEventListener("click", () => {
+    const r = inQuotes(), q = r.quotes.find(x => x.u.id === inPick);
+    if (!q || q.total == null || !q.equip) return;
+    const key = keyOf(q.equip);
+    installCtx = {
+      key, system: inName(q), models: models(q.equip), job: r.job.label,
+      addons: r.addons.map(a => a.label), balance: q.jobPrice + q.addonsTotal, estimate: q.total,
+      address: [inVal("inStreet"), inVal("inCity"), [inVal("inState"), inVal("inZip")].filter(Boolean).join(" ")].filter(Boolean).join(", "),
+      notes: inVal("inNotes"),
+    };
+    try { localStorage.setItem("installCtx", JSON.stringify(installCtx)); } catch (e) {}
+    if (!order[key]) change(key, 1);
+    // Carry the job address into the checkout form (it's where the system ships and gets installed).
+    const fill = (id, v) => { if (v && !$("#" + id).value.trim()) $("#" + id).value = v; };
+    fill("bStreet", inVal("inStreet")); fill("bCity", inVal("inCity")); fill("bState", inVal("inState")); fill("zip", inVal("inZip"));
+    $('input[name="ship"][value="freight"]').checked = true;
+    $("#zip").dispatchEvent(new Event("input", { bubbles: true }));
+    closeIn(); openDrawer();
   });
   $("#inForm").addEventListener("change", e => {
     if (e.target.name === "inPick") inPick = e.target.value;
-    else if (!["inName", "inPhone", "inEmail", "inNotes", "inStreet", "inCity", "inZip"].includes(e.target.id)) inBooked = false;
+    else if (!["inNotes", "inStreet", "inCity", "inZip"].includes(e.target.id)) inBooked = false;
     renderIn();
   });
-  $("#inForm").addEventListener("input", e => { if (["inName", "inPhone", "inEmail", "inNotes", "inStreet", "inCity", "inZip"].includes(e.target.id)) updateInSend(inQuotes()); });
+  $("#inForm").addEventListener("input", e => { if (["inNotes", "inStreet", "inCity", "inZip"].includes(e.target.id)) updateInSend(inQuotes()); });
   $("#inForm").addEventListener("submit", e => e.preventDefault());
   function openIn(u) {
     closeSpecs(); closeDrawer(); closeWs();
@@ -2236,6 +2296,25 @@
   $("#wsForm").addEventListener("submit", e => e.preventDefault());
   $("#closeWs").onclick = closeWs;
   $("#wsBg").addEventListener("click", e => { if (e.target.id === "wsBg") closeWs(); });
+
+  // ---------- Installation order note in the drawer (system paid now, installation paid after)
+  function renderInstallNote() {
+    const note = $("#installNote"); if (!note) return;
+    if (installCtx && !order[installCtx.key]) { installCtx = null; try { localStorage.removeItem("installCtx"); } catch (e) {} }
+    const pickup = $('input[name="ship"][value="pickup"]');
+    note.hidden = !installCtx;
+    if (pickup) pickup.disabled = !!installCtx;
+    if (!installCtx) return;
+    if (pickup?.checked) $('input[name="ship"][value="freight"]').checked = true;
+    note.innerHTML = `<b>Installation order:</b> ${esc(installCtx.system)}${installCtx.address ? ` installed at ${esc(installCtx.address)}` : ""}.
+      You pay for the system now. The installation balance of <b>${money(installCtx.balance)}</b>${installCtx.addons.length ? ` (includes ${esc(installCtx.addons.join(", "))})` : ""} is paid online after your install.
+      We'll email your installation agreement after checkout. <button type="button" data-drop-install>Buy the system only (no install)</button>`;
+  }
+  document.addEventListener("click", e => {
+    if (!e.target.closest?.("[data-drop-install]")) return;
+    installCtx = null; try { localStorage.removeItem("installCtx"); } catch (err) {}
+    updateOrder();
+  });
 
   // ---------- Drawer
   function openDrawer() { $("#drawer").classList.add("open"); $("#drawerBg").classList.add("open"); updateOrder(); }
@@ -2286,6 +2365,7 @@
     openContractor: openCa, closeContractor: closeCa, closeDrawer,
     deliveryInfo: () => ({ method: method(), zip: $("#zip").value.trim(), liftgate: $("#liftgate").checked, comUnload: $("#comUnload").checked }),
     customerInfo: () => buyerInfo(),
+    installInfo: () => installCtx && order[installCtx.key] ? { ...installCtx } : null,
     checkBuyer,
     specsItem: () => specsId && $("#specsBg").classList.contains("open") ? byId(specsId) : null,
   };

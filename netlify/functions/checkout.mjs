@@ -112,6 +112,14 @@ export default async (req) => {
     contractor: profile?.status === "approved" ? clip(`${profile.company || ""} (${user.email})`, 200) : "",
     rep: clip(profile?.rep_code || String(body?.repCode || "").toUpperCase().replace(/[^A-Z0-9-]/g, "").slice(0, 24), 30),
     spanish: body?.lang === "es" ? "yes" : "no",
+    // Installation order: the system is paid now, the installation balance after the install (not charged here).
+    install: body?.install ? clip([
+      `INSTALL: ${body.install.job || ""}`,
+      body.install.address && `at ${body.install.address}`,
+      body.install.addons?.length && `add-ons: ${body.install.addons.join(", ")}`,
+      Number.isFinite(+body.install.balance) && `install balance due after job (site estimate): $${Math.round(+body.install.balance)}`,
+      body.install.notes && `notes: ${body.install.notes}`,
+    ].filter(Boolean).join(" · "), 500) : "",
     order_1: clip(summary, 500), order_2: clip(summary.slice(500), 500), order_3: clip(summary.slice(1000), 500),
   };
 
@@ -128,7 +136,9 @@ export default async (req) => {
     customer_creation: "always",
     metadata,
     payment_intent_data: { metadata, description: clip(`Northgate order: ${summary}`, 1000) },
-    custom_text: { submit: { message: order.pickup
+    custom_text: { submit: { message: body?.install
+      ? "You're paying for your system today. We'll email your installation agreement, ship your system (arrives in 1–3 business days) and install it 1–2 days after it arrives. The installation is paid online after the job is done."
+      : order.pickup
       ? "We'll call or text to set your pickup time in DFW."
       : "We confirm stock and ship in 3–5 business days. You'll get tracking by text or email." } },
   };
