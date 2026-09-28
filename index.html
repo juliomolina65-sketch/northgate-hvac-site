@@ -738,6 +738,22 @@
   .drawer input[type="text"]:focus { outline: none; border-color: var(--link); box-shadow: 0 0 0 3px rgba(23,103,179,.12); }
   .fields { display: grid; gap: 8px; }
   .foot { padding: 14px 18px 18px; border-top: 1px solid var(--line); display: grid; gap: 10px; background: #fafbfc; }
+  .drawer-bar { display: none; }
+  /* Phones: the whole order scrolls as one page; a slim bar keeps the total + Pay online in reach. */
+  @media (max-width: 600px) {
+    .drawer { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .drawer > header { position: sticky; top: 0; z-index: 2; flex: none; }
+    .drawer .scroll { flex: none; overflow: visible; }
+    .drawer .foot { padding-bottom: 90px; }
+    .drawer-bar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 42; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: #fff; border-top: 1px solid var(--line); box-shadow: 0 -6px 18px rgba(20,35,60,.10); transition: transform .2s ease; }
+    .drawer-bar.hide { transform: translateY(110%); }
+    body:has(.drawer.open) .lang-fab { display: none; }
+    .drawer-bar small { display: block; font-size: 11.5px; color: var(--muted); }
+    .drawer-bar b { font-size: 19px; }
+    .drawer-bar .btn { padding: 11px 18px; font-size: 15px; gap: 7px; }
+    .drawer-bar .icon { width: 16px; height: 16px; }
+  }
   .totals { display: grid; gap: 4px; font-size: 14px; }
   .totals div { display: flex; justify-content: space-between; }
   .totals .discount { color: var(--ok); }
@@ -1456,6 +1472,10 @@
       <div class="grand"><span id="tTotalLabel">Total</span><span id="tTotal">$0</span></div>
     </div>
     <button class="btn btn-cta pay-btn" id="payOnline" type="button"><svg class="icon"><use href="#i-lock"/></svg>Pay online</button>
+    <div class="drawer-bar" id="drawerBar" aria-hidden="true">
+      <span><small id="dbarLabel">Total</small><b id="dbarTotal">$0</b></span>
+      <button class="btn btn-cta" type="button" id="barPay"><svg class="icon"><use href="#i-lock"/></svg>Pay online</button>
+    </div>
     <p class="agree-line">By placing an order you agree to our <a href="terms.html" target="_blank">Terms of Sale</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</p>
     <p class="pay-methods" id="payMethods">Card, bank transfer (ACH), Apple Pay / Google Pay, or <b>monthly payments</b> with Klarna.</p>
     <div class="pay-error" id="payError" hidden></div>
@@ -2019,6 +2039,7 @@
       if (installCtx.pay !== "klarna") $("#tTotal").textContent = money(now);
     }
     if (installCtx?.pay === "klarna") $("#tTotal").textContent = money(eq + lift - disc + installCtx.balance);   // Klarna: whole package at checkout
+    $("#dbarLabel").textContent = $("#tTotalLabel").textContent; $("#dbarTotal").textContent = $("#tTotal").textContent;   // phone pay bar
 
     $("#orderBar").classList.toggle("show", n > 0);
     $("#orderCount").textContent = n;
@@ -2553,6 +2574,9 @@
 
   // ---------- Drawer
   function openDrawer() { $("#drawer").classList.add("open"); $("#drawerBg").classList.add("open"); updateOrder(); }
+  // Phone pay bar: taps the real Pay online button (same checks), and hides while that button is on screen.
+  $("#barPay").onclick = () => { $("#payOnline").scrollIntoView({ behavior: "smooth", block: "center" }); $("#payOnline").click(); };
+  if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => $("#drawerBar").classList.toggle("hide", e.isIntersecting), { root: $("#drawer") }).observe($("#payOnline"));
   function closeDrawer() { $("#drawer").classList.remove("open"); $("#drawerBg").classList.remove("open"); }
   $("#openDrawer").onclick = openDrawer;
   $("#headerOrder").onclick = openDrawer;
