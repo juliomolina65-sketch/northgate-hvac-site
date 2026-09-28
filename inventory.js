@@ -607,7 +607,7 @@ const amst = (tons, s) => ({
     "Factory-installed TXV and R-32 leak sensor",
     "All-aluminum evaporator coil, 21\" depth for attic installs",
     "Tool-less filter access, low-leak cabinet (<2% at 1.0\" H2O)",
-    "Accepts field-installed 3 to 25 kW heat kits (sold separately)",
+    "Accepts field-installed 3 to 25 kW heat kits",
   ],
   specs: {
     "Dimensions (W × D × H)": s.dims,
@@ -624,7 +624,7 @@ const amst = (tons, s) => ({
     "Suction line": s.suction,
     "Drain connection": "3/4\" FPT, with secondary drain",
     "Air flow direction": "Multi-position (vertical or horizontal)",
-    "Electric heat": "Field-installed 3 to 25 kW heat kits available (not included)",
+    "Electric heat": "Field-installed 3 to 25 kW heat kits",
     "Approvals": "AHRI certified, ETL listed, UL 60335-2-40",
     "Warranty": GOODMAN_WARRANTY,
   },
@@ -649,7 +649,7 @@ const hkts = (kw, s) => ({
   role: "Heat Kit",
   model: s.model,
   kw,
-  image: null,
+  image: "img/heatkit-kffeh.jpg",
   name: `Goodman ${kw} kW Electric Heat Kit ${s.breaker ? "with Circuit Breaker" : "without Breaker"} (${s.model})`,
   highlights: [`${s.rated} kW at 240V`, s.breaker ? "Built-in circuit breaker (service disconnect)" : "No breaker: field-supplied disconnect required", `Fits ${s.fits}`],
   specs: {
@@ -675,7 +675,33 @@ const goodmanHeatOptions = kits => [
   ...kits.map(([m, add]) => ({ model: m, add, part: PARTS[m], label: `+ ${PARTS[m].kw} kW`, desc: `${PARTS[m].kw} kW heat kit`, spec: `${PARTS[m].kw} kW electric` })),
 ];
 
-const goodmanSystem = (tons, price, seer2, [condenser, airHandler]) => ({
+// Goodman electric systems from 2 ton up ship as a bundle WITH a heat kit, included in the price (owner, Sept 28, 2026):
+// 10 kW on 2 and 2.5 ton, 15 kW on 3 to 5 ton. A bigger kit is an upgrade for the difference.
+// (1.5 ton keeps the optional heat kit.)
+const goodmanIncludedHeat = tons => {
+  const std = tons <= 2.5 ? "HKTSN10X1" : "HKTSD15XB";
+  const ups = tons <= 2.5 ? [["HKTSD15XB", 280 - 150]] : tons === 5 ? [["HKTSD20DB", 319 - 280]] : [];
+  const opt = (m, add) => ({ model: m, add, part: PARTS[m], label: `${PARTS[m].kw} kW`, desc: `${PARTS[m].kw} kW heat kit`, spec: `${PARTS[m].kw} kW electric` });
+  return [opt(std, 0), ...ups.map(([m, add]) => opt(m, add))];
+};
+const goodmanSystem = (tons, price, seer2, [condenser, airHandler]) => tons >= 2 ? {
+  id: `goodman-${tons}t-ac-${condenser.toLowerCase()}`,
+  brand: "Goodman",
+  name: `${tons}-Ton ${seer2} SEER2 Electric AC System`,
+  type: "Split AC System",
+  tons,
+  seer2,
+  seer2Exact: true,        // AHRI-matched system rating
+  refrigerant: "R-32",
+  voltage: "208/230V 1-ph",
+  optionTitle: "Electric heat kit",
+  heatOptions: goodmanIncludedHeat(tons),
+  price,
+  msrp: null,
+  inStock: null,
+  image: "img/bundle-goodman-ac-heat.jpg",
+  components: [PARTS[condenser], PARTS[airHandler]],
+} : ({
   id: `goodman-${tons}t-ac-${condenser.toLowerCase()}`,
   brand: "Goodman",
   name: `${tons}-Ton ${seer2} SEER2 Split AC System`,
@@ -1384,6 +1410,11 @@ const FINAL_PRICES = {
   "goodman-3t-gas-glxs4ba3610": 3950,
   "goodman-2.5t-gas-glxs4ba3010": 3850,
   "goodman-2t-gas-glxs4ba2410": 3750,
+  // Goodman electric, heat kit included (owner-set Sept 28, 2026; 1.5, 2 and 2.5 ton stay at their formula price)
+  "goodman-5t-ac-glxs4ba6010": 4350,
+  "goodman-4t-ac-glxs4ba4810": 4150,
+  "goodman-3.5t-ac-glxs4ba4210": 4000,
+  "goodman-3t-ac-glxs4ba3610": 3900,
 };
 [...TRANE_ELECTRIC, ...TRANE_GAS, ...ELECTRIC, ...GAS, ...HEAT_PUMPS, ...GOODMAN, ...GOODMAN_HEAT_PUMPS, ...GOODMAN_GAS, ...PART_ITEMS, ...COMMERCIAL]
   .forEach(u => { if (FINAL_PRICES[u.id] != null) u.price = FINAL_PRICES[u.id]; });

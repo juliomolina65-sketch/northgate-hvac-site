@@ -126,6 +126,13 @@ if __name__ == "__main__":
         ("goodman-ah.png", 45.0, 250, 1080),
         ("goodman-cond-glx.png", 30.0, 740, 1090),
     ], "bundle-goodman-ac.jpg")
+    # Goodman electric systems ship with a heat kit included (10 kW up to 2.5 ton, 15 kW from 3 ton).
+    # Generic heat-kit photo in front, same placement as the Carrier electric bundle.
+    bundle([
+        ("goodman-ah.png", 45.0, 250, 1080),
+        ("goodman-cond-glx.png", 30.0, 740, 1090),
+        ("heatkit-kffeh.png", 8.0 * 2.1, 445, 1150),
+    ], "bundle-goodman-ac-heat.jpg")
     single("goodman-hp-glzs4b.jpg", "goodman-hp-glzs4b-1200.jpg")
     bundle([
         ("goodman-ah.png", 45.0, 250, 1080),
