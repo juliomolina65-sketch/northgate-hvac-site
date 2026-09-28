@@ -581,6 +581,7 @@
       "Payne es una línea de productos de Carrier: equipo fabricado por Carrier con otro nombre, a menor precio. Nuestro sistema instalado más económico.",
     "Payne is a Carrier product line: Carrier-built equipment under a different name, at a lower price.":
       "Payne es una línea de productos de Carrier: equipo fabricado por Carrier con otro nombre, a menor precio.",
+    "NEW": "NUEVO", "We install nationwide · 1-min quote": "Instalamos en todo el país · cotización en 1 min", "Get price →": "Ver precio →",
     "Check out": "Pagar", "Your installed package": "Su paquete instalado",
     "Equipment, installation, materials and 1-year labor warranty, paid in 2 payments": "Equipo, instalación, materiales y garantía de mano de obra de 1 año, en 2 pagos",
     "Payment 1 · today": "Pago 1 · hoy", "Payment 2 · after your install": "Pago 2 · después de la instalación",

@@ -86,7 +86,22 @@
   .ws-freight input { margin-top: 3px; accent-color: var(--brand); }
   .ws-freight b { display: block; font-weight: 500; }
   .ws-freight small { color: var(--muted); font-size: 12.5px; }
-  @media (max-width: 520px) { .ws-row { grid-template-columns: 1fr; } .announce .wrap { gap: 8px; } }
+  @media (max-width: 520px) { .ws-row { grid-template-columns: 1fr; } }
+  .announce .ann-short, .announce .msg-short { display: none; }
+  /* Phones: the installation bar is one compact row (tag · text · button) instead of three stacked lines. */
+  @media (max-width: 600px) {
+    .announce .wrap { flex-wrap: nowrap; justify-content: space-between; text-align: left; gap: 10px; padding: 9px 14px; }
+    .announce .ann-long, .announce .msg { display: none; }
+    .announce .ann-short { display: inline; }
+    .announce .pill { flex: none; font-size: 10.5px; padding: 3px 7px; }
+    .announce .ann-text { flex: 1; min-width: 0; line-height: 1.25; }
+    .announce .ann-text b { display: block; font-size: 14px; }
+    .announce .msg-short { display: block; font-size: 12px; color: #c9d7ea; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .announce button { flex: none; padding: 8px 12px; font-size: 13px; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+    .utility .wrap { min-height: 0; padding-top: 6px; padding-bottom: 6px; }
+    .perks { flex-wrap: nowrap; gap: 14px; justify-content: center; font-size: 12px; white-space: nowrap; }
+    .perks svg { width: 14px; height: 14px; }
+  }
 
   /* Installation quote */
   .in-modal { width: min(720px, 100%); }
@@ -842,9 +857,9 @@
 
 <div class="announce" role="region" aria-label="Installation announcement">
   <div class="wrap">
-    <span class="pill">NEW · INSTALLATION</span>
-    <span><b>Need it installed?</b> <span class="msg">Get an installed price for your home in about a minute.</span></span>
-    <button type="button" data-install>Get my installed price →</button>
+    <span class="pill"><span class="ann-long">NEW · INSTALLATION</span><span class="ann-short">NEW</span></span>
+    <span class="ann-text"><b>Need it installed?</b> <span class="msg">Get an installed price for your home in about a minute.</span><span class="msg-short">We install nationwide · 1-min quote</span></span>
+    <button type="button" data-install><span class="ann-long">Get my installed price →</span><span class="ann-short">Get price →</span></button>
   </div>
 </div>
 
