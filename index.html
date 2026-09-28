@@ -112,6 +112,8 @@
   .in-monthly-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
   .in-monthly-row > span { font-weight: 500; color: var(--text); white-space: nowrap; }
   .in-monthly-row > div { flex: 1; min-width: 200px; }
+  .in-card .tag.pick { background: #fff3d6; color: #8a5a00; border: 1px solid #f2d18a; }
+  .in-card .pick-note { font-size: 12.5px; color: var(--text-2); margin-top: 4px; max-width: 460px; }
   .in-card .kit-free { font-size: 12.5px; color: var(--ok); font-weight: 500; margin-top: 3px; }
   .in-card .t { font-weight: 500; font-size: 14.5px; color: var(--text); }
   .in-card .m { color: var(--muted); font-size: 12px; margin-top: 2px; }
@@ -2316,7 +2318,10 @@
     const picked = inPick === q.u.id;
     return `<label class="in-card"><input type="radio" name="inPick" value="${q.u.id}"${picked ? " checked" : ""}>
       <img src="${q.equip?.image || q.u.image || ""}" alt="">
-      <div>${best ? `<span class="tag">BEST VALUE</span><br>` : ""}<div class="t">${esc(inName(q))}</div>
+      <div>${q.u.brand === "Payne"
+          ? `<span class="tag pick">★ OUR TOP PICK · MADE BY CARRIER</span>${best ? ` <span class="tag">BEST VALUE</span>` : ""}<br>`
+          : best ? `<span class="tag">BEST VALUE</span><br>` : ""}<div class="t">${esc(inName(q))}</div>
+        ${q.u.brand === "Payne" ? `<div class="pick-note">Payne is a Carrier product line: Carrier-built equipment under a different name, at a lower price.${best ? " Our most cost-efficient installed system." : ""}</div>` : ""}
         <div class="m">${q.equip ? esc(inModels(q)) : esc(`${q.u.brand} outdoor unit quoted on request`)}</div>
         ${q.equip === q.u && q.heat?.part && !/Gas/.test(q.u.type) ? `<div class="kit-free">✓ ${kwOf(q.heat)} kW heat kit included with installation</div>` : ""}
         ${picked && q.total != null && !klarnaBlock(q.total) ? `<div class="in-monthly in-monthly-row"><span>Whole package:</span><div id="inCardMonthly">or pay monthly with Klarna</div></div>` : ""}</div>

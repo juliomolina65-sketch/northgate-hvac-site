@@ -576,6 +576,11 @@
     "New equipment with full specs on every unit. We register your manufacturer warranty for you.": "Equipo nuevo con especificaciones completas en cada unidad. Registramos la garantía del fabricante por usted.",
     "Free shipping nationwide": "Envío gratis a todo el país", "Warranty registered for you": "Garantía registrada por usted",
     "Home systems · parts · commercial rooftop": "Sistemas residenciales · piezas · techo comercial",
+    "★ OUR TOP PICK · MADE BY CARRIER": "★ NUESTRA MEJOR OPCIÓN · HECHO POR CARRIER",
+    "Payne is a Carrier product line: Carrier-built equipment under a different name, at a lower price. Our most cost-efficient installed system.":
+      "Payne es una línea de productos de Carrier: equipo fabricado por Carrier con otro nombre, a menor precio. Nuestro sistema instalado más económico.",
+    "Payne is a Carrier product line: Carrier-built equipment under a different name, at a lower price.":
+      "Payne es una línea de productos de Carrier: equipo fabricado por Carrier con otro nombre, a menor precio.",
     "Check out": "Pagar", "Your installed package": "Su paquete instalado",
     "Equipment, installation, materials and 1-year labor warranty, paid in 2 payments": "Equipo, instalación, materiales y garantía de mano de obra de 1 año, en 2 pagos",
     "Payment 1 · today": "Pago 1 · hoy", "Payment 2 · after your install": "Pago 2 · después de la instalación",
