@@ -1411,6 +1411,7 @@ window.INSTALL = {
   included: [
     { text: "New drain pan with a flood (float) sensor" },
     { text: "New gas flex connector for the furnace hookup", gasOnly: true },
+    { text: "Electric heat kit for the air handler, sized for your system", airHandlerOnly: true },
     { text: "Plenum connections resealed with tape and mastic" },
     { text: "New electrical disconnect box and disconnect whip" },
     { text: "New outdoor condenser pad" },

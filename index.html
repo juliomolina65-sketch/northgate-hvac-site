@@ -2119,13 +2119,13 @@
     const jobPrice = job.custom ? null : job.price[inTier(inVal("inState"))];
     const systems = INV.filter(u => IN_TYPES[type].includes(u.type) && u.tons === tons && u.price != null && (!brand || u.brand === brand));
     const quotes = systems.map(u => {
-      let equip = u, equipPrice = u.price;
+      let equip = u, heat = installHeat(u), equipPrice = priceOf(u, heat);
       if (job.equip === "outdoor") {
         equip = INV.find(x => x.brand === u.brand && x.tons === tons && x.type === (type === "heatpump" ? "Heat Pump Condenser" : "Condenser") && x.price != null) || null;
-        equipPrice = equip?.price ?? null;
+        heat = undefined; equipPrice = equip?.price ?? null;
       }
       const total = jobPrice == null || equipPrice == null ? null : equipPrice + jobPrice + addonsTotal;
-      return { u, equip, equipPrice, jobPrice, addonsTotal, total, cmp: job.key === "changeout" ? inCompare(total, tons) : null };
+      return { u, equip, heat, equipPrice, jobPrice, addonsTotal, total, cmp: job.key === "changeout" ? inCompare(total, tons) : null };
     }).sort((a, b) => (a.total ?? 1e9) - (b.total ?? 1e9));
     return { type, tons, brand, job, addons, quotes };
   }
@@ -2148,13 +2148,24 @@
       <small>Typical installed price ${esc(c.where)}: ${money(c.lo)} – ${money(c.hi)} · Source: ${esc(IN.compare.source)}</small>
     </div>`;
   }
-  const inName = q => title(q.equip && q.equip !== q.u ? q.equip : q.u);
+  // Installs always include an electric heat kit on air-handler systems (Goodman and Trane default to none):
+  // same sizing as Carrier's standard kit, 10 kW up to 2.5 ton, 15 kW from 3 ton (nearest size if not offered).
+  const kwOf = o => o?.part?.kw ?? +((o?.label || "").match(/(\d+)\s*kW/)?.[1] || 0);
+  function installHeat(u) {
+    const std = heatOf(u);
+    if (!u.heatOptions || std?.part || /Gas/.test(u.type)) return std;
+    const want = u.tons <= 2.5 ? 10 : 15, kits = u.heatOptions.filter(o => o.part);
+    return kits.sort((a, b) => Math.abs(kwOf(a) - want) - Math.abs(kwOf(b) - want))[0] || std;
+  }
+  const inName = q => q.equip && q.equip !== q.u ? title(q.equip)
+    : title(q.u) + (q.heat?.part && !/Gas/.test(q.u.type) ? ` + ${kwOf(q.heat)} kW heat kit` : "");
+  const inModels = q => q.equip === q.u ? models(q.u, q.heat) : models(q.equip);
   function inCardHTML(q, best) {
     const picked = inPick === q.u.id;
     return `<label class="in-card"><input type="radio" name="inPick" value="${q.u.id}"${picked ? " checked" : ""}>
       <img src="${q.equip?.image || q.u.image || ""}" alt="">
       <div>${best ? `<span class="tag">BEST VALUE</span><br>` : ""}<div class="t">${esc(inName(q))}</div>
-        <div class="m">${q.equip ? esc(models(q.equip)) : esc(`${q.u.brand} outdoor unit quoted on request`)}</div></div>
+        <div class="m">${q.equip ? esc(inModels(q)) : esc(`${q.u.brand} outdoor unit quoted on request`)}</div></div>
       <div class="in-total">${q.total == null ? `<b style="font-size:17px">Custom quote</b><small>we'll call you</small>` : `<b>${money(q.total)}</b><small>installed estimate</small>`}</div>
       ${q.cmp || picked ? `<div class="in-foot">${inCompareHTML(q.cmp, q.total)}
         ${picked ? `<button class="btn btn-cta in-go" type="button" data-in-continue>${q.total == null ? "Continue with this system →" : "Continue with this price →"}</button>` : ""}</div>` : ""}
@@ -2164,7 +2175,7 @@
     $("#inSqftWrap").hidden = inVal("inTons") !== "unsure";
     const r = inQuotes();
     if (!r.quotes.some(q => q.u.id === inPick)) { inPick = r.quotes[0]?.u.id || null; inBooked = false; }
-    const items = IN.included.filter(i => !i.gasOnly || r.type === "gas");
+    const items = IN.included.filter(i => (!i.gasOnly || r.type === "gas") && (!i.airHandlerOnly || (r.type !== "gas" && r.job.key !== "outdoor")));
     $("#inIncluded").innerHTML = r.job.custom ? "" : `<b>Every ${r.job.key === "outdoor" ? "outdoor unit swap" : "system change-out"} includes</b><ul>${items.map(i => `<li>${esc(i.text)}</li>`).join("")}</ul>`;
     const tonsNote = inVal("inTons") === "unsure" ? `<div class="in-note">For about ${esc($("#inSqft").selectedOptions[0].text)}, a <b>${r.tons}-ton</b> system is typical. We confirm the size before installing.</div>` : "";
     const custom = r.job.custom ? `<div class="in-note"><b>New installs are quoted after a visit</b> because ductwork and electrical vary a lot. Pick a system and send your request; we'll set up the visit.</div>` : "";
@@ -2195,7 +2206,7 @@
       addr && `Address: ${addr}`,
       `Need: ${r.tons}-ton ${IN_TYPE_NAMES[r.type]}${inVal("inTons") === "unsure" ? ` (home ${$("#inSqft").selectedOptions[0].text})` : ""}`,
       `Job: ${r.job.label}`,
-      q && `System: ${inName(q)}${q.equip ? ` (${models(q.equip)})` : ""}`,
+      q && `System: ${inName(q)}${q.equip ? ` (${inModels(q)})` : ""}`,
       r.addons.length && `Add-ons: ${r.addons.map(a => a.label).join(", ")}`,
       q && (q.total != null ? `Installed estimate on the site: ${money(q.total)}` : "Estimate: custom quote"),
       inVal("inNotes") && `Notes: ${inVal("inNotes")}`,
@@ -2262,9 +2273,9 @@
   $("#inCheckout").addEventListener("click", () => {
     const r = inQuotes(), q = r.quotes.find(x => x.u.id === inPick);
     if (!q || q.total == null || !q.equip) return;
-    const key = keyOf(q.equip);
+    const key = q.equip === q.u ? keyOf(q.u, q.heat?.model) : keyOf(q.equip);
     installCtx = {
-      key, system: inName(q), models: models(q.equip), job: r.job.label,
+      key, system: inName(q), models: inModels(q), job: r.job.label,
       addons: r.addons.map(a => a.label), balance: q.jobPrice + q.addonsTotal, estimate: q.total,
       address: [inVal("inStreet"), inVal("inCity"), [inVal("inState"), inVal("inZip")].filter(Boolean).join(" ")].filter(Boolean).join(", "),
       notes: inVal("inNotes"),
