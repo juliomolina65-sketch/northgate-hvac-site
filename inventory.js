@@ -1408,6 +1408,7 @@ const FINAL_PRICES = {
 // ------------------------------------------------------------
 // CARRIER SPECIALTY AIR HANDLERS (Sibi Pro, pulled Sept 28, 2026; cost = your Sibi price):
 //   FMA5X front-return upflow, 14.5" wide (apartment/closet style, TXV), 1.5 – 3 ton (largest made)
+//   FMA5L the same cabinet with a fixed piston instead of a TXV (budget option, sold cheaper)
 //   FMC5Z ceiling-mount (horizontal, cased), 1.5 – 3 ton
 // Sold on their own (cost + PART_SHIPPING + PART_COMMISSION + insurance, same as the Carrier FJ5 air handlers)
 // and as Carrier electric AC and heat pump bundles: the Carrier system of the same size with the FJ5 fan coil swapped
@@ -1420,14 +1421,15 @@ const altKit = (model, kw, fits) => ({
   highlights: [`${kw} kW, 230V`, "Built-in circuit breaker", `Fits ${fits}`],
   specs: { "Heating capacity": `${kw} kW at 230V`, "Disconnect": "Circuit breaker", "Voltage / Phase": "230V, 1-phase, 60 Hz", "Fits": fits },
 });
-const fma5 = (tons, model, hp, suction) => ({
+const fma5 = (tons, model, hp, suction, piston = false) => ({
   role: "Air Handler", model, image: "img/airhandler-fma5.jpg",
-  name: `Carrier ${tons} Ton Upflow Front-Return Air Handler, 14.5" Wide, R-454B`,
-  highlights: ["Front return: fits closets and apartments", '14.5" wide upflow cabinet', "Factory TXV (R-454B)", "Accepts HK2 electric heat kits up to 10 kW"],
+  name: `Carrier ${tons} Ton Upflow Front-Return Air Handler, 14.5" Wide, R-454B${piston ? " (Piston)" : ""}`,
+  highlights: ["Front return: fits closets and apartments", '14.5" wide upflow cabinet', piston ? "Fixed piston metering (budget model)" : "Factory TXV (R-454B)", "Accepts HK2 electric heat kits up to 10 kW"],
   specs: {
     "Configuration": "Upflow, front return", "Cabinet width": '14.5"', "Cooling capacity": `${tons} ton`, "Refrigerant": "R-454B (not for R-410A)",
-    "Metering device": "TXV", "Blower motor": `${hp} HP, 1050 RPM`, "Liquid line": '3/8" sweat', "Suction line": `${suction} sweat`,
-    "Voltage / Phase": "208/230V, 1-phase, 60 Hz", "Electric heat": "HK2 kits, 5 to 10 kW", "Series": "FMA5X (R-410A version: FMA4X)",
+    "Metering device": piston ? "Piston (fixed orifice)" : "TXV", "Blower motor": `${hp} HP`, "Liquid line": '3/8" sweat', "Suction line": `${suction} sweat`,
+    "Voltage / Phase": "208/230V, 1-phase, 60 Hz", "Electric heat": "HK2 kits, 5 to 10 kW",
+    "Series": piston ? "FMA5L (R-410A version: FMA4P)" : "FMA5X (R-410A version: FMA4X)", "Manufacturer": "ICP (Carrier family)",
   },
 });
 const fmc5 = (tons, model) => ({
@@ -1436,12 +1438,14 @@ const fmc5 = (tons, model) => ({
   highlights: ["Ceiling mount: hangs horizontally above the ceiling", "Cased cabinet", "R-454B", "Accepts EHC electric heat kits"],
   specs: {
     "Configuration": "Ceiling-mount (horizontal)", "Cabinet width": '28.375"', "Cooling capacity": `${tons} ton`, "Refrigerant": "R-454B (not for R-410A)",
-    "Coil casing": "Cased", "Voltage / Phase": "208/230V, 1-phase, 60 Hz", "Electric heat": "EHC kits", "Series": "FMC5Z (R-410A version: FMC4Z)",
+    "Coil casing": "Cased", "Voltage / Phase": "208/230V, 1-phase, 60 Hz", "Electric heat": "EHC kits", "Series": "FMC5Z (R-410A version: FMC4Z)", "Manufacturer": "ICP (Carrier family)",
   },
 });
 Object.assign(PARTS, {
   FMA5X1800AL: fma5(1.5, "FMA5X1800AL", "1/3", '3/4"'), FMA5X2400AL: fma5(2, "FMA5X2400AL", "1/3", '3/4"'),
   FMA5X3000AL: fma5(2.5, "FMA5X3000AL", "1/2", '3/4"'), FMA5X3600AL: fma5(3, "FMA5X3600AL", "1/2", '3/4"'),
+  FMA5L1800AL: fma5(1.5, "FMA5L1800AL", "1/4", '3/4"', true), FMA5L2400AL: fma5(2, "FMA5L2400AL", "1/4", '3/4"', true),
+  FMA5L3000AL: fma5(2.5, "FMA5L3000AL", "1/3", '3/4"', true), FMA5L3600AL: fma5(3, "FMA5L3600AL", "1/2", '3/4"', true),
   FMC5Z1800AL: fmc5(1.5, "FMC5Z1800AL"), FMC5Z2400AL: fmc5(2, "FMC5Z2400AL"), FMC5Z3000AL: fmc5(2.5, "FMC5Z3000AL"), FMC5Z3600AL: fmc5(3, "FMC5Z3600AL"),
   "HK2-10B": altKit("HK2-10B", 10, "FMA front-return air handlers"),
   EHC10CKB: altKit("EHC10CKB", 10, "1.5 ton FMC ceiling-mount air handlers"),
@@ -1451,6 +1455,9 @@ Object.assign(PARTS, {
 const ALT_AH = {
   front: { key: "frontreturn", label: "Front-Return Air Handler", short: "Front return", img: { ac: "img/bundle-carrier-electric-fma5.jpg", hp: "img/bundle-carrier-heatpump-fma5.jpg" },
     sizes: { 1.5: ["FMA5X1800AL", 684], 2: ["FMA5X2400AL", 707], 2.5: ["FMA5X3000AL", 727], 3: ["FMA5X3600AL", 771] },
+    kit: () => ["HK2-10B", 163] },
+  frontBudget: { key: "frontreturn-piston", label: "Front-Return Air Handler (Piston)", short: "Front return · piston", img: { ac: "img/bundle-carrier-electric-fma5.jpg", hp: "img/bundle-carrier-heatpump-fma5.jpg" },
+    sizes: { 1.5: ["FMA5L1800AL", 573], 2: ["FMA5L2400AL", 593], 2.5: ["FMA5L3000AL", 627], 3: ["FMA5L3600AL", 746] },
     kit: () => ["HK2-10B", 163] },
   ceiling: { key: "ceiling", label: "Ceiling-Mount Air Handler", short: "Ceiling mount", img: { ac: "img/bundle-carrier-electric-fmc5.jpg", hp: "img/bundle-carrier-heatpump-fmc5.jpg" },
     sizes: { 1.5: ["FMC5Z1800AL", 790], 2: ["FMC5Z2400AL", 849], 2.5: ["FMC5Z3000AL", 1004], 3: ["FMC5Z3600AL", 1170] },
