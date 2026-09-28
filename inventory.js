@@ -675,16 +675,15 @@ const goodmanHeatOptions = kits => [
   ...kits.map(([m, add]) => ({ model: m, add, part: PARTS[m], label: `+ ${PARTS[m].kw} kW`, desc: `${PARTS[m].kw} kW heat kit`, spec: `${PARTS[m].kw} kW electric` })),
 ];
 
-// Goodman electric systems from 2 ton up ship as a bundle WITH a heat kit, included in the price (owner, Sept 28, 2026):
-// 10 kW on 2 and 2.5 ton, 15 kW on 3 to 5 ton. A bigger kit is an upgrade for the difference.
-// (1.5 ton keeps the optional heat kit.)
+// Goodman electric systems and heat pumps ship as a bundle WITH a heat kit, included in the price (owner, Sept 28, 2026):
+// 10 kW on 1.5 to 2.5 ton, 15 kW on 3 to 5 ton. A bigger kit is an upgrade for the difference.
 const goodmanIncludedHeat = tons => {
   const std = tons <= 2.5 ? "HKTSN10X1" : "HKTSD15XB";
   const ups = tons <= 2.5 ? [["HKTSD15XB", 280 - 150]] : tons === 5 ? [["HKTSD20DB", 319 - 280]] : [];
   const opt = (m, add) => ({ model: m, add, part: PARTS[m], label: `${PARTS[m].kw} kW`, desc: `${PARTS[m].kw} kW heat kit`, spec: `${PARTS[m].kw} kW electric` });
   return [opt(std, 0), ...ups.map(([m, add]) => opt(m, add))];
 };
-const goodmanSystem = (tons, price, seer2, [condenser, airHandler]) => tons >= 2 ? {
+const goodmanSystem = (tons, price, seer2, [condenser, airHandler]) => ({
   id: `goodman-${tons}t-ac-${condenser.toLowerCase()}`,
   brand: "Goodman",
   name: `${tons}-Ton ${seer2} SEER2 Electric AC System`,
@@ -700,24 +699,6 @@ const goodmanSystem = (tons, price, seer2, [condenser, airHandler]) => tons >= 2
   msrp: null,
   inStock: null,
   image: "img/bundle-goodman-ac-heat.jpg",
-  components: [PARTS[condenser], PARTS[airHandler]],
-} : ({
-  id: `goodman-${tons}t-ac-${condenser.toLowerCase()}`,
-  brand: "Goodman",
-  name: `${tons}-Ton ${seer2} SEER2 Split AC System`,
-  type: "Split AC System",
-  tons,
-  seer2,
-  seer2Exact: true,        // AHRI-matched system rating
-  refrigerant: "R-32",
-  voltage: "208/230V 1-ph",
-  heatNote: `Heat kit optional · add 5 to ${tons === 5 ? 20 : 15} kW`,
-  optionTitle: "Add a heat kit (optional)",
-  heatOptions: goodmanHeatOptions(tons === 5 ? GOODMAN_KITS_5T : GOODMAN_KITS),
-  price,
-  msrp: null,
-  inStock: null,
-  image: "img/bundle-goodman-ac.jpg",
   components: [PARTS[condenser], PARTS[airHandler]],
 });
 const GOODMAN = [
@@ -788,16 +769,13 @@ const goodmanHeatPump = (tons, price, seer2, [heatPump, airHandler]) => ({
   hspf2: 7.8,
   refrigerant: "R-32",
   voltage: "208/230V 1-ph",
-  heatNote: `Backup heat kit optional · add 5 to ${tons === 5 ? 20 : 15} kW`,
-  optionTitle: "Backup (auxiliary) heat kit (optional)",
-  // a heat pump heats on its own; the kit is only electric backup
-  heatOptions: goodmanHeatOptions(tons === 5 ? GOODMAN_KITS_5T : GOODMAN_KITS).map(o => o.part
-    ? { ...o, spec: `Heat pump + ${o.part.kw} kW electric backup` }
-    : { ...o, label: "No backup kit", spec: "Heat pump (no backup kit)" }),
+  optionTitle: "Backup (auxiliary) heat kit",
+  // a heat pump heats on its own; the included kit is electric backup
+  heatOptions: goodmanIncludedHeat(tons).map(o => ({ ...o, desc: `${o.part.kw} kW backup heat kit`, spec: `Heat pump + ${o.part.kw} kW electric backup` })),
   price,
   msrp: null,
   inStock: null,
-  image: "img/bundle-goodman-hp.jpg",
+  image: "img/bundle-goodman-hp-kit.jpg",
   components: [PARTS[heatPump], PARTS[airHandler]],
 });
 const GOODMAN_HEAT_PUMPS = [
@@ -1251,7 +1229,7 @@ const bayhtr = (s) => ({
   role: "Heat Kit",
   model: s.model,
   kw: s.kw,
-  image: null,
+  image: "img/heatkit-kffeh.jpg",
   name: `Trane ${s.kw} kW Electric Heat Kit with Circuit Breakers (${s.model})`,
   highlights: [`${s.rated} kW at 240V (${s.btu} BTU/h)`, "Built-in circuit breakers (service disconnect)", "Plug-in connection to 5TEM4 air handlers"],
   specs: {
@@ -1276,14 +1254,16 @@ Object.assign(PARTS, {
 // Trane electric systems: XR14 condenser + 5TEM4 air handler. Heat kit is an optional add-on at the same
 // prices as the Carrier air handler add-ons (TRANE_KIT_ADDON). Trane is sold as bundles only (no single parts).
 // 1.5–2.5 ton use the 5TEM4B03 (rated 18–30k; takes 10 or 15 kW, not 20). 3 ton and up take 10, 15 or 20 kW.
-// Price (without heat kit): the gas system of the same size + TRANE_ELECTRIC_PREMIUM.
+// Price (heat kit included): the gas system of the same size + TRANE_ELECTRIC_PREMIUM.
 const TRANE_ELECTRIC_PREMIUM = 50;
 const TRANE_ELECTRIC_PRICES = Object.fromEntries(TRANE_SIZES.map(t => [t, TRANE_GAS_PRICES[t] + TRANE_ELECTRIC_PREMIUM]));
 const TRANE_KIT_ADDON = { BAYHTR1510BRK: 150, BAYHTR1517BRK: 180, BAYHTR1523BRK: 280 };
-const traneKitOptions = kits => [
-  { model: "none", add: 0, part: null, label: "No heat kit", desc: "no heat kit", spec: "None (cooling only)" },
-  ...kits.map(m => ({ model: m, add: TRANE_KIT_ADDON[m], part: PARTS[m], label: `+ ${PARTS[m].kw} kW`, desc: `${PARTS[m].kw} kW heat kit`, spec: `${PARTS[m].kw} kW electric (${m})` })),
-];
+// Heat kit included in the price (owner, Sept 28, 2026): 10 kW up to 2.5 ton, 15 kW from 3 ton; bigger kits for the difference.
+const traneKitOptions = (tons, kits) => {
+  const std = tons <= 2.5 ? "BAYHTR1510BRK" : "BAYHTR1517BRK";
+  return kits.filter(m => TRANE_KIT_ADDON[m] >= TRANE_KIT_ADDON[std]).map(m => ({ model: m, add: TRANE_KIT_ADDON[m] - TRANE_KIT_ADDON[std], part: PARTS[m],
+    label: `${PARTS[m].kw} kW`, desc: `${PARTS[m].kw} kW heat kit`, spec: `${PARTS[m].kw} kW electric (${m})` }));
+};
 const traneElectricSystem = (tons, [condenser, airHandler], kits) => ({
   id: `trane-${tons}t-electric-${condenser.toLowerCase()}`,
   brand: "Trane",
@@ -1297,11 +1277,10 @@ const traneElectricSystem = (tons, [condenser, airHandler], kits) => ({
   price: TRANE_ELECTRIC_PRICES[tons],
   msrp: null,
   inStock: null,
-  image: "img/bundle-trane-electric.jpg",
+  image: "img/bundle-trane-electric-kit.jpg",
   components: [PARTS[condenser], PARTS[airHandler]],
-  optionTitle: "Add a heat kit (optional)",
-  heatNote: `Heat kit optional · add ${kits.map(m => PARTS[m].kw).join(", ").replace(/, (?=[^,]*$)/, " or ")} kW`,
-  heatOptions: traneKitOptions(kits),
+  optionTitle: "Electric heat kit",
+  heatOptions: traneKitOptions(tons, kits),
 });
 const KITS_SMALL = ["BAYHTR1510BRK", "BAYHTR1517BRK"];                    // 5TEM4B03 cabinet
 const KITS_ALL = ["BAYHTR1510BRK", "BAYHTR1517BRK", "BAYHTR1523BRK"];     // 5TEM4B04 and D cabinets
@@ -1431,7 +1410,7 @@ const FINAL_PRICES = {
 const PAYNE_SHIPPING = 650;
 const PAYNE_LOCAL_DISCOUNT = 500;
 const PAYNE_MARGIN = 800;
-const PAYNE_IMG = { electric: "img/bundle-payne-electric.jpg", heatpump: "img/bundle-payne-heatpump.jpg", gas: "img/bundle-payne-gas.jpg" };   // photos: Sibi / Payne (permission Sept 28, 2026)
+const PAYNE_IMG = { electric: "img/bundle-payne-electric-kit.jpg", heatpump: "img/bundle-payne-heatpump-kit.jpg", gas: "img/bundle-payne-gas.jpg" };   // photos: Sibi / Payne (permission Sept 28, 2026)
 const payneCondenser = (tons, model, cost, hp) => ({
   role: hp ? "Heat Pump" : "Condenser", model, cost, image: hp ? "img/payne-hp.jpg" : "img/payne-ac.jpg",
   name: `Payne ${tons} Ton 14.3 SEER2 ${hp ? "Heat Pump" : "Air Conditioner"} Condensing Unit (R-454B)`,

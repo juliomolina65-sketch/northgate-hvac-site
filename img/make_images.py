@@ -161,4 +161,13 @@ if __name__ == "__main__":
         ("goodman-cond-glx.png", 30.0, 760, 1080),
         ("goodman-coil-capta.jpg", 19.0, 430, 1150),
     ], "bundle-goodman-gas.jpg")
+    # Heat kit included (Sept 28, 2026): electric and heat pump bundles show the heat kit in front.
+    bundle([("goodman-ah.png", 45.0, 330, 1080), ("goodman-hp-glzs4b.jpg", 31.0, 815, 1090),
+            ("heatkit-kffeh.png", 8.0 * 2.1, 525, 1150)], "bundle-goodman-hp-kit.jpg")
+    bundle([("trane-ah-tem4.png", 45.0, 360, 1060), ("trane-cond-xr.png", 33.0, 840, 1090),
+            ("heatkit-kffeh.png", 8.0 * 2.1, 530, 1150)], "bundle-trane-electric-kit.jpg")
+    bundle([("payne/payne-airhandler.png", 42.0, 320, 1045), ("payne/payne-ac.png", 34.0, 820, 1075),
+            ("heatkit-kffeh.png", 8.0 * 2.1, 470, 1150)], "bundle-payne-electric-kit.jpg")
+    bundle([("payne/payne-airhandler.png", 42.0, 300, 1045), ("payne/payne-hp.png", 28.0, 790, 1075),
+            ("heatkit-kffeh.png", 8.0 * 2.1, 450, 1150)], "bundle-payne-heatpump-kit.jpg")
     print("done")
