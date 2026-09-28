@@ -19,7 +19,7 @@ window.BUSINESS = {
   payment: "Pay online by card, bank transfer (ACH), Apple Pay / Google Pay, or monthly with Klarna. Prefer an invoice? Pay by ACH or Zelle. We ship once payment clears. Picking up in DFW? You can also pay cash at pickup.",
   returnPolicy: "Unopened units can be returned within 30 days, minus original shipping and a 15% restocking fee. Buyer pays return shipping.",  // <- your policy
   // Set to false once the units below are your real inventory.
-  sampleData: true,
+  sampleData: false,
 };
 
 // Shipping is FREE and built into the unit prices (like HVACDirect). Only the liftgate is extra.
