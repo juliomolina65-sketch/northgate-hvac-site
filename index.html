@@ -365,16 +365,41 @@
   .notice h2 { color: var(--brand); margin: 8px 0; } .notice p { color: var(--text-2); }
   .acct-banner { background: #e7f4ea; color: var(--ok); font-size: 13.5px; text-align: center; padding: 7px 16px; border-bottom: 1px solid #cfe8d6; }
   .acct-banner.pending { background: var(--warn-bg); color: var(--warn-ink); border-bottom-color: #efdc9f; }
-  .brand-bar { display: flex; align-items: center; gap: 16px; margin: 16px 0 0; background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: 12px 14px; }
-  .brand-bar .bb-label { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
-  .bb-buttons { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; flex: 1; }
-  .bb-buttons button { display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); background: #fff; border-radius: 6px; padding: 10px 12px; font: inherit; color: inherit; cursor: pointer; text-align: left; transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease; }
-  .bb-buttons button:hover { border-color: #b9c1cc; box-shadow: 0 4px 14px rgba(20,35,60,.10); transform: translateY(-1px); }
-  .bb-buttons .bb { flex: none; min-width: 104px; text-align: center; }
-  .bb-buttons small { display: block; color: var(--text-2); font-size: 12.5px; line-height: 1.35; }
-  .bb-buttons small b { color: var(--ok); }
-  @media (max-width: 1100px) { .brand-bar { flex-direction: column; align-items: stretch; gap: 10px; } .bb-buttons { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 520px) { .bb-buttons .bb { min-width: 0; } .bb-buttons button { flex-direction: column; align-items: flex-start; gap: 6px; } }
+  /* Brands we carry (first section on the landing page) */
+  .brands-top { margin: 16px 0 0; background: linear-gradient(180deg, #ffffff 0%, #f6f8fb 100%); border: 1px solid var(--line); border-radius: 8px; padding: 22px 22px 20px; box-shadow: 0 2px 10px rgba(20,35,60,.05); }
+  .bt-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 18px; flex-wrap: wrap; }
+  .bt-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #a36c00; }
+  .bt-eyebrow::before { content: ""; width: 22px; height: 2px; background: #f2b33d; border-radius: 2px; }
+  .bt-head h2 { font-size: 24px; line-height: 1.2; color: var(--brand); margin: 6px 0 4px; letter-spacing: -.01em; }
+  .bt-head p { margin: 0; color: var(--text-2); font-size: 14.5px; }
+  .bt-trust { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; flex-wrap: wrap; }
+  .bt-trust li { display: inline-flex; align-items: center; gap: 7px; background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 12.5px; font-weight: 500; color: var(--text); white-space: nowrap; }
+  .bt-trust svg { width: 15px; height: 15px; color: var(--cta); fill: none; stroke: currentColor; stroke-width: 2; }
+  .bt-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+  .bt-tile { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; font: inherit; color: inherit; cursor: pointer; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 18px 16px 14px; overflow: hidden; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .bt-tile::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--bc); }
+  .bt-tile:hover { transform: translateY(-3px); box-shadow: 0 12px 26px rgba(20,35,60,.12); border-color: #c9d1dc; }
+  .bt-logo { height: 54px; display: flex; align-items: center; margin-bottom: 8px; }
+  .bt-logo .brand-logo { height: 50px; width: 150px; object-position: left center; }
+  .bt-what { font-size: 12px; color: var(--muted); text-transform: capitalize; }
+  .bt-meta { font-size: 13.5px; color: var(--text-2); } .bt-meta b { color: var(--text); font-weight: 600; }
+  .bt-from { font-size: 13.5px; color: var(--text-2); margin: 2px 0 10px; } .bt-from b { color: var(--ok); font-size: 18px; }
+  .bt-go { margin-top: auto; padding-top: 10px; border-top: 1px solid var(--line-2); width: 100%; font-size: 13.5px; font-weight: 600; color: var(--bc); }
+  .bt-go span { display: inline-block; transition: transform .18s ease; } .bt-tile:hover .bt-go span { transform: translateX(4px); }
+  @media (max-width: 1000px) { .bt-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) {
+    .brands-top { padding: 16px 14px 14px; }
+    .bt-head { margin-bottom: 14px; gap: 12px; }
+    .bt-head h2 { font-size: 19px; }
+    .bt-head p { font-size: 13.5px; }
+    .bt-trust { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin: 0 -14px; padding: 0 14px; width: calc(100% + 28px); }
+    .bt-trust::-webkit-scrollbar { display: none; }
+    .bt-grid { gap: 10px; }
+    .bt-tile { padding: 14px 12px 12px; }
+    .bt-logo { height: 40px; margin-bottom: 4px; } .bt-logo .brand-logo { height: 36px; width: 110px; }
+    .bt-what { font-size: 11px; } .bt-meta, .bt-from { font-size: 12.5px; } .bt-from b { font-size: 16px; }
+    .bt-go { font-size: 12.5px; margin-top: 6px; padding-top: 8px; }
+  }
   .bb.lg { font-size: 15px; padding: 6px 12px; border-radius: 4px; letter-spacing: .1em; }
   .subtypes .bb { margin-right: 6px; padding: 2px 6px; font-size: 10px; }
   .facet label .bb { margin-left: 0; color: #fff; font-size: 11px; font-weight: 800; }   /* sidebar count style shouldn't hit the badge */
@@ -865,9 +890,20 @@
     </div>
 
     <div id="home">
-    <nav class="brand-bar" aria-label="Brands we carry">
-      <span class="bb-label">Brands we carry</span>
-      <div class="bb-buttons" id="brandBar"></div>
+    <nav class="brands-top" aria-label="Brands we carry">
+      <div class="bt-head">
+        <div>
+          <span class="bt-eyebrow">Brands we carry</span>
+          <h2>The brands HVAC pros trust, priced below supply houses</h2>
+          <p>New equipment with full specs on every unit. We register your manufacturer warranty for you.</p>
+        </div>
+        <ul class="bt-trust">
+          <li><svg><use href="#i-truck"/></svg>Free shipping nationwide</li>
+          <li><svg><use href="#i-shield"/></svg>Warranty registered for you</li>
+          <li><svg><use href="#i-tag"/></svg><span>Save $<span data-ship="pickupDiscount"></span> with DFW pickup</span></li>
+        </ul>
+      </div>
+      <div class="bt-grid" id="brandBar"></div>
     </nav>
     <section id="showcase" aria-label="Brands and offers">
       <div class="com-banner res-banner" id="resBanner">
@@ -1701,13 +1737,21 @@
     </button>`;
   }).join("");
   // Top-of-page brand buttons: what each brand covers and where it starts.
+  const BRAND_COLOR = { Carrier: "#10318f", Trane: "#e8491d", Goodman: "#e11b22", Bryant: "#c8202f" };
   $("#brandBar").innerHTML = brandList.map(b => {
     const mine = INV.filter(u => u.brand === b);
     const res = mine.filter(u => !u.commercial), com = mine.filter(u => u.commercial);
-    const what = [res.some(u => /System/.test(u.type)) && "home systems", res.some(u => u.unit === "each") && "parts", com.length && "commercial rooftop"].filter(Boolean);
-    const priced = (res.some(u => /System/.test(u.type)) ? res.filter(u => /System/.test(u.type)) : mine).filter(u => u.price != null);
-    return `<button type="button" data-shop-brand="${esc(b)}"${res.length ? "" : ' data-shop-cat="commercial"'}>${brandLogo(b)}
-      <span><small>${what.join(" · ").replace(/^./, c => c.toUpperCase())}</small>${priced.length ? `<small>from <b>${money(Math.min(...priced.map(u => u.price)))}</b></small>` : ""}</span></button>`;
+    const what = [res.some(u => /System/.test(u.type)) && "Home systems", res.some(u => u.unit === "each") && "parts", com.length && "commercial rooftop"].filter(Boolean);
+    const homeSys = res.filter(u => /System/.test(u.type));
+    const main = homeSys.length ? homeSys : com, priced = main.filter(u => u.price != null);
+    const tons = main.map(u => u.tons).filter(t => t != null);
+    const count = homeSys.length ? `${homeSys.length} home systems` : `${com.length} rooftop units`;
+    return `<button type="button" class="bt-tile" style="--bc:${BRAND_COLOR[b] || "var(--brand)"}" data-shop-brand="${esc(b)}"${res.length ? "" : ' data-shop-cat="commercial"'}>
+      <span class="bt-logo">${brandLogo(b)}</span>
+      <span class="bt-what">${esc(what.join(" · "))}</span>
+      <span class="bt-meta"><b>${esc(count)}</b>${tons.length ? ` · ${Math.min(...tons)}–${Math.max(...tons)} ton` : ""}</span>
+      ${priced.length ? `<span class="bt-from">From <b>${money(Math.min(...priced.map(u => u.price)))}</b></span>` : ""}
+      <span class="bt-go">Shop ${esc(b)} <span aria-hidden="true">→</span></span></button>`;
   }).join("");
 
   // Residential banner (top of the landing page): live counts and a shortcut per system type.
