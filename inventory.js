@@ -1398,6 +1398,14 @@ const FINAL_PRICES = {
 [...TRANE_ELECTRIC, ...TRANE_GAS, ...ELECTRIC, ...GAS, ...HEAT_PUMPS, ...GOODMAN, ...GOODMAN_HEAT_PUMPS, ...GOODMAN_GAS, ...PART_ITEMS, ...COMMERCIAL]
   .forEach(u => { if (FINAL_PRICES[u.id] != null) u.price = FINAL_PRICES[u.id]; });
 
+// SALES: $ off the site price for a limited time (after the final prices above). The card and product page show a
+// SALE tag with the regular price crossed out; checkout charges the sale price. Remove a line to end that sale.
+const SALES = {
+  "carrier-3t-electric-ga5san53602w": 300,   // Carrier 3-ton electric AC system (Sept 28, 2026)
+};
+[...ELECTRIC, ...TRANE_ELECTRIC, ...GAS, ...TRANE_GAS, ...HEAT_PUMPS, ...GOODMAN, ...GOODMAN_HEAT_PUMPS, ...GOODMAN_GAS, ...PART_ITEMS, ...COMMERCIAL]
+  .forEach(u => { if (SALES[u.id] && u.price != null) { u.regularPrice = u.price; u.saleOff = SALES[u.id]; u.price -= SALES[u.id]; } });
+
 // ------------------------------------------------------------
 // PAYNE split systems (sourced through Sibi Pro, Robert Madden Industries McKinney).
 // Site price = Sibi cost of every component + PAYNE_SHIPPING (same freight + insurance built into the other

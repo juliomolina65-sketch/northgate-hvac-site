@@ -584,6 +584,9 @@
   .badge { position: absolute; top: 10px; left: 10px; background: var(--brand); color: #fff; font-size: 12px; font-weight: 700; padding: 3px 8px; border-radius: 3px; }
   .badge.stock { left: auto; right: 10px; background: #e7f4ea; color: var(--ok); }
   .badge.stock.out { background: #eef0f3; color: var(--muted); }
+  .badge.sale { left: auto; right: 10px; background: #c62828; color: #fff; letter-spacing: .03em; }
+  .sale-was { color: var(--muted); font-size: 14px; font-weight: 400; }
+  .sale-tag { display: inline-block; background: #c62828; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .04em; padding: 2px 6px; border-radius: 3px; margin-right: 6px; vertical-align: 3px; }
   .card-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
   .card-title { font-size: 16px; font-weight: 500; color: var(--link); line-height: 1.3; }
   .card:hover .card-title { text-decoration: underline; }
@@ -1912,7 +1915,7 @@
     {
       const q = Object.entries(order).reduce((n, [k, v]) => n + (k.split("::")[0] === u.id ? v : 0), 0);
       const std = heatOf(u);
-      const stock = u.inStock == null ? '<span class="badge stock">Available</span>' : u.inStock > 0 ? `<span class="badge stock">${u.inStock} in stock</span>` : '<span class="badge stock out">Call for availability</span>';
+      const stock = u.saleOff ? `<span class="badge sale">SALE · ${money(u.saleOff)} OFF</span>` : u.inStock == null ? '<span class="badge stock">Available</span>' : u.inStock > 0 ? `<span class="badge stock">${u.inStock} in stock</span>` : '<span class="badge stock out">Call for availability</span>';
       const items = u.components
         ? partsOf(u, std).map(c => `<div><b>${esc(c.role)}:</b> ${esc(c.model)}</div>`).join("")
         : `<div><b>Model:</b> ${esc(u.model)}</div>`;
@@ -1936,7 +1939,7 @@
           ${u.heatNote ? `<div class="heat-line"><b>${esc(u.heatNote)}</b></div>` : std ? `<div class="heat-line"><b>${std.desc} standard</b>${u.heatOptions.length > 1 ? ` · ${u.heatOptions.filter(o => o !== std).map(o => o.label).join(" or ")} available` : ""}${u.afue ? ` · ${u.afue}% AFUE` : ""}</div>` : ""}
           ${u.price == null
             ? `<div class="price-row"><span class="price" style="font-size:20px">Call for price</span></div>`
-            : `<div class="price-row">${u.listPrice > u.price ? `<span class="acct-tag">Your price</span>` : ""}<span class="price">${money(u.price)}</span> <small style="color:var(--muted)">/ ${u.unit || "system"}</small>${u.listPrice > u.price ? ` <s class="list-price">${money(u.listPrice)}</s>` : ""}</div>`}
+            : `<div class="price-row">${u.listPrice > u.price ? `<span class="acct-tag">Your price</span>` : ""}<span class="price">${money(u.price)}</span> <small style="color:var(--muted)">/ ${u.unit || "system"}</small>${u.listPrice > u.price ? ` <s class="list-price">${money(u.listPrice)}</s>` : u.saleOff ? ` <s class="sale-was">${money(u.regularPrice)}</s>` : ""}</div>`}
           <div class="ship-line"><svg><use href="#i-truck"/></svg>${u.commercial ? "Free freight to your job site · forklift needed to unload" : `Free shipping nationwide · ships in ${S.shipsIn}`}</div>
           ${pickupOff(u) && u.price != null ? `<div class="pickup-line">Local pickup in DFW: <b>${money(u.price - pickupOff(u))}</b></div>` : ""}
           ${u.price == null
@@ -2192,7 +2195,8 @@
     $("#specsSave").textContent = `Save ${money(pickupOff(u))} → ${money(base - pickupOff(u))}`;
     $$("[data-ship-pick]").forEach(b => b.setAttribute("aria-pressed", b.dataset.shipPick === method()));
     const list = u.listPrice > u.price ? u.listPrice + (heatOf(u, specsHeat)?.add || 0) : null;
-    $("#specsPrice").innerHTML = `${list ? `<span class="acct-tag">Your contractor price</span><br>` : ""}${money(pick ? base - pickupOff(u) : base)} <small>/ ${u.unit || "system"}</small>${list ? ` <s class="list-price">${money(pick ? list - pickupOff(u) : list)}</s>` : ""}`;
+    const was = !list && u.saleOff ? base + u.saleOff : null;
+    $("#specsPrice").innerHTML = `${list ? `<span class="acct-tag">Your contractor price</span><br>` : was ? `<span class="sale-tag">SALE · ${money(u.saleOff)} OFF</span><br>` : ""}${money(pick ? base - pickupOff(u) : base)} <small>/ ${u.unit || "system"}</small>${list ? ` <s class="list-price">${money(pick ? list - pickupOff(u) : list)}</s>` : was ? ` <s class="sale-was">${money(pick ? was - pickupOff(u) : was)}</s>` : ""}`;
     $("#specsShipNote").textContent = pick ? `Local pickup in DFW · you save ${money(pickupOff(u))}` : u.commercial ? "Free freight to your job site · forklift needed to unload" : `Free shipping nationwide · ships in ${S.shipsIn}`;
     // Monthly payments line (account.js swaps in Stripe's official Affirm/Klarna message when Stripe is connected).
     const amount = pick ? base - pickupOff(u) : base;
