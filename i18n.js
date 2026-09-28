@@ -723,6 +723,7 @@
     [/^(\d+) units · ([\d.]+) to ([\d.]+) ton$/, "$1 unidades · $2 a $3 toneladas"],
     [/^(\d+) systems · ([\d.]+) to ([\d.]+) ton$/, "$1 sistemas · $2 a $3 toneladas"],
     [/^Show (\d+) more$/, "Ver $1 más"],
+    [/^✓ (\d+) kW heat kit included with installation$/, "✓ Kit de calefacción de $1 kW incluido con la instalación"],
     [/^(.+) \+ (\d+) kW heat kit$/, (m, sys, kw) => `${m.replace(/ \+ \d+ kW heat kit$/, "")} + kit de calefacción de ${kw} kW`],
     [/^Check out · (\$[\d,]+) installed package →$/, "Pagar · paquete instalado de $1 →"],
     [/^([\d.]+) ton$/, "$1 toneladas"],

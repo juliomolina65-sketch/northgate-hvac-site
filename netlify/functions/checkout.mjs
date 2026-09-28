@@ -117,6 +117,7 @@ export default async (req) => {
       `INSTALLED PACKAGE (payment 1 of 2): ${body.install.job || ""}`,
       body.install.address && `at ${body.install.address}`,
       body.install.addons?.length && `add-ons: ${body.install.addons.join(", ")}`,
+      body.install.heatKitFree && `${body.install.heatKitFree} (credited on payment 2)`,
       Number.isFinite(+body.install.balance) && `payment 2 due after install (site estimate): $${Math.round(+body.install.balance)}`,
       body.install.notes && `notes: ${body.install.notes}`,
     ].filter(Boolean).join(" · "), 500) : "",
