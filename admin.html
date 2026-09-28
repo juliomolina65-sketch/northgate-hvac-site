@@ -36,6 +36,11 @@
   td.num, th.num { text-align: right; white-space: nowrap; }
   code { font-size: 12.5px; background: #f1f5fa; padding: 1px 4px; border-radius: 3px; }
   .demo-note { background: var(--warn-bg); color: var(--warn); border: 1px solid #efdc9f; border-radius: 6px; padding: 12px 14px; margin-bottom: 14px; }
+  .inst { margin-top: 6px; font-size: 12.5px; background: #eef5ff; border-radius: 4px; padding: 5px 7px; }
+  .fin { margin-top: 8px; font-size: 12.5px; background: #fff7e6; border: 1px solid #f2d18a; border-radius: 4px; padding: 6px 8px; }
+  .fin.ok { background: #eaf5ec; border-color: #bfe0c6; color: #16572a; }
+  .fin .btn-sm { margin-top: 4px; border: 0; background: #1f7a33; color: #fff; border-radius: 4px; padding: 5px 9px; font: inherit; font-weight: 600; cursor: pointer; }
+  .fin .linkish { background: none; border: 0; padding: 0; color: #0b5cad; font: inherit; cursor: pointer; text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -263,14 +268,45 @@
       <div class="card"><table><thead><tr><th>Date</th><th>Customer</th><th>Items</th><th>Delivery</th><th>Total</th><th>Rep</th><th>Status</th></tr></thead><tbody>` +
       (rows.length ? rows.map(o => { const c = who(o); return `<tr data-order="${o.id}"><td>${new Date(o.created_at).toLocaleString()}</td>
         <td>${esc(c.name)}<br><span class="muted">${esc(c.email)}<br>${esc(c.phone)}${o.meta?.company ? "<br>" + esc(o.meta.company) : ""}${o.meta?.contractor ? "<br>Contractor: " + esc(o.meta.contractor) : ""}</span></td>
-        <td>${(o.items || []).map(i => `${i.qty}× ${esc(i.name)}<br><span class="muted">${esc(i.models)}</span>`).join("<br>")}</td>
+        <td>${(o.items || []).map(i => `${i.qty}× ${esc(i.name)}<br><span class="muted">${esc(i.models)}</span>`).join("<br>")}${o.meta?.install ? `<div class="inst"><b>Installation:</b> ${esc(o.meta.install)}</div>` : ""}</td>
         <td>${esc(o.delivery || "")}${o.meta?.liftgate === "yes" ? "<br>+ liftgate" : ""}${o.meta?.commercial_unloading && o.meta.commercial_unloading !== "n/a" ? "<br><b>Unloading:</b> " + esc(o.meta.commercial_unloading) : ""}${addr(o) ? `<br><span class="muted">${esc(addr(o))}</span>` : ""}</td>
-        <td><b>${money((o.total_cents || 0) / 100)}</b><br><span class="muted">${esc(o.payment_method || "")}</span></td>
+        <td><b>${money((o.total_cents || 0) / 100)}</b><br><span class="muted">${esc(o.payment_method || "")}</span>${finalBox(o, c)}</td>
         <td>${esc(o.rep_code || "house")}</td>
         <td><select data-status>${statuses.map(s => `<option ${s === o.status ? "selected" : ""}>${s}</option>`).join("")}</select></td></tr>`; }).join("")
       : `<tr><td colspan="7" class="muted">No paid orders yet.</td></tr>`) + `</tbody></table></div>`;
     $("#showAllOrders").onchange = e => { showAllOrders = e.target.checked; loadOrders(); };
   }
+  // Installed packages paid by card: the rest is due after the install. Create / share the final payment link.
+  function finalBox(o, c) {
+    const due = +o.meta?.install_due_cents || 0;
+    if (!(due > 0)) return "";
+    const amt = money(due / 100), m = o.meta;
+    if (m.final_paid_at) return `<div class="fin ok">Final payment ${amt} received ✓<br><span class="muted">${new Date(m.final_paid_at).toLocaleDateString()}</span></div>`;
+    if (m.final_link_url) {
+      const msg = `Hi ${c.name.split(" ")[0] || ""}, thanks for choosing Northgate! Your installation is complete. Here's the link for the final payment of ${amt}: ${m.final_link_url}`;
+      return `<div class="fin">After install: <b>${amt}</b>${m.final_payment_status === "processing" ? " · <i>bank payment clearing</i>" : ""}<br>
+        <a href="${esc(m.final_link_url)}" target="_blank" rel="noopener">Payment link</a> ·
+        <button type="button" class="linkish" data-copy="${esc(m.final_link_url)}">Copy</button>
+        ${c.phone ? ` · <a href="sms:${esc(c.phone)}?&body=${encodeURIComponent(msg)}">Text</a>` : ""}
+        ${c.email ? ` · <a href="mailto:${esc(c.email)}?subject=${encodeURIComponent("Your final payment")}&body=${encodeURIComponent(msg)}">Email</a>` : ""}</div>`;
+    }
+    return `<div class="fin">After install: <b>${amt}</b><br><button type="button" class="btn-sm" data-final="${o.id}">Create final payment link</button></div>`;
+  }
+  $("#orders").addEventListener("click", async e => {
+    const cp = e.target.closest("[data-copy]");
+    if (cp) { try { await navigator.clipboard.writeText(cp.dataset.copy); cp.textContent = "Copied ✓"; } catch { prompt("Copy this link:", cp.dataset.copy); } return; }
+    const b = e.target.closest("[data-final]"); if (!b) return;
+    b.disabled = true; b.textContent = "Creating…";
+    try {
+      const { data: { session } } = await sb.auth.getSession();
+      const r = await fetch("/.netlify/functions/final-payment", { method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${session?.access_token || ""}` },
+        body: JSON.stringify({ orderId: +b.dataset.final }) });
+      const out = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(out.message || `Couldn't create the link (${r.status}).`);
+      loadOrders();
+    } catch (err) { alert(err.message); b.disabled = false; b.textContent = "Create final payment link"; }
+  });
   $("#orders").addEventListener("change", async e => {
     const sel = e.target.closest("[data-status]"); if (!sel) return;
     const { error } = await sb.from("orders").update({ status: sel.value, updated_at: new Date().toISOString() }).eq("id", sel.closest("tr").dataset.order);

@@ -2,7 +2,7 @@
 // Marks orders paid / failed in Supabase. Bank (ACH) payments take a few days to clear,
 // so a completed checkout can be "processing" before it's "paid".
 import crypto from "node:crypto";
-import { supabaseReady, update } from "./lib/supabase.mjs";
+import { supabaseReady, select, update } from "./lib/supabase.mjs";
 
 function verify(raw, header, secret) {
   const parts = Object.fromEntries(String(header || "").split(",").map(p => p.split("=")));
@@ -27,6 +27,18 @@ export default async (req) => {
     "checkout.session.async_payment_failed": "failed",
     "checkout.session.expired": "abandoned",
   }[event.type];
+
+  // Final payment on an installed package (paid through the link from admin.html): mark the original order.
+  if (status && s?.payment_link && supabaseReady()) {
+    const order = (await select("orders", `meta->>final_link_id=eq.${encodeURIComponent(s.payment_link)}&select=id,meta`))[0];
+    if (order && ["paid", "processing", "failed"].includes(status)) {
+      await update("orders", `id=eq.${order.id}`, {
+        meta: { ...order.meta, final_payment_status: status, ...(status === "paid" ? { final_paid_at: new Date().toISOString(), final_session_id: s.id } : {}) },
+        updated_at: new Date().toISOString(),
+      });
+    }
+    return new Response("ok");
+  }
 
   if (status && s?.id && supabaseReady()) {
     await update("orders", `stripe_session_id=eq.${encodeURIComponent(s.id)}`, {

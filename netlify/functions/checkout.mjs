@@ -230,7 +230,8 @@ export default async (req) => {
         delivery: metadata.delivery,
         items: order.lines.map(l => ({ key: l.key, qty: l.qty, name: l.name, models: l.models, unit_cents: l.unit })),
         rep_code: metadata.rep || null,
-        meta: metadata,
+        // Installed packages paid by card: what's still owed after the install (admin sends the final payment link).
+        meta: cardPackage ? { ...metadata, install_package_cents: ic.packageCents, install_due_cents: ic.laterCents } : metadata,
       });
     } catch (e) { console.error("order record failed", e.message); }
   }
