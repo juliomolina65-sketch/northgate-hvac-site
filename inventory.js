@@ -1421,6 +1421,15 @@ window.INSTALL = {
     { key: "lineset",    label: "New refrigerant line set",    price: 650 },
     { key: "thermostat", label: "New smart thermostat",        price: 250 },
   ],
+  // "Typical local installed price" shown next to each estimate (same area tiers as above).
+  // Ranges are for a 3-ton full change-out and scale by size (perTon). Source: 2026 published cost guides
+  // (hvacreviewhub.org 3-ton AC + furnace: national $6,500-$14,500, Northeast/West Coast $8,500-$16,500,
+  // Midwest/South $6,000-$12,000; Angi and hvacprojectcost.com New York pages agree). Update if you find better data.
+  compare: {
+    ranges: { standard: [6000, 12000], mid: [6500, 14500], high: [8500, 16500] },
+    perTon: 0.08,
+    source: "2026 published HVAC cost guides",
+  },
   // "Not sure what size?" helper: home square footage -> tons (rule of thumb, confirmed before install)
   sizeBySqft: [[1000, 1.5], [1300, 2], [1600, 2.5], [1900, 3], [2200, 3.5], [2600, 4], [Infinity, 5]],
 };
