@@ -942,7 +942,7 @@
         <div class="com-top">
           <div class="com-stage" aria-hidden="true">
             <span class="com-tons"><b>1.5–5</b>TONS</span>
-            <img class="full" src="img/bundle-carrier-heatpump.jpg" alt="">
+            <img class="full" src="img/bundle-carrier-heatpump-brand.jpg" alt="">
           </div>
           <div class="com-copy">
             <span class="pill">HOME SYSTEMS · FREE SHIPPING</span>
@@ -998,7 +998,7 @@
           </div>
           <div class="hero-pics">
             <button type="button" data-cat="electric" data-scroll><img src="img/bundle-trane-electric.jpg" alt="Trane electric AC system" loading="lazy"><span>Electric AC systems</span></button>
-            <button type="button" data-cat="gas" data-scroll><img src="img/bundle-carrier-gas.jpg" alt="Carrier gas furnace system" loading="lazy"><span>Gas furnace systems</span></button>
+            <button type="button" data-cat="gas" data-scroll><img src="img/bundle-carrier-gas-brand.jpg" alt="Carrier gas furnace system" loading="lazy"><span>Gas furnace systems</span></button>
             <button type="button" data-cat="heatpump" data-scroll><img src="img/bundle-goodman-hp.jpg" alt="Goodman heat pump system" loading="lazy"><span>Heat pump systems</span></button>
             <button type="button" data-cat="condenser" data-scroll><img src="img/trane-cond-xr.jpg" alt="Trane AC condenser" loading="lazy"><span>Condensers &amp; parts</span></button>
           </div>
@@ -1761,7 +1761,7 @@
   }
 
   // Landing showcase: one card per brand with what it offers and its lowest system price.
-  const BRAND_PHOTO = { Carrier: "img/bundle-carrier-1.5t-electric.jpg", Goodman: "img/bundle-goodman-ac.jpg", Bryant: "img/rtu-bryant-582l-en-normal.jpg" };
+  const BRAND_PHOTO = { Carrier: "img/bundle-carrier-electric.jpg", Goodman: "img/bundle-goodman-ac.jpg", Bryant: "img/rtu-bryant-582l-en-normal.jpg" };
   $("#brandCards").innerHTML = brandList.map(b => {
     const res = INV.filter(u => u.brand === b && /System/.test(u.type) && u.price != null);
     const com = !res.length;   // e.g. Bryant: commercial rooftop units only

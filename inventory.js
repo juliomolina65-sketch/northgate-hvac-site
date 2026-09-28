@@ -57,7 +57,7 @@ const WARRANTY_10YR = "10-year parts (incl. compressor & coil) when registered w
 const ga5san5 = (tons, s) => ({
   role: "Condenser",
   model: s.model,
-  image: "img/condenser-ga5san5.jpg",
+  image: "img/condenser-carrier.jpg",
   name: `${tons} Ton Up to ${s.seer2Max} SEER2 Air Conditioner Condensing Unit (R-454B)`,
   highlights: [
     `${s.seer2Range} SEER2 / 11.2 – 14.5 EER2 (depends on matched indoor unit)`,
@@ -100,7 +100,7 @@ const ga5san5 = (tons, s) => ({
 const gh5san = (tons, s) => ({
   role: "Heat Pump",
   model: s.model,
-  image: "img/hp-gh5san.jpg",
+  image: "img/hp-carrier.jpg",
   name: `${tons} Ton 14.3 SEER2 Residential Heat Pump Condensing Unit (R-454B)`,
   highlights: [
     "14.3 SEER2 · up to 12.5 EER2 · up to 7.8 HSPF2 (depends on indoor match)",
@@ -144,7 +144,7 @@ const gh5san = (tons, s) => ({
 const fj5 = (tons, s) => ({
   role: "Air Handler",
   model: s.model,
-  image: "img/airhandler-fj5.jpg",
+  image: "img/airhandler-carrier.jpg",
   name: `${tons} Ton Residential Fan Coil, Multipoise, R-454B (Aluminum Coil)`,
   highlights: [
     "Multipoise: upflow, downflow or horizontal",
@@ -463,7 +463,7 @@ const electricBundle = (tons, price, [condenser, airHandler], heatOptions, extra
   price,
   msrp: null,
   inStock: null,
-  image: "img/bundle-carrier-1.5t-electric.jpg",   // same look across 1.5 – 3 ton
+  image: "img/bundle-carrier-electric.jpg",   // same look across 1.5 – 3 ton
   components: [PARTS[condenser], PARTS[airHandler]],
   optionTitle: "Electric heat kit",
   heatOptions: heatOptions.map(o => ({ ...o, part: PARTS[o.model], label: `${PARTS[o.model].kw} kW`, desc: `${PARTS[o.model].kw} kW heat`, spec: `${PARTS[o.model].kw} kW electric` })),
@@ -492,7 +492,7 @@ const gasBundle = (tons, price, [condenser, coil], [furnace, upgrade], extra = {
   price,
   msrp: null,
   inStock: null,
-  image: "img/bundle-carrier-gas.jpg",
+  image: "img/bundle-carrier-gas-brand.jpg",
   components: [PARTS[condenser], PARTS[coil]],
   optionTitle: "Furnace size",
   heatOptions: [furnaceOption(furnace, 0), ...(upgrade ? [furnaceOption(upgrade, FURNACE_UPGRADE)] : [])],
@@ -538,7 +538,7 @@ const heatPumpBundle = (tons, heatPump) => {
     eer2: 12.5,
     hspf2: 7.8,
     price: e.price + HEAT_PUMP_PREMIUM,
-    image: "img/bundle-carrier-heatpump.jpg",
+    image: "img/bundle-carrier-heatpump-brand.jpg",
     optionTitle: "Backup (auxiliary) heat kit",
     heatOptions: e.heatOptions.map(o => ({ ...o, spec: `${o.part.kw} kW electric backup` })),
     seer2Exact: true,   // heat pumps are rated a flat 14.3 SEER2 (not a range)

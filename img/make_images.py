@@ -170,4 +170,14 @@ if __name__ == "__main__":
             ("heatkit-kffeh.png", 8.0 * 2.1, 470, 1150)], "bundle-payne-electric-kit.jpg")
     bundle([("payne/payne-airhandler.png", 42.0, 300, 1045), ("payne/payne-hp.png", 28.0, 790, 1075),
             ("heatkit-kffeh.png", 8.0 * 2.1, 450, 1150)], "bundle-payne-heatpump-kit.jpg")
+    # Carrier photos with the Carrier logo (owner's photos, Sept 28, 2026)
+    single("carrier-cond-brand.png", "condenser-carrier.jpg")
+    single("carrier-hp-brand.png", "hp-carrier.jpg")
+    single("carrier-ah-brand.png", "airhandler-carrier.jpg")
+    bundle([("carrier-ah-brand.png", 44.0, 400, 1045), ("carrier-cond-brand.png", 34.0, 860, 1075),
+            ("heatkit-kffeh.png", 8.0 * 2.1, 560, 1150)], "bundle-carrier-electric.jpg")
+    bundle([("furnace-58sc0b.png", 33.3, 245, 1040), ("carrier-cond-brand.png", 35.0, 770, 1070),
+            ("coil-cvava.png", 14.7 * 1.25, 470, 1150)], "bundle-carrier-gas-brand.jpg")
+    bundle([("carrier-ah-brand.png", 44.0, 330, 1045), ("carrier-hp-brand.png", 28.0, 760, 1075),
+            ("heatkit-kffeh.png", 8.0 * 2.1, 490, 1150)], "bundle-carrier-heatpump-brand.jpg")
     print("done")
