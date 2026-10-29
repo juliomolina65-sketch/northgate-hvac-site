@@ -6,10 +6,8 @@
 window.BUSINESS = {
   name: "Northgate",                      // <- your business name (domain ideas: northgateair.com, northgatehvac.com)
   tagline: "Carrier, Trane, Goodman, Payne and Bryant equipment with free nationwide shipping, or pick up in DFW and save $650 per system.",
-  phone: "(945) 244-6670",                // <- main phone (shown on the site; calls and texts)
-  sms: "+19452446670",                    // <- same number, digits only with +1
-  phone2: "(945) 391-3427",               // <- second phone (shown in Contact and the footer)
-  tel2: "+19453913427",                   // <- same number, digits only with +1
+  phone: "(945) 495-5771",                // <- main phone (shown on the site; calls and texts)
+  sms: "+19454955771",                    // <- same number, digits only with +1
   email: "orders@example.com",            // <- your email
   legalName: "Northgate",                 // <- your registered business name (e.g. "Northgate HVAC LLC"), used on the Terms & Privacy pages
   mailingAddress: "4910 Kelso Lane, Garland, TX 75043", // <- your business mailing address for legal notices (not shown anywhere else)
