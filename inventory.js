@@ -10,7 +10,7 @@ window.BUSINESS = {
   sms: "+19454955771",                    // <- same number, digits only with +1
   email: "orders@example.com",            // <- your email
   legalName: "Northgate",                 // <- your registered business name (e.g. "Northgate HVAC LLC"), used on the Terms & Privacy pages
-  mailingAddress: "4910 Kelso Lane, Garland, TX 75043", // <- your business mailing address for legal notices (not shown anywhere else)
+  mailingAddress: "", // <- your business mailing address for legal notices (not shown anywhere else)
   policiesUpdated: "September 24, 2026",  // date shown on the Terms & Privacy pages
   pickupArea: "Dallas–Fort Worth",        // exact pickup address is sent after the order is confirmed
   warrantyNote: "New in box. Confirm warranty terms for your install when you order.",
