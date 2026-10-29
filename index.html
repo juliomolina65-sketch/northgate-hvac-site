@@ -2593,6 +2593,13 @@ Payment: PAY ON DELIVERY (cash or Zelle)` : "") + (lift ? `\nLiftgate: yes (+${m
   $("#closeIn").onclick = closeIn;
   $("#inBg").addEventListener("click", e => { if (e.target.id === "inBg") closeIn(); });
   if (/[?&]install\b/.test(location.search) || location.hash === "#install") openIn();
+  // Links from the Google pages (/equipment/..., /shop/...): ?item=<id> opens that product, ?cat=<key> opens a category.
+  {
+    const qs = new URLSearchParams(location.search);
+    const cat = qs.get("cat"), item = qs.get("item");
+    if (cat && CATS.some(c => c.key === cat)) setCat(cat, true);
+    if (item && byId(item)) openSpecs(item);
+  }
 
   function openWs() { closeSpecs(); closeDrawer(); updateWs(); $("#wsBg").classList.add("open"); }
   function closeWs() { $("#wsBg").classList.remove("open"); }

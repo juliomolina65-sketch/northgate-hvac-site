@@ -11,6 +11,7 @@ import stripeWebhook from "./netlify/functions/stripe-webhook.mjs";
 import finalPayment from "./netlify/functions/final-payment.mjs";
 import checkoutStatus from "./netlify/functions/checkout-status.mjs";
 import podOrder from "./netlify/functions/pod-order.mjs";
+import { seoRoute } from "./seo.mjs";
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const PORT = +process.env.PORT || 8080;
@@ -104,5 +105,10 @@ http.createServer((req, res) => {
   const fn = FUNCTIONS[pathname];
   if (fn) return runFunction(fn, req, res);
   if (req.method !== "GET" && req.method !== "HEAD") return send(res, 405, { "Content-Type": "text/plain" }, "Method not allowed");
+  // Old www links go to the main address.
+  if (/^www\./i.test(req.headers.host || "")) return send(res, 301, { Location: `https://northgatehvac.com${req.url}` }, "");
+  let page = null;
+  try { page = seoRoute(pathname); } catch (e) { console.error("seo page error", pathname, e); }
+  if (page) return send(res, page.status, { "Content-Type": page.type, "Cache-Control": "public, max-age=300" }, req.method === "HEAD" ? "" : page.body);
   serveStatic(req, res);
 }).listen(PORT, () => console.log(`Northgate running on port ${PORT}`));
